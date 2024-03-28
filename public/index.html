@@ -1,0 +1,382 @@
+<!DOCTYPE html>
+<html lang="en">
+<!--**  Github: https://github.com/sabeerbikba/rickshaw  **-->
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Explore Honnavar</title>
+    <!-- need to add meta tags  -->
+    <!-- <base href=""> --> <!-- need to setup after done if needed -->
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html,
+        body,
+        main {
+            height: 100%;
+        }
+
+        @font-face {
+            font-family: 'Questrial';
+            src: url('./assets/Questrial-Regular.ttf') format('truetype');
+        }
+
+        .header {
+            width: 100%;
+        }
+
+        .nav-a {
+            color: black;
+        }
+
+        .nav-li {
+            padding-right: 8px;
+        }
+
+        .nav-nav-nav {
+            background-color: #E5E2D6;
+            height: 100%;
+        }
+
+        .main-image {
+            position: relative;
+            background: rgb(215, 151, 48);
+            background: linear-gradient(rgba(215, 151, 48, 0.27) 0%,
+                    rgba(215, 151, 48, 0.5) 30%,
+                    rgba(215, 151, 48, 0.72) 60%,
+                    rgba(215, 151, 48, 0.92) 96%);
+        }
+
+        .content {
+            display: flex;
+            background-color: #32645C;
+            color: white;
+        }
+
+        h1 {
+            font-family: sans-serif;
+        }
+
+        p {
+            font-family: Georgia, serif;
+        }
+
+        button {
+            font-family: 'Questrial', sans-serif;
+        }
+
+        .btn {
+            height: 50px;
+            width: 180px;
+            border-radius: 3px;
+            border: 2px solid black;
+            background-color: #C9A10D;
+        }
+
+        .btn-div {
+            height: 56px;
+            width: 186px;
+            padding: 3px;
+            border-radius: 3px;
+            background-color: #C9A10D;
+        }
+
+        .light-left,
+        .light-right {
+            width: 25%;
+            padding-bottom: 40px;
+            margin-top: auto;
+            margin-bottom: auto;
+        }
+
+        .nav {
+            width: 70%;
+            height: 100%;
+            margin: auto;
+        }
+
+        @media screen and (max-width: 766px) {}
+
+        @media screen and (min-width: 768px) and (max-width: 1024px) {}
+
+        @media screen and (min-width: 1025px) and (max-width: 1350px) {
+            .road {
+                display: none;
+            }
+
+            .content {
+                height: 34%;
+            }
+
+            .main-image {
+                height: 66%;
+            }
+
+            .hero-img {
+                width: auto;
+                height: 550px;
+            }
+
+            h1 {
+                font-size: 2.1rem;
+            }
+
+            p {
+                font-size: 1.55rem;
+            }
+
+            .btn {
+                height: 60px;
+                width: 362px;
+                border-radius: 8px;
+                border: 4px solid black;
+                background-color: #C9A10D;
+                font-size: 2.12rem;
+            }
+
+            .btn-div {
+                height: 68px;
+                width: 370px;
+                padding: 3px;
+                border-radius: 8px;
+                background-color: #C9A10D;
+            }
+
+            .header {
+                height: 7%;
+            }
+
+            main {
+                height: 93%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+        }
+
+        @media screen and (min-width: 1351px) {}
+
+        .hero-img {
+            max-width: 100%;
+            object-fit: cover;
+        }
+
+        .hero-img-div {
+            width: 100%;
+        }
+
+
+        .bottom-div {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+        }
+
+
+
+        .nav-logo-div {
+            width: 9%;
+        }
+
+        .nav-nav-div {
+            width: 91%;
+        }
+
+        .nav-ul {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .light-left {
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .light-right {
+            display: flex;
+        }
+
+        .light-left-img {
+            padding-right: 22%;
+        }
+
+        .light-right-img {
+            padding-left: 22%;
+        }
+
+        .content-content {
+            width: 50%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-top: 40px;
+            margin-bottom: 40px;
+        }
+
+
+
+        /* utilites */
+        .flex {
+            display: flex;
+        }
+
+        .flex-center {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .m-auto {
+            margin: auto;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .inline {
+            display: inline;
+        }
+
+        .text-dec-none {
+            text-decoration: none;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="nav-nav-nav">
+            <div class="nav flex">
+                <div class="nav-logo-div">
+                    <a class="text-dec-none" href="/">
+                        <!-- svg -->
+                        <svg width="100%" height="100%" viewBox="0 0 88 99" fill="none"
+                            xmlns="http://www.w3.org/2000/svg">
+                            <g id="Group 1" filter="url(#filter0_d_4_18)">
+                                <path id="Union" fill-rule="evenodd" clip-rule="evenodd"
+                                    d="M60.7036 50.7742C63.7873 47.0032 65.6333 42.2082 65.6333 36.9885C65.6333 24.8446 55.6418 15 43.3166 15C30.9915 15 21 24.8446 21 36.9885C21 42.4976 23.0563 47.5335 26.4538 51.3918L43.7 77L60.7105 50.7723L60.7036 50.7742Z"
+                                    fill="white" />
+                                <ellipse id="Ellipse 3" cx="43.3166" cy="36.0039" rx="9.18921" ry="8.53283"
+                                    fill="#C37E17" />
+                            </g>
+                            <defs>
+                                <filter id="filter0_d_4_18" x="0.9" y="-6.1" width="86.8333" height="104.2"
+                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                                    <feColorMatrix in="SourceAlpha" type="matrix"
+                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
+                                    <feOffset dx="1" />
+                                    <feGaussianBlur stdDeviation="10.55" />
+                                    <feComposite in2="hardAlpha" operator="out" />
+                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.73 0" />
+                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4_18" />
+                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4_18"
+                                        result="shape" />
+                                </filter>
+                            </defs>
+                        </svg>
+                        <!-- svg -->
+                    </a>
+                </div>
+                <div class="nav-nav-div">
+                    <nav class="nav-links">
+                        <ul class="nav-ul">
+                            <li class="inline nav-li">
+                                <a class="text-dec-none nav-a" href="./gallery/">Gallery</a>
+                            </li>
+                            <li class="inline">
+                                <a class="text-dec-none nav-a" href="./about/">About me</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div>
+                        <!-- svg -->
+                        <svg width="100%" viewBox="0 0 862 9" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <g id="line">
+                                <path id="Vector 1" d="M1 4.5H862" stroke="black" stroke-width="3" />
+                                <ellipse id="Ellipse 4" cx="4" cy="4.5" rx="4" ry="4.5" fill="#FF0E0E" />
+                            </g>
+                        </svg>
+                        <!-- svg -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <main>
+        <!-- MAIN  PAGE -->
+        <div class="main-image">
+
+            <div>
+                <div class="hero-img-div flex-center">
+                    <img class="hero-img" src="./assets/sunshine-ocean.jpg" alt="sunshine-ocean">
+                </div>
+            </div>
+
+
+            <div class="text-center bottom-div">
+                <div class="inline">
+                    circles
+                </div>
+            </div>
+
+        </div>
+
+
+
+        <div class="content">
+            <div class="light-left">
+                <img class="light-left-img" src="./assets/lights.svg" alt="light">
+            </div>
+            <div class="content-content">
+                <h1>Explore Honnavar Like a Local</h1>
+                <p>Embark on a unique journey through the heart of Honnavar with our authentic rickshaw tours.</p>
+                <div class="flex-center">
+                    <div class="btn-div">
+                        <a href="tel:+918970517155">
+                            <!-- chnage link -->
+                            <button class="btn">
+                                Book Your Tour Today!
+                            </button>
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="light-right">
+                <img class="light-right-img" src="assets/lights.svg" alt="light">
+            </div>
+        </div>
+
+        <div class="road">
+            <!-- svg -->
+            <svg width="100%" height="100%" viewBox="0 0 430 162" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="Group 15">
+                    <rect id="Rectangle 18" width="430" height="162" fill="#575757" />
+                    <path id="Rectangle 16" d="M22 0H59V44C59 47.866 55.866 51 52 51H29C25.134 51 22 47.866 22 44V0Z"
+                        fill="black" />
+                    <path id="Rectangle 17"
+                        d="M366 0H403V44C403 47.866 399.866 51 396 51H373C369.134 51 366 47.866 366 44V0Z"
+                        fill="black" />
+                    <path id="Rectangle 19" d="M197.5 0H216.5L223.5 77.2006H190.5L197.5 0Z" fill="#DEDEDE" />
+                    <path id="Rectangle 20" d="M188 125.272H227L231 162H184L188 125.272Z" fill="#D9D9D9" />
+                </g>
+            </svg>
+            <!-- svg -->
+        </div>
+
+
+
+    </main>
+
+</body>
+
+</html>
