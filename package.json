@@ -14,5 +14,9 @@
   "devDependencies": {
     "express": "^4.19.1",
     "nodemon": "^3.1.0"
+  },
+  "dependencies": {
+    "express-fileupload": "^1.5.0",
+    "imgur": "^2.4.2"
   }
 }

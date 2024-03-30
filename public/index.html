@@ -19,6 +19,7 @@
         body,
         main {
             height: 100%;
+            width: 100%;
         }
 
         @font-face {
@@ -30,17 +31,32 @@
             width: 100%;
         }
 
-        .nav-a {
-            color: black;
-        }
-
-        .nav-li {
-            padding-right: 8px;
-        }
-
         .nav-nav-nav {
             background-color: #E5E2D6;
             height: 100%;
+        }
+
+        .nav-logo-div {
+            width: 9%;
+        }
+
+        .nav-nav-div {
+            width: 91%;
+        }
+
+        .nav-a {
+            color: black;
+            height: 100%;
+            display: inline-block;
+            padding-top: 13px;
+            padding-bottom: 13px;
+
+        }
+
+        .nav-ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
         }
 
         .main-image {
@@ -52,10 +68,31 @@
                     rgba(215, 151, 48, 0.92) 96%);
         }
 
+        .bar {
+            background-color: #32645C;
+        }
+
+        .bar-bar {
+            background: rgb(95, 95, 95);
+            background: linear-gradient(277deg, rgba(95, 95, 95, 1) 0%, rgba(48, 48, 48, 1) 15%, rgba(0, 0, 0, 1) 48%, rgba(48, 48, 48, 1) 82%, rgba(95, 95, 95, 1) 100%);
+        }
+
         .content {
             display: flex;
             background-color: #32645C;
             color: white;
+            position: relative;
+            z-index: 20;
+        }
+
+        .content-content {
+            width: 60%;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-around;
+            margin-top: 40px;
+            margin-bottom: 40px;
         }
 
         h1 {
@@ -94,18 +131,695 @@
             margin-bottom: auto;
         }
 
+        .light {
+            height: auto;
+        }
+
+        .light-left-svg {
+            padding-right: 22%;
+        }
+
+        .light-right-svg {
+            padding-left: 22%;
+        }
+
         .nav {
             width: 70%;
             height: 100%;
             margin: auto;
         }
 
-        @media screen and (max-width: 766px) {}
+        .road-svg {
+            margin-bottom: -4.9px;
+        }
 
-        @media screen and (min-width: 768px) and (max-width: 1024px) {}
+        @media screen and (max-width: 359px) {}
+
+        @media screen and (min-width: 360px) and (max-width: 466px) {
+            .content {
+                height: 22%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 27%;
+            }
+
+            .bar {
+                height: 8%;
+                border-radius: 0 0 10px 10px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 210px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: .9rem;
+            }
+
+            p {
+                font-size: .8rem;
+            }
+
+            .btn {
+                height: 40px;
+                width: 162px;
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: .9rem;
+            }
+
+            .btn-div {
+                height: 46px;
+                width: 168px;
+                padding: 3px;
+                border-radius: 3px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 55px;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 467px) and (max-width: 566px) {
+            .content {
+                height: 24%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 27%;
+            }
+
+            .bar {
+                height: 10%;
+                border-radius: 0 0 10px 10px;
+                padding-top: 14px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 210px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: 1.2rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+
+            .btn {
+                height: 46px;
+                width: 172px;
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: 1rem;
+            }
+
+            .btn-div {
+                height: 52px;
+                width: 178px;
+                padding: 3px;
+                border-radius: 3px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 55px;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 567px) and (max-width: 666px) {
+            .content {
+                height: 28%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 32%;
+            }
+
+            .bar {
+                height: 10%;
+                border-radius: 0 0 10px 10px;
+                padding-top: 14px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 250px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: 1.4rem;
+            }
+
+            p {
+                font-size: 1.25rem;
+            }
+
+            .btn {
+                height: 46px;
+                width: 192px;
+                border-radius: 5px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: 1.1rem;
+            }
+
+            .btn-div {
+                height: 52px;
+                width: 198px;
+                padding: 3px;
+                border-radius: 5px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 85px;
+            }
+
+            .light-left-svg {
+                padding-right: 12%;
+            }
+
+            .light-right-svg {
+                padding-left: 12%;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 667px) and (max-width: 766px) {
+            .content {
+                height: 32%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 40%;
+            }
+
+            .bar {
+                height: 10%;
+                border-radius: 0 0 10px 10px;
+                padding-top: 14px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 315px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: 1.6rem;
+            }
+
+            p {
+                font-size: 1.45rem;
+            }
+
+            .btn {
+                height: 46px;
+                width: 222px;
+                border-radius: 6px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: 1.3rem;
+            }
+
+            .btn-div {
+                height: 52px;
+                width: 228px;
+                padding: 3px;
+                border-radius: 6px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 85px;
+            }
+
+            .light-left-svg {
+                padding-right: 12%;
+            }
+
+            .light-right-svg {
+                padding-left: 12%;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 767px) and (max-width: 866px) {
+            .road {
+                display: none;
+            }
+
+            .content {
+                height: 40%;
+            }
+
+            .content-content {
+                margin-top: 45px;
+                margin-bottom: 12px;
+            }
+
+            .main-image {
+                height: 50%;
+            }
+
+            .bar {
+                height: 10%;
+            }
+
+            .bar-bar {
+                height: 48px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            .hero-img {
+                height: 400px;
+            }
+
+            h1 {
+                font-size: 1.7rem;
+            }
+
+            p {
+                font-size: 1.45rem;
+            }
+
+            .btn {
+                height: 50px;
+                width: 252px;
+                border-radius: 8px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: 1.5rem;
+            }
+
+            .btn-div {
+                height: 56px;
+                width: 258px;
+                padding: 3px;
+                border-radius: 8px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 110px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 85px;
+            }
+
+            .light-left-svg {
+                padding-right: 15%;
+            }
+
+            .light-right-svg {
+                padding-left: 15%;
+            }
+
+            .header {
+                height: 6%;
+            }
+
+            main {
+                height: 94%;
+            }
+
+            .nav {
+                width: 80%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 30px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: 1rem;
+            }
+
+            .nav-logo-div {
+                width: 8%;
+            }
+
+            .nav-nav-div {
+                width: 92%;
+            }
+        }
+
+        @media screen and (min-width: 867px) and (max-width: 1024px) {
+            .road {
+                display: none;
+            }
+
+            .content {
+                height: 38%;
+            }
+
+            .content-content {
+                margin-top: 45px;
+                margin-bottom: 12px;
+            }
+
+            .main-image {
+                height: 55%;
+            }
+
+            .bar {
+                height: 7%;
+            }
+
+            .bar-bar {
+                height: 48px;
+            }
+
+            body {
+                background-color: #fff;
+            }
+
+            .hero-img {
+                height: 430px;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            p {
+                font-size: 1.8rem;
+            }
+
+            .btn {
+                height: 50px;
+                width: 252px;
+                border-radius: 8px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: 1.5rem;
+            }
+
+            .btn-div {
+                height: 56px;
+                width: 258px;
+                padding: 3px;
+                border-radius: 8px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 110px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 85px;
+            }
+
+            .light-left-svg {
+                padding-right: 15%;
+            }
+
+            .light-right-svg {
+                padding-left: 15%;
+            }
+
+            .header {
+                height: 6%;
+            }
+
+            main {
+                height: 94%;
+            }
+
+            .nav {
+                width: 80%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 30px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: 1rem;
+            }
+
+            .nav-logo-div {
+                width: 8%;
+            }
+
+            .nav-nav-div {
+                width: 92%;
+            }
+        }
 
         @media screen and (min-width: 1025px) and (max-width: 1350px) {
             .road {
+                display: none;
+            }
+
+            .bar {
                 display: none;
             }
 
@@ -118,7 +832,6 @@
             }
 
             .hero-img {
-                width: auto;
                 height: 550px;
             }
 
@@ -147,6 +860,10 @@
                 background-color: #C9A10D;
             }
 
+            .light {
+                width: 140px;
+            }
+
             .header {
                 height: 7%;
             }
@@ -159,11 +876,28 @@
                 width: 78%;
             }
 
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-ul {
+                height: 37px;
+                margin-right: 22px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
         }
 
         @media screen and (min-width: 1351px) {}
 
         .hero-img {
+            width: auto;
             max-width: 100%;
             object-fit: cover;
         }
@@ -177,51 +911,20 @@
             position: absolute;
             bottom: 0;
             width: 100%;
-        }
-
-
-
-        .nav-logo-div {
-            width: 9%;
-        }
-
-        .nav-nav-div {
-            width: 91%;
-        }
-
-        .nav-ul {
-            display: flex;
-            justify-content: flex-end;
+            z-index: 10;
+            background-color: #daa041;
         }
 
         .light-left {
+            width: 20%;
             display: flex;
             justify-content: flex-end;
         }
 
         .light-right {
+            width: 20%;
             display: flex;
         }
-
-        .light-left-img {
-            padding-right: 22%;
-        }
-
-        .light-right-img {
-            padding-left: 22%;
-        }
-
-        .content-content {
-            width: 50%;
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            margin-top: 40px;
-            margin-bottom: 40px;
-        }
-
-
 
         /* utilites */
         .flex {
@@ -290,7 +993,7 @@
                 <div class="nav-nav-div">
                     <nav class="nav-links">
                         <ul class="nav-ul">
-                            <li class="inline nav-li">
+                            <li class="nav-li">
                                 <a class="text-dec-none nav-a" href="./gallery/">Gallery</a>
                             </li>
                             <li class="inline">
@@ -325,8 +1028,26 @@
 
             <div class="text-center bottom-div">
                 <div class="inline">
-                    circles
+                    <span>height: <b id="height">
+                            <script>0</script>
+                        </b><b>px</b></span>
+                    <span>widht: <b id="width">0</b><b>px</b></span>
                 </div>
+                <!-- circles -->
+
+                <!-- testing -->
+                <script>
+                    const width = document.getElementById('width');
+                    const height = document.getElementById('height');
+                    width.textContent = window.innerWidth;
+                    height.textContent = window.innerHeight;
+                    window.addEventListener('resize', () => {
+                        width.textContent = window.innerWidth;
+                        height.textContent = window.innerHeight;
+                    });
+                </script>
+                <!-- testing -->
+
             </div>
 
         </div>
@@ -335,7 +1056,125 @@
 
         <div class="content">
             <div class="light-left">
-                <img class="light-left-img" src="./assets/lights.svg" alt="light">
+                <!-- light svg -->
+                <svg class="light light-left-svg" viewBox="0 0 76 139" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="lights">
+                        <rect id="Rectangle 9" x="8.3302" y="8" width="61" height="128" rx="25" fill="#D9D9D9" />
+                        <path id="Rectangle 10"
+                            d="M8.3302 33C8.3302 19.1929 19.5231 8 33.3302 8H44.3302C58.1373 8 69.3302 19.1929 69.3302 33V40H8.3302V33Z"
+                            fill="#B81C17" />
+                        <path id="Rectangle 11"
+                            d="M8.3302 103H69.3302V111C69.3302 124.807 58.1373 136 44.3302 136H33.3302C19.5231 136 8.3302 124.807 8.3302 111V103Z"
+                            fill="#B81C17" />
+                        <rect id="Rectangle 12" x="8.3302" y="40" width="4" height="63" fill="#B81C17" />
+                        <g id="Vector 2" filter="url(#filter0_f_16_20)">
+                            <path d="M12.3302 68H66.3302" stroke="black" />
+                        </g>
+                        <rect id="Rectangle 14" x="12.3302" y="103" width="18" height="53"
+                            transform="rotate(-90 12.3302 103)" fill="url(#paint0_linear_16_20)" />
+                        <rect id="Rectangle 13" x="65.3302" y="40" width="4" height="63" fill="#B81C17" />
+                        <g id="Ellipse 9" filter="url(#filter1_f_16_20)">
+                            <ellipse cx="38.8302" cy="54.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Ellipse 10" filter="url(#filter2_f_16_20)">
+                            <ellipse cx="38.8302" cy="83.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Ellipse 11" filter="url(#filter3_f_16_20)">
+                            <ellipse cx="38.8302" cy="111.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Vector 3" filter="url(#filter4_f_16_20)">
+                            <path
+                                d="M52.4193 9H26.2108C15.7274 9 11.4718 20.701 10.1545 26.5515C9.1838 54.2645 8.65686 111.723 10.9865 119.852C13.3162 127.981 21.4961 133.4 26.2108 135.094C33.8376 136.48 50.5889 136.572 56.5794 133.246C62.5699 129.921 65.841 122.007 67.2276 116.619C68.0597 92.6007 69.2245 39.4842 67.2276 26.5515C65.2308 13.6188 56.8568 9.46188 52.4193 9Z"
+                                stroke="black" />
+                        </g>
+                        <g id="Vector 4" filter="url(#filter5_f_16_20)">
+                            <path d="M25.3302 124.5H54.8302" stroke="white" stroke-width="6" />
+                        </g>
+                        <g id="Ellipse 12" filter="url(#filter6_f_16_20)">
+                            <ellipse cx="19.5806" cy="18.3209" rx="13.6151" ry="1.90333"
+                                transform="rotate(-40.5659 19.5806 18.3209)" fill="black" />
+                        </g>
+                        <g id="Ellipse 13" filter="url(#filter7_f_16_20)">
+                            <ellipse cx="57.0136" cy="20.2501" rx="13.6151" ry="1.90333"
+                                transform="rotate(-133.039 57.0136 20.2501)" fill="black" />
+                        </g>
+                        <g id="Vector 5" filter="url(#filter8_f_16_20)">
+                            <path d="M35 50L25 55" stroke="#594640" stroke-width="3" />
+                        </g>
+                        <g id="Vector 6" filter="url(#filter9_f_16_20)">
+                            <path d="M52.8114 53.9592L42.3302 49.3314" stroke="#594640" stroke-width="3" />
+                        </g>
+                    </g>
+                    <defs>
+                        <filter id="filter0_f_16_20" x="8.3302" y="63.5" width="62" height="9"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter1_f_16_20" x="27.3302" y="42" width="23" height="25"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter2_f_16_20" x="29.3302" y="73" width="19" height="21"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter3_f_16_20" x="28.3302" y="100" width="21" height="23"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter4_f_16_20" x="6.8302" y="6.5" width="64.0001" height="132"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter5_f_16_20" x="17.3302" y="113.5" width="45.5" height="22"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter6_f_16_20" x="0.162964" y="0.348022" width="38.8353" height="35.9457"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter7_f_16_20" x="38.6165" y="1.21346" width="36.7943" height="38.0733"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter8_f_16_20" x="20.3292" y="44.6584" width="19.3417" height="15.6833"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter9_f_16_20" x="37.7243" y="43.9592" width="19.6929" height="15.3723"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <linearGradient id="paint0_linear_16_20" x1="12.3302" y1="129.5" x2="30.3302" y2="129.5"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#A7A7A7" />
+                            <stop offset="0.0001" stop-color="#555555" />
+                            <stop offset="1" stop-color="#D9D9D9" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <!-- light svg -->
             </div>
             <div class="content-content">
                 <h1>Explore Honnavar Like a Local</h1>
@@ -352,25 +1191,164 @@
                 </div>
             </div>
             <div class="light-right">
-                <img class="light-right-img" src="assets/lights.svg" alt="light">
+                <!-- light svg -->
+                <svg class="light light-right-svg" viewBox="0 0 76 139" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <g id="lights">
+                        <rect id="Rectangle 9" x="8.3302" y="8" width="61" height="128" rx="25" fill="#D9D9D9" />
+                        <path id="Rectangle 10"
+                            d="M8.3302 33C8.3302 19.1929 19.5231 8 33.3302 8H44.3302C58.1373 8 69.3302 19.1929 69.3302 33V40H8.3302V33Z"
+                            fill="#B81C17" />
+                        <path id="Rectangle 11"
+                            d="M8.3302 103H69.3302V111C69.3302 124.807 58.1373 136 44.3302 136H33.3302C19.5231 136 8.3302 124.807 8.3302 111V103Z"
+                            fill="#B81C17" />
+                        <rect id="Rectangle 12" x="8.3302" y="40" width="4" height="63" fill="#B81C17" />
+                        <g id="Vector 2" filter="url(#filter0_f_16_20)">
+                            <path d="M12.3302 68H66.3302" stroke="black" />
+                        </g>
+                        <rect id="Rectangle 14" x="12.3302" y="103" width="18" height="53"
+                            transform="rotate(-90 12.3302 103)" fill="url(#paint0_linear_16_20)" />
+                        <rect id="Rectangle 13" x="65.3302" y="40" width="4" height="63" fill="#B81C17" />
+                        <g id="Ellipse 9" filter="url(#filter1_f_16_20)">
+                            <ellipse cx="38.8302" cy="54.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Ellipse 10" filter="url(#filter2_f_16_20)">
+                            <ellipse cx="38.8302" cy="83.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Ellipse 11" filter="url(#filter3_f_16_20)">
+                            <ellipse cx="38.8302" cy="111.5" rx="6.5" ry="7.5" fill="#594640" />
+                        </g>
+                        <g id="Vector 3" filter="url(#filter4_f_16_20)">
+                            <path
+                                d="M52.4193 9H26.2108C15.7274 9 11.4718 20.701 10.1545 26.5515C9.1838 54.2645 8.65686 111.723 10.9865 119.852C13.3162 127.981 21.4961 133.4 26.2108 135.094C33.8376 136.48 50.5889 136.572 56.5794 133.246C62.5699 129.921 65.841 122.007 67.2276 116.619C68.0597 92.6007 69.2245 39.4842 67.2276 26.5515C65.2308 13.6188 56.8568 9.46188 52.4193 9Z"
+                                stroke="black" />
+                        </g>
+                        <g id="Vector 4" filter="url(#filter5_f_16_20)">
+                            <path d="M25.3302 124.5H54.8302" stroke="white" stroke-width="6" />
+                        </g>
+                        <g id="Ellipse 12" filter="url(#filter6_f_16_20)">
+                            <ellipse cx="19.5806" cy="18.3209" rx="13.6151" ry="1.90333"
+                                transform="rotate(-40.5659 19.5806 18.3209)" fill="black" />
+                        </g>
+                        <g id="Ellipse 13" filter="url(#filter7_f_16_20)">
+                            <ellipse cx="57.0136" cy="20.2501" rx="13.6151" ry="1.90333"
+                                transform="rotate(-133.039 57.0136 20.2501)" fill="black" />
+                        </g>
+                        <g id="Vector 5" filter="url(#filter8_f_16_20)">
+                            <path d="M35 50L25 55" stroke="#594640" stroke-width="3" />
+                        </g>
+                        <g id="Vector 6" filter="url(#filter9_f_16_20)">
+                            <path d="M52.8114 53.9592L42.3302 49.3314" stroke="#594640" stroke-width="3" />
+                        </g>
+                    </g>
+                    <defs>
+                        <filter id="filter0_f_16_20" x="8.3302" y="63.5" width="62" height="9"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter1_f_16_20" x="27.3302" y="42" width="23" height="25"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter2_f_16_20" x="29.3302" y="73" width="19" height="21"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="1.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter3_f_16_20" x="28.3302" y="100" width="21" height="23"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter4_f_16_20" x="6.8302" y="6.5" width="64.0001" height="132"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="1" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter5_f_16_20" x="17.3302" y="113.5" width="45.5" height="22"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter6_f_16_20" x="0.162964" y="0.348022" width="38.8353" height="35.9457"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter7_f_16_20" x="38.6165" y="1.21346" width="36.7943" height="38.0733"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="4.5" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter8_f_16_20" x="20.3292" y="44.6584" width="19.3417" height="15.6833"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <filter id="filter9_f_16_20" x="37.7243" y="43.9592" width="19.6929" height="15.3723"
+                            filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+                            <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                            <feBlend mode="normal" in="SourceGraphic" in2="BackgroundImageFix" result="shape" />
+                            <feGaussianBlur stdDeviation="2" result="effect1_foregroundBlur_16_20" />
+                        </filter>
+                        <linearGradient id="paint0_linear_16_20" x1="12.3302" y1="129.5" x2="30.3302" y2="129.5"
+                            gradientUnits="userSpaceOnUse">
+                            <stop stop-color="#A7A7A7" />
+                            <stop offset="0.0001" stop-color="#555555" />
+                            <stop offset="1" stop-color="#D9D9D9" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <!-- light svg -->
+            </div>
+        </div>
+
+        <div class="bar">
+            <div class="bar-bar">
+
             </div>
         </div>
 
         <div class="road">
             <!-- svg -->
-            <svg width="100%" height="100%" viewBox="0 0 430 162" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <g id="Group 15">
-                    <rect id="Rectangle 18" width="430" height="162" fill="#575757" />
-                    <path id="Rectangle 16" d="M22 0H59V44C59 47.866 55.866 51 52 51H29C25.134 51 22 47.866 22 44V0Z"
+            <svg class="road-svg" viewBox="0 0 430 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="road3-1">
+                    <rect id="Rectangle 18" width="430" height="167" fill="#575757" />
+                    <path id="Rectangle 21"
+                        d="M366 0H403V52C403 55.866 399.866 59 396 59H373C369.134 59 366 55.866 366 52V0Z"
                         fill="black" />
-                    <path id="Rectangle 17"
-                        d="M366 0H403V44C403 47.866 399.866 51 396 51H373C369.134 51 366 47.866 366 44V0Z"
+                    <path id="Rectangle 22" d="M27 0H64V52C64 55.866 60.866 59 57 59H34C30.134 59 27 55.866 27 52V0Z"
                         fill="black" />
-                    <path id="Rectangle 19" d="M197.5 0H216.5L223.5 77.2006H190.5L197.5 0Z" fill="#DEDEDE" />
-                    <path id="Rectangle 20" d="M188 125.272H227L231 162H184L188 125.272Z" fill="#D9D9D9" />
+                    <path id="Rectangle 19" d="M206 0.00195312H224L228.208 125.127H214H201.777L206 0.00195312Z"
+                        fill="#DEDEDE" />
                 </g>
             </svg>
             <!-- svg -->
+            <svg class="road-svg" viewBox="0 0 430 167" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="road3-2">
+                    <rect id="Rectangle 18" width="430" height="167" fill="#575757" />
+                    <path id="Rectangle 20" d="M200.274 0.751953H229.711L235 157.5H195L200.274 0.751953Z"
+                        fill="#D9D9D9" />
+                </g>
+            </svg>
+            <!-- svg -->
+            <svg class="road-svg" viewBox="0 0 430 169" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <g id="road3-3">
+                    <rect id="Rectangle 18" width="430" height="166" fill="#575757" />
+                    <path id="Rectangle 21" d="M193.5 36H236.5L241 169H189L193.5 36Z" fill="#D9D9D9" />
+                </g>
+            </svg>
+
         </div>
 
 
