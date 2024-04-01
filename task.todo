@@ -4,3 +4,10 @@
 * need to use scrren height media quries 
 * remove id from svg if not used 
 * after project complete need to check unused lib 
+1* need to adjust nav line for width @media-query 
+1* add media queries for width less then 400px
+3* onhover button break light
+6* check mobile desktop mode 
+7* if laptop or link not opened when  clicked open whatapp link (jsLogic)
+
+*** * less number higher priority * ***

@@ -20,6 +20,12 @@
         main {
             height: 100%;
             width: 100%;
+            overflow: hidden;
+        }
+
+        body {
+            min-height: 640px;
+            background-color: #575757;
         }
 
         @font-face {
@@ -29,6 +35,8 @@
 
         .header {
             width: 100%;
+            position: relative;
+            z-index: 30;
         }
 
         .nav-nav-nav {
@@ -68,8 +76,15 @@
                     rgba(215, 151, 48, 0.92) 96%);
         }
 
+
+        .main-image {
+            background-color: #fff !important;
+            /* !! important !! */
+        }
+
         .bar {
             background-color: #32645C;
+            box-shadow: 0 4px 9px 2px rgba(0, 0, 0, .3);
         }
 
         .bar-bar {
@@ -135,6 +150,17 @@
             height: auto;
         }
 
+        .light-left {
+            width: 20%;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .light-right {
+            width: 20%;
+            display: flex;
+        }
+
         .light-left-svg {
             padding-right: 22%;
         }
@@ -153,9 +179,337 @@
             margin-bottom: -4.9px;
         }
 
-        @media screen and (max-width: 359px) {}
+        .hero-img {
+            width: auto;
+            max-width: 100%;
+            object-fit: cover;
+        }
 
-        @media screen and (min-width: 360px) and (max-width: 466px) {
+        .hero-img-div {
+            width: 100%;
+        }
+
+        .bottom-div {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            z-index: 10;
+            background-color: #daa041;
+        }
+
+        @media screen and (max-width: 329px) {
+            .content {
+                height: 22%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 22%;
+            }
+
+            .bar {
+                height: 8%;
+                border-radius: 0 0 10px 10px;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                width: 95%;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: .9rem;
+            }
+
+            p {
+                font-size: .8rem;
+            }
+
+            .btn {
+                height: 29px;
+                width: 162px;
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: .9rem;
+            }
+
+            .btn-div {
+                height: 36px;
+                width: 168px;
+                padding: 3px;
+                border-radius: 3px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 55px;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 42%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 330px) and (max-width: 369px) {
+            .content {
+                height: 22%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 22%;
+            }
+
+            .bar {
+                height: 8%;
+                border-radius: 0 0 10px 10px;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 170px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: .9rem;
+            }
+
+            p {
+                font-size: .8rem;
+            }
+
+            .btn {
+                height: 29px;
+                width: 162px;
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: .9rem;
+            }
+
+            .btn-div {
+                height: 36px;
+                width: 168px;
+                padding: 3px;
+                border-radius: 3px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 55px;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 42%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 370px) and (max-width: 419px) {
+            .content {
+                height: 22%;
+            }
+
+            .content-content {
+                margin-top: 28px;
+                margin-bottom: 8px;
+            }
+
+            .main-image {
+                height: 24%;
+            }
+
+            .bar {
+                height: 8%;
+                border-radius: 0 0 10px 10px;
+            }
+
+            /* test */
+            .road {
+                width: 100%;
+                height: 10%;
+            }
+
+            .hero-img {
+                height: 185px;
+            }
+
+            .bar-bar {
+                height: 35px;
+            }
+
+            h1 {
+                font-size: .9rem;
+            }
+
+            p {
+                font-size: .8rem;
+            }
+
+            .btn {
+                height: 40px;
+                width: 162px;
+                border-radius: 4px;
+                border: 2px solid black;
+                background-color: #C9A10D;
+                font-size: .9rem;
+            }
+
+            .btn-div {
+                height: 46px;
+                width: 168px;
+                padding: 3px;
+                border-radius: 3px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 60px;
+            }
+
+            .light-left,
+            .light-right {
+                padding-bottom: 55px;
+            }
+
+            .header {
+                height: 5%;
+            }
+
+            main {
+                height: 95%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 52%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 420px) and (max-width: 466px) {
             .content {
                 height: 22%;
             }
@@ -172,10 +526,6 @@
             .bar {
                 height: 8%;
                 border-radius: 0 0 10px 10px;
-            }
-
-            body {
-                background-color: #fff;
             }
 
             /* test */
@@ -242,8 +592,11 @@
                 margin-right: 9px;
             }
 
+            .nav-links {
+                height: 42%;
+            }
+
             .nav-ul {
-                height: 22px;
                 margin-right: 9px;
             }
 
@@ -257,6 +610,41 @@
 
             .nav-nav-div {
                 width: 88%;
+            }
+        }
+
+        @media screen and (min-height: 390px) and (max-height: 579px) {
+            .header {
+                height: 7%;
+            }
+
+            main {
+                height: 93%;
+            }
+
+            .main-image {
+                height: 42%;
+            }
+
+            .content {
+                height: 37%;
+            }
+
+            .bar {
+                height: 11%;
+            }
+        }
+
+        /* problem is here  */
+        @media screen and (max-height: 389px) and (min-height: 580px) and (max-height: 725px) {
+            .nav-a {
+                font-size: .722rem; 
+            }
+        }
+
+        @media screen and (max-width: 466px) and (min-height: 580px) and (max-height: 725px) {
+            .nav-a {
+                font-size: .722rem;
             }
         }
 
@@ -278,10 +666,6 @@
                 height: 10%;
                 border-radius: 0 0 10px 10px;
                 padding-top: 14px;
-            }
-
-            body {
-                background-color: #fff;
             }
 
             /* test */
@@ -384,10 +768,6 @@
                 height: 10%;
                 border-radius: 0 0 10px 10px;
                 padding-top: 14px;
-            }
-
-            body {
-                background-color: #fff;
             }
 
             /* test */
@@ -500,10 +880,6 @@
                 padding-top: 14px;
             }
 
-            body {
-                background-color: #fff;
-            }
-
             /* test */
             .road {
                 width: 100%;
@@ -530,7 +906,7 @@
                 height: 46px;
                 width: 222px;
                 border-radius: 6px;
-                border: 2px solid black;
+                border: 2.8px solid black;
                 background-color: #C9A10D;
                 font-size: 1.3rem;
             }
@@ -620,10 +996,6 @@
                 height: 48px;
             }
 
-            body {
-                background-color: #fff;
-            }
-
             .hero-img {
                 height: 400px;
             }
@@ -640,7 +1012,7 @@
                 height: 50px;
                 width: 252px;
                 border-radius: 8px;
-                border: 2px solid black;
+                border: 3px solid black;
                 background-color: #C9A10D;
                 font-size: 1.5rem;
             }
@@ -730,10 +1102,6 @@
                 height: 48px;
             }
 
-            body {
-                background-color: #fff;
-            }
-
             .hero-img {
                 height: 430px;
             }
@@ -750,7 +1118,7 @@
                 height: 50px;
                 width: 252px;
                 border-radius: 8px;
-                border: 2px solid black;
+                border: 3px solid black;
                 background-color: #C9A10D;
                 font-size: 1.5rem;
             }
@@ -814,7 +1182,87 @@
             }
         }
 
-        @media screen and (min-width: 1025px) and (max-width: 1350px) {
+        @media screen and (min-width: 1025px) and (max-width: 1150px) {
+            .road {
+                display: none;
+            }
+
+            .bar {
+                display: none;
+            }
+
+            .content {
+                height: 34%;
+            }
+
+            .main-image {
+                height: 66%;
+            }
+
+            .hero-img {
+                height: 520px;
+            }
+
+            h1 {
+                font-size: 2.1rem;
+            }
+
+            p {
+                font-size: 1.55rem;
+            }
+
+            .btn {
+                height: 60px;
+                width: 362px;
+                border-radius: 8px;
+                border: 4px solid black;
+                background-color: #C9A10D;
+                font-size: 2.12rem;
+            }
+
+            .btn-div {
+                height: 68px;
+                width: 370px;
+                padding: 3px;
+                border-radius: 8px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 140px;
+            }
+
+            .header {
+                height: 7%;
+            }
+
+            main {
+                height: 93%;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-ul {
+                height: 37px;
+                margin-right: 22px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
+        }
+
+        @media screen and (min-width: 1151px) and (max-width: 1350px) {
             .road {
                 display: none;
             }
@@ -894,37 +1342,118 @@
             }
         }
 
-        @media screen and (min-width: 1351px) {}
+        @media screen and (min-width: 1351px) {
+            .road {
+                display: none;
+            }
 
-        .hero-img {
-            width: auto;
-            max-width: 100%;
-            object-fit: cover;
+            .bar {
+                display: none;
+            }
+
+            .content {
+                height: 34%;
+            }
+
+            .content-content {
+                width: 50%;
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
+
+            .main-image {
+                height: 66%;
+            }
+
+            .hero-img {
+                width: 90%;
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            p {
+                font-size: 1.85rem;
+            }
+
+            .btn {
+                height: 60px;
+                width: 362px;
+                border-radius: 8px;
+                border: 4px solid black;
+                background-color: #C9A10D;
+                font-size: 2.12rem;
+            }
+
+            .btn-div {
+                height: 68px;
+                width: 370px;
+                padding: 3px;
+                border-radius: 8px;
+                background-color: #C9A10D;
+            }
+
+            .light {
+                width: 140px;
+            }
+
+            .light-left {
+                width: 25%;
+            }
+
+            .light-right {
+                width: 25%;
+            }
+
+
+            .light-left-svg {
+                padding-right: 12%;
+            }
+
+
+            .light-right-svg {
+                padding-left: 12%;
+            }
+
+            .header {
+                height: 7%;
+            }
+
+            main {
+                height: 93%;
+            }
+
+            .nav {
+                width: 87%;
+            }
+
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-links {
+                height: 75%;
+            }
+
+            .nav-ul {
+                margin-right: 22px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
         }
 
-        .hero-img-div {
-            width: 100%;
+        .road {
+            position: relative;
+            z-index: -10;
         }
 
-
-        .bottom-div {
-            position: absolute;
-            bottom: 0;
-            width: 100%;
-            z-index: 10;
-            background-color: #daa041;
-        }
-
-        .light-left {
-            width: 20%;
-            display: flex;
-            justify-content: flex-end;
-        }
-
-        .light-right {
-            width: 20%;
-            display: flex;
-        }
 
         /* utilites */
         .flex {
@@ -1028,9 +1557,7 @@
 
             <div class="text-center bottom-div">
                 <div class="inline">
-                    <span>height: <b id="height">
-                            <script>0</script>
-                        </b><b>px</b></span>
+                    <span>height: <b id="height"></b><b>px</b></span>
                     <span>widht: <b id="width">0</b><b>px</b></span>
                 </div>
                 <!-- circles -->
@@ -1315,7 +1842,6 @@
 
         <div class="bar">
             <div class="bar-bar">
-
             </div>
         </div>
 
@@ -1354,7 +1880,6 @@
 
 
     </main>
-
 </body>
 
 </html>
