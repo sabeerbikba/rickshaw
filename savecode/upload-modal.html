@@ -6,12 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Image Gallery</title>
     <style>
-        * {
-            padding: 0;
-            margin: 0;
-            box-sizing: border-box;
-        }
-
+        /* Styles for the upload modal and buttons */
         body {
             font-family: Arial, sans-serif;
         }
@@ -35,42 +30,16 @@
         .modal-content {
             background-color: white;
             padding: 20px;
-            border-radius: 50px;
-            width: 885px;
+            border-radius: 5px;
+            width: 65%;
             height: 550px;
             display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             position: relative;
             transition: opacity 0.3s ease;
-            box-shadow: 0 4px 8px 0 #373737, 0 6px 20px 0 #272727;
         }
-
-        @keyframes rotateBorder {
-            0% {
-                border-style: dashed;
-                border-color: black;
-            }
-
-            25% {
-                border-style: solid dashed dashed dashed;
-                border-color: transparent black black black;
-            }
-
-            50% {
-                border-style: solid solid dashed dashed;
-                border-color: transparent transparent black black;
-            }
-
-            75% {
-                border-style: solid solid solid dashed;
-                border-color: transparent transparent transparent black;
-            }
-
-            100% {
-                border-style: solid solid solid solid;
-                border-color: transparent transparent transparent transparent;
-            }
-        }
-
 
         .modal-content.fade-out {
             opacity: 0.3;
@@ -93,22 +62,30 @@
 
         .close-btn {
             position: absolute;
-            top: -28px;
-            right: -32px;
+            top: -36px;
+            right: -30px;
             cursor: pointer;
             background-color: transparent;
+            border: none;
             font-size: 38px;
             color: darkred;
             border: 3px solid darkred;
             border-radius: 5px;
-            width: 48px;
-            height: 52px;
-            box-shadow: 0 4px 8px 0 #373737, 0 6px 20px 0 #272727;
-            text-shadow: 0px 7px 9px #000;
+            width: 42px;
+            height: 51px;
         }
 
         .close-btn:hover {
             color: #333;
+        }
+
+        #upload-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        #upload-list li {
+            margin-bottom: 10px;
         }
 
         .drag-text {
@@ -118,31 +95,25 @@
         .image-preview {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-evenly;
+            justify-content: space-around;
+            margin-top: 20px;
             width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
         }
-
 
         .image-container {
             width: 100%;
-            height: 50px;
-            border-top: 1px solid red;
             text-align: center;
-            margin-bottom: 7px;
-            display: flex;
-            justify-content: space-evenly;
+            margin-bottom: 20px;
         }
 
         .preview-image {
             max-width: 100px;
             max-height: 100px;
-            width: 50px;
+            margin: 5px auto;
         }
 
         .file-info {
-            width: 300px;
+            margin-bottom: 5px;
         }
 
         .remove-btn {
@@ -158,90 +129,61 @@
             background-color: #ff3333;
         }
 
-        #upload-submit,
         .browse-btn {
+            padding: 5px 10px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+        }
+
+        .browse-btn:hover {
+            background-color: #555;
+        }
+
+        #upload-submit,
+        .close-modal {
             padding: 10px 20px;
             border: none;
             background-color: #333;
             color: white;
             cursor: pointer;
-            border-radius: 0 7px 7px 0;
-            width: 150px;
-            height: 45px;
-            font-size: 1rem;
-        }
-
-        #upload-submit {
-            border-radius: 10px;
+            margin: 10px;
         }
 
         #upload-submit:hover,
-        .browse-btn:hover {
+        .close-modal:hover {
             background-color: #555;
         }
 
         .btns-container {
             width: 100%;
-            position: absolute;
-            bottom: 0;
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-evenly;
-            width: calc(100% - 40px);
-        }
-
-        .upload-container {
-            width: 100%;
-            height: calc(100% - 55px);
-            border: 4px dashed #daa041b8;
-            border-radius: 8px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            background-color: #daa0414d;
-            overflow: scroll;
-        }
-
-        .add-more {
-            display: none;
-        }
-
-        .browse-btn-div {
-            border: 2px solid #333;
-            border-radius: 10px;
-            padding-left: 5px;
+            padding: auto;
         }
     </style>
 </head>
 
 <body>
     <button id="upload-button">Upload Here</button>
+
     <div id="upload-modal" class="modal">
         <div class="modal-overlay">
             <div class="modal-content" id="uploadArea">
-                <div class="upload-container">
-                    <button class="close-btn" id="close-modal">X</button>
-                    <div class="chose-images browse-btn-div">
-                        <span class="drag-text">Chose Images</span>
-                        <button class="browse-btn">Browse files</button>
-                    </div>
-                    <div class="plus-sign">+</div>
-                    <div class="image-preview" id="imagePreview"></div>
-                </div>
+                <button class="close-btn" id="close-modal">X</button>
+                <div class="plus-sign">+</div>
+                <div class="image-preview" id="imagePreview"></div>
                 <div class="btns-container">
                     <button id="upload-submit">Upload</button>
-                    <div class="add-more browse-btn-div">
-                        <span class="drag-text">Add More Images</span>
-                        <button class="browse-btn">Browse files</button>
-                    </div>
+                    <span class="drag-text">Drag & Drop files here</span>
+                    <button class="browse-btn" onclick="document.getElementById('fileInput').click()">Browse
+                        files</button>
                     <input type="file" id="fileInput" multiple hidden>
                 </div>
             </div>
         </div>
     </div>
+
     <script>
-        // <!-- need to add actual dailog for modal if it is better idea -->
         document.getElementById('upload-button').addEventListener('click', () => {
             document.getElementById('upload-modal').style.display = 'block';
         });
@@ -251,61 +193,31 @@
         });
 
         const modalContent = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
         const imagePreview = document.getElementById('imagePreview');
         const plusSign = document.querySelector('.plus-sign');
-        const fileInput = document.getElementById('fileInput');
-        const choseImages = document.querySelector('.chose-images');
-        const addMore = document.querySelector('.add-more');
-        const uploadContainer = document.querySelector('.upload-container');
-
-        const browseBtns = document.querySelectorAll('.browse-btn');
-        const browseBtnDivs = document.querySelectorAll('.browse-btn-div');
-
-        browseBtns.forEach((btn, index) => {
-            btn.addEventListener('mouseover', () => {
-                browseBtnDivs[index].style.borderColor = 'rgba(0, 0, 0, 0.60)';
-            });
-
-            btn.addEventListener('mouseout', () => {
-                browseBtnDivs[index].style.borderColor = 'black';
-            });
-        });
-
-        function animateBorder(element) {
-            element.style.animation = 'rotateBorder 2s linear infinite';
-        }
-
-
 
         modalContent.addEventListener('dragover', (e) => {
             e.preventDefault();
             modalContent.classList.add('active');
             modalContent.classList.add('fade-out');
             plusSign.style.opacity = '1';
-            modalContent.style.border = "4px dashed black";
-            uploadContainer.style.border = "none"; // Hide border of upload container
-            document.querySelector('.close-btn').style.display = 'none'; // Hide close button
-            animateBorder(modalContent); // Call animation function
+            modalContent.style.border = "4px dashed black"
         });
 
         modalContent.addEventListener('dragleave', () => {
             modalContent.classList.remove('active');
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
-            modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8"; // Show border of upload container
-            document.querySelector('.close-btn').style.display = 'block'; // Show close button
+            modalContent.style.border = "none"
         });
-
 
         modalContent.addEventListener('drop', (e) => {
             e.preventDefault();
             modalContent.classList.remove('active');
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
-            modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8"; // Show border of upload container
-            document.querySelector('.close-btn').style.display = 'block'; // Show close button
+            modalContent.style.border = "none"
             const files = e.dataTransfer.files;
             handleFiles(files);
         });
@@ -315,19 +227,7 @@
             handleFiles(files);
         });
 
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('browse-btn')) {
-                fileInput.click();
-            }
-        });
-
         function handleFiles(files) {
-            if (files.length > 0) {
-                uploadContainer.style.border = "none";
-                choseImages.style.display = "none";
-                addMore.style.display = "block";
-            }
-
             for (const file of files) {
                 if (file.type.startsWith('image/')) {
                     const reader = new FileReader();
@@ -342,20 +242,15 @@
                         const fileInfo = document.createElement('div');
                         fileInfo.classList.add('file-info');
                         fileInfo.innerHTML = `
-                    <p>Name: ${file.name}</p>
-                    <p>Size: ${formatBytes(file.size)}</p>
-                `;
+                            <p>Name: ${file.name}</p>
+                            <p>Size: ${formatBytes(file.size)}</p>
+                        `;
 
                         const removeBtn = document.createElement('button');
                         removeBtn.innerText = 'Remove';
                         removeBtn.classList.add('remove-btn');
                         removeBtn.addEventListener('click', () => {
                             imagePreview.removeChild(imageContainer);
-                            if (imagePreview.children.length === 0) {
-                                uploadContainer.style.border = "4px dashed #daa041b8";
-                                choseImages.style.display = "block";
-                                addMore.style.display = "none";
-                            }
                         });
 
                         imageContainer.appendChild(img);

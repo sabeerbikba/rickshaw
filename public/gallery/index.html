@@ -2,11 +2,10 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Explore Honnavar</title>
-    <!-- github: https://github.com/sabeerbikba/rickshaw -->
-    <!-- <base href=""> --> <!-- need to setup after done if needed -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Static Template</title>
     <style>
         * {
             margin: 0;
@@ -14,27 +13,66 @@
             box-sizing: border-box;
         }
 
+        body {
+            background-image: url('../assets/gallery-background.svg');
+            background-size: cover;
+            background-attachment: fixed;
+            /* image need to fixed in frame  */
+        }
+
+        main {
+            padding: 40px 5%;
+        }
+
+        .heading-text span {
+            font-weight: 100;
+        }
+
+        .image-gallery {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .image-item {
+            flex-basis: 350px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-gallery::after {
+            content: "";
+            flex-basis: 350px;
+        }
+
+        .image-item img {
+            object-fit: cover;
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            border-radius: 5px;
+        }
+
+        /* header */
+
+
         .header {
             width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 30;
         }
 
         .nav-nav-nav {
             background-color: #E5E2D6;
+            height: 100%;
         }
 
         .nav {
-            height: 50px;
-            width: 70%;
+            width: 80%;
             margin: auto;
-        }
-
-        .nav-links {
-            padding: auto;
-            /* not working code */
-        }
-
-        .nav-a {
-            color: black;
+            height: 100%;
         }
 
         .nav-logo-div {
@@ -45,69 +83,494 @@
             width: 91%;
         }
 
+        .nav-a {
+            color: black;
+            display: inline-block;
+            padding-top: 13px;
+            padding-bottom: 13px;
+
+        }
+
+        .nav-ul {
+            list-style: none;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .upload-btn {
+            display: block;
+            border: none;
+            background-color: transparent;
+            margin: 0;
+            font-family: serif;
+            font-size: 1rem;
+        }
+
+        /* header */
+
+
+        /* media quries */
+
+        @media screen and (max-width: 329px) {
+            .header {
+                height: 44px;
+            }
+
+
+            main {
+                padding-top: 59px;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 46%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 330px) and (max-width: 369px) {
+            .header {
+                height: 44px;
+            }
+
+            main {
+                padding-top: 59px;
+            }
+
+
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 46%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 370px) and (max-width: 419px) {
+            .header {
+                height: 44px;
+            }
+
+            main {
+                padding-top: 59px;
+            }
+
+
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 52%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 420px) and (max-width: 466px) {
+            .header {
+                height: 44px;
+            }
+
+
+
+            main {
+                padding-top: 59px;
+            }
+
+
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-links {
+                height: 54%;
+            }
+
+            .nav-ul {
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 467px) and (max-width: 566px) {
+            .header {
+                height: 48px;
+            }
+
+
+
+            main {
+                padding-top: 59px;
+            }
+
+
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 567px) and (max-width: 666px) {
+            .header {
+                height: 50px;
+            }
+
+            main {
+                padding-top: 60px;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 667px) and (max-width: 766px) {
+            .header {
+                height: 52px;
+            }
+
+            main {
+                padding-top: 67px;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 22px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: .9rem;
+            }
+
+            .nav-logo-div {
+                width: 12%;
+            }
+
+            .nav-nav-div {
+                width: 88%;
+            }
+        }
+
+        @media screen and (min-width: 767px) and (max-width: 866px) {
+            .header {
+                height: 54px;
+            }
+
+            main {
+                padding-top: 69px;
+            }
+
+            .nav {
+                width: 80%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 30px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: 1rem;
+            }
+
+            .nav-logo-div {
+                width: 8%;
+            }
+
+            .nav-nav-div {
+                width: 92%;
+            }
+        }
+
+
+        @media screen and (min-width: 867px) and (max-width: 1024px) {
+            .header {
+                height: 57px;
+            }
+
+            main {
+                padding-top: 72px;
+            }
+
+
+
+            .nav {
+                width: 80%;
+            }
+
+            .nav-li {
+                margin-right: 9px;
+            }
+
+            .nav-ul {
+                height: 30px;
+                margin-right: 9px;
+            }
+
+            .nav-a {
+                font-size: 1rem;
+            }
+
+            .nav-logo-div {
+                width: 8%;
+            }
+
+            .nav-nav-div {
+                width: 92%;
+            }
+        }
+
+        /* scroll bar media query added end reason conflict  */
+
+
+        @media screen and (min-width: 1025px) and (max-width: 1150px) {
+            .header {
+                height: 67px;
+            }
+
+            main {
+                padding-top: 82px;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-ul {
+                height: 37px;
+                margin-right: 22px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
+        }
+
+        @media screen and (min-width: 1151px) and (max-width: 1350px) {
+
+            .header {
+                height: 78px;
+            }
+
+            main {
+                padding-top: 93px;
+            }
+
+            .nav {
+                width: 78%;
+            }
+
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-ul {
+                height: 43px;
+                margin-right: 22px;
+            }
+
+            .bar {
+                height: 80px;
+                border-radius: 0 0 25px 25px;
+            }
+
+            .bar-bar {
+                height: 55px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
+        }
+
+        @media screen and (min-width: 1351px) {
+
+            .header {
+                height: 82px;
+            }
+
+            main {
+                padding-top: 97px;
+            }
+
+            .nav {
+                width: 87%;
+            }
+
+            .nav-li {
+                margin-right: 21px;
+            }
+
+            .nav-links {
+                height: 60%;
+            }
+
+            .nav-ul {
+                margin-right: 45px;
+            }
+
+            .nav-logo-div {
+                width: 5%;
+            }
+
+            .nav-nav-div {
+                width: 95%;
+            }
+        }
+
+        /* media quries */
+
+
+        /* utilites */
+
         .flex {
             display: flex;
-        }
-
-        /* gallery */
-
-        .row {
-            display: -ms-flexbox;
-            /* IE10 */
-            display: flex;
-            -ms-flex-wrap: wrap;
-            /* IE10 */
-            flex-wrap: wrap;
-            padding: 0 4px;
-        }
-
-        /* Create four equal columns that sits next to each other */
-        .column {
-            -ms-flex: 25%;
-            /* IE10 */
-            flex: 25%;
-            max-width: 25%;
-            padding: 0 4px;
-        }
-
-        .column img {
-            margin-top: 8px;
-            vertical-align: middle;
-            width: 100%;
-        }
-
-        /* Responsive layout - makes a two column-layout instead of four columns */
-        @media screen and (max-width: 800px) {
-            .column {
-                -ms-flex: 50%;
-                flex: 50%;
-                max-width: 50%;
-            }
-        }
-
-        /* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
-        @media screen and (max-width: 600px) {
-            .column {
-                -ms-flex: 100%;
-                flex: 100%;
-                max-width: 100%;
-            }
-        }
-
-        /* gallery */
-
-        .flex-center {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .m-auto {
-            margin: auto;
-        }
-
-        .text-center {
-            text-align: center;
         }
 
         .inline {
@@ -156,14 +619,14 @@
                     </a>
                 </div>
                 <div class="nav-nav-div">
-                    <nav class="nav-links inline">
-                        <ul class="inline">
-                            <li class="inline">
-                                <a class="text-dec-none nav-a" href="./about/">About me</a>
+                    <nav class="nav-links">
+                        <ul class="nav-ul">
+                            <li class="nav-li">
+                                <a class="text-dec-none nav-a" href="../about/">About me</a>
                             </li>
-                            <li class="inline">
-                                <a class="text-dec-none nav-a" href="./upload/">Upload</a>
-                            </li>
+                            <button class="nav-a upload-btn">
+                                upload
+                            </button>
                         </ul>
                     </nav>
                     <div>
@@ -181,49 +644,108 @@
         </div>
     </header>
     <main>
-        <!-- GALLERY -->
-
-
-        <div class="row">
-            <div class="column">
-                <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/rocks.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/falls2.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/paris.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/nature.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/mist.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/paris.jpg" style="width:100%">
+        <div class="image-gallery">
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/24.png" alt="" />
             </div>
-            <div class="column">
-                <img src="https://www.w3schools.com/w3images/underwater.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/ocean.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/mountainskies.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/rocks.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/underwater.jpg" style="width:100%">
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
             </div>
-            <div class="column">
-                <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/rocks.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/falls2.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/paris.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/nature.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/mist.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/paris.jpg" style="width:100%">
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
             </div>
-            <div class="column">
-                <img src="https://www.w3schools.com/w3images/underwater.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/ocean.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/wedding.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/mountainskies.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/rocks.jpg" style="width:100%">
-                <img src="https://www.w3schools.com/w3images/underwater.jpg" style="width:100%">
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/24.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/24.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
+            </div>
+            <div class="image-item">
+                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
             </div>
         </div>
-
-
     </main>
-
 </body>
 
 </html>
