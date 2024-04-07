@@ -46,39 +46,29 @@
 
         @keyframes rotateBorder {
             0% {
-                border-style: dashed;
-                border-color: black;
+                border: 2px dashed black;
             }
 
-            25% {
-                border-style: solid dashed dashed dashed;
-                border-color: transparent black black black;
+            33% {
+                border: 3px dashed black;
             }
 
-            50% {
-                border-style: solid solid dashed dashed;
-                border-color: transparent transparent black black;
-            }
-
-            75% {
-                border-style: solid solid solid dashed;
-                border-color: transparent transparent transparent black;
+            66% {
+                border: 4px dashed black;
             }
 
             100% {
-                border-style: solid solid solid solid;
-                border-color: transparent transparent transparent transparent;
+                border: 3px dashed black;
             }
         }
 
-
         .modal-content.fade-out {
-            opacity: 0.3;
+            opacity: 0.3777;
         }
 
         .plus-sign {
-            font-size: 100px;
-            color: #ccc;
+            font-size: 180px;
+            color: black;
             opacity: 0;
             transition: opacity 0.3s ease;
             position: absolute;
@@ -130,7 +120,7 @@
             height: 50px;
             border-top: 1px solid red;
             text-align: center;
-            margin-bottom: 7px;
+            padding: 4px 0;
             display: flex;
             justify-content: space-evenly;
         }
@@ -142,7 +132,7 @@
         }
 
         .file-info {
-            width: 300px;
+            width: 450px;
         }
 
         .remove-btn {
@@ -212,12 +202,15 @@
             border-radius: 10px;
             padding-left: 5px;
         }
+
+        
+
     </style>
 </head>
 
 <body>
     <button id="upload-button">Upload Here</button>
-    <div id="upload-modal" class="modal">
+    <dialog id="upload-modal">
         <div class="modal-overlay">
             <div class="modal-content" id="uploadArea">
                 <div class="upload-container">
@@ -239,17 +232,8 @@
                 </div>
             </div>
         </div>
-    </div>
+    </dialog>
     <script>
-        // <!-- need to add actual dailog for modal if it is better idea -->
-        document.getElementById('upload-button').addEventListener('click', () => {
-            document.getElementById('upload-modal').style.display = 'block';
-        });
-
-        document.getElementById('close-modal').addEventListener('click', () => {
-            document.getElementById('upload-modal').style.display = 'none';
-        });
-
         const modalContent = document.getElementById('uploadArea');
         const imagePreview = document.getElementById('imagePreview');
         const plusSign = document.querySelector('.plus-sign');
@@ -257,9 +241,25 @@
         const choseImages = document.querySelector('.chose-images');
         const addMore = document.querySelector('.add-more');
         const uploadContainer = document.querySelector('.upload-container');
-
         const browseBtns = document.querySelectorAll('.browse-btn');
         const browseBtnDivs = document.querySelectorAll('.browse-btn-div');
+        const modal = document.getElementById('upload-modal');
+        const closeBtn = document.getElementById('close-modal');
+        const uploadButton = document.getElementById('upload-button');
+
+        uploadButton.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        closeBtn.addEventListener('click', () => {
+            modal.close();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === "Escape") {
+                modal.close();
+            }
+        });
 
         browseBtns.forEach((btn, index) => {
             btn.addEventListener('mouseover', () => {
@@ -271,21 +271,15 @@
             });
         });
 
-        function animateBorder(element) {
-            element.style.animation = 'rotateBorder 2s linear infinite';
-        }
-
-
-
         modalContent.addEventListener('dragover', (e) => {
             e.preventDefault();
             modalContent.classList.add('active');
             modalContent.classList.add('fade-out');
             plusSign.style.opacity = '1';
             modalContent.style.border = "4px dashed black";
-            uploadContainer.style.border = "none"; // Hide border of upload container
-            document.querySelector('.close-btn').style.display = 'none'; // Hide close button
-            animateBorder(modalContent); // Call animation function
+            uploadContainer.style.border = "none";
+            document.querySelector('.close-btn').style.display = 'none';
+            modalContent.style.animation = 'rotateBorder 4s linear infinite';
         });
 
         modalContent.addEventListener('dragleave', () => {
@@ -293,10 +287,10 @@
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
             modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8"; // Show border of upload container
-            document.querySelector('.close-btn').style.display = 'block'; // Show close button
+            uploadContainer.style.border = "4px dashed #daa041b8";
+            document.querySelector('.close-btn').style.display = 'block';
+            modalContent.style.animation = 'none';
         });
-
 
         modalContent.addEventListener('drop', (e) => {
             e.preventDefault();
@@ -304,8 +298,9 @@
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
             modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8"; // Show border of upload container
-            document.querySelector('.close-btn').style.display = 'block'; // Show close button
+            uploadContainer.style.border = "4px dashed #daa041b8";
+            document.querySelector('.close-btn').style.display = 'block';
+            modalContent.style.animation = 'none';
             const files = e.dataTransfer.files;
             handleFiles(files);
         });
@@ -322,50 +317,84 @@
         });
 
         function handleFiles(files) {
-            if (files.length > 0) {
-                uploadContainer.style.border = "none";
-                choseImages.style.display = "none";
-                addMore.style.display = "block";
-            }
+            let hasValidFile = false;
+            let isNewFileAdded = false;
 
             for (const file of files) {
-                if (file.type.startsWith('image/')) {
-                    const reader = new FileReader();
-                    reader.onload = () => {
-                        const img = document.createElement('img');
-                        img.src = reader.result;
-                        img.classList.add('preview-image');
-
-                        const imageContainer = document.createElement('div');
-                        imageContainer.classList.add('image-container');
-
-                        const fileInfo = document.createElement('div');
-                        fileInfo.classList.add('file-info');
-                        fileInfo.innerHTML = `
-                    <p>Name: ${file.name}</p>
-                    <p>Size: ${formatBytes(file.size)}</p>
-                `;
-
-                        const removeBtn = document.createElement('button');
-                        removeBtn.innerText = 'Remove';
-                        removeBtn.classList.add('remove-btn');
-                        removeBtn.addEventListener('click', () => {
-                            imagePreview.removeChild(imageContainer);
-                            if (imagePreview.children.length === 0) {
-                                uploadContainer.style.border = "4px dashed #daa041b8";
-                                choseImages.style.display = "block";
-                                addMore.style.display = "none";
-                            }
-                        });
-
-                        imageContainer.appendChild(img);
-                        imageContainer.appendChild(fileInfo);
-                        imageContainer.appendChild(removeBtn);
-                        imagePreview.appendChild(imageContainer);
-                    };
-                    reader.readAsDataURL(file);
+                if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
+                    alert(`Error: ${file.name} is not a supported file type.`);
+                    continue;
                 }
+
+                if (file.size > 1048576) {
+                    alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
+                    continue;
+                }
+
+                const existingFile = Array.from(imagePreview.children).find(child => child.dataset.fileName === file.name);
+                if (existingFile) {
+                    alert(`Error: ${file.name} is already added.`);
+                    continue;
+                }
+
+                hasValidFile = true;
+                isNewFileAdded = true;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    img.classList.add('preview-image');
+
+                    const imageContainer = document.createElement('div');
+                    imageContainer.classList.add('image-container');
+                    imageContainer.style.border = '1px solid red';
+                    imageContainer.style.top = '0';
+                    imageContainer.dataset.fileName = file.name;
+
+                    const fileInfo = document.createElement('div');
+                    fileInfo.classList.add('file-info');
+                    fileInfo.innerHTML = `
+                <p><b>${file.name}</b></p>
+                <p>Size: ${formatBytes(file.size)}</p>
+            `;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerText = 'Remove';
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.addEventListener('click', () => {
+                        imagePreview.removeChild(imageContainer);
+                        if (imagePreview.children.length === 0) {
+                            uploadContainer.style.border = "4px dashed #daa041b8";
+                            choseImages.style.display = "block";
+                            addMore.style.display = "none";
+                        }
+                    });
+
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(fileInfo);
+                    imageContainer.appendChild(removeBtn);
+                    imagePreview.appendChild(imageContainer);
+
+                    choseImages.style.display = "none";
+                    uploadContainer.style.border = "none";
+                    addMore.style.display = "block";
+                };
+                reader.readAsDataURL(file);
             }
+
+            if (!hasValidFile && isNewFileAdded) {
+                uploadContainer.style.border = "4px dashed #daa041b8";
+                choseImages.style.display = "block";
+                addMore.style.display = "none";
+            }
+        }
+
+        function isSupportedVideoFormat(fileName) {
+            const supportedFormats = [
+                'mp4', 'mpeg', 'avi', 'webm', 'quicktime', 'x-matroska', 'x-flv', 'x-msvideo', 'x-ms-wmv'
+            ];
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+            return supportedFormats.includes(fileExtension);
         }
 
         function formatBytes(bytes, decimals = 2) {
