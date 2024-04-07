@@ -21,7 +21,7 @@
         }
 
         .modal-overlay {
-            background-color: rgba(0, 0, 0, 0.5);
+            background-color: rgba(0, 0, 0, 0.2);
             position: fixed;
             top: 0;
             left: 0;
@@ -35,7 +35,7 @@
         .modal-content {
             background-color: white;
             padding: 20px;
-            border-radius: 50px;
+            border-radius: 60px;
             width: 885px;
             height: 550px;
             display: flex;
@@ -49,16 +49,12 @@
                 border: 2px dashed black;
             }
 
-            33% {
+            50% {
                 border: 3px dashed black;
-            }
-
-            66% {
-                border: 4px dashed black;
             }
 
             100% {
-                border: 3px dashed black;
+                border: 4px dashed black;
             }
         }
 
@@ -108,12 +104,8 @@
         .image-preview {
             display: flex;
             flex-wrap: wrap;
-            justify-content: space-evenly;
             width: 100%;
-            max-height: 400px;
-            overflow-y: auto;
         }
-
 
         .image-container {
             width: 100%;
@@ -126,13 +118,18 @@
         }
 
         .preview-image {
-            max-width: 100px;
-            max-height: 100px;
             width: 50px;
         }
 
         .file-info {
             width: 450px;
+        }
+
+        .file-info p b {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
 
         .remove-btn {
@@ -142,6 +139,7 @@
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
+            font-size: .9rem;
         }
 
         .remove-btn:hover {
@@ -170,16 +168,6 @@
             background-color: #555;
         }
 
-        .btns-container {
-            width: 100%;
-            position: absolute;
-            bottom: 0;
-            padding: 15px 0;
-            display: flex;
-            justify-content: space-evenly;
-            width: calc(100% - 40px);
-        }
-
         .upload-container {
             width: 100%;
             height: calc(100% - 55px);
@@ -193,18 +181,373 @@
             overflow: scroll;
         }
 
+        .btns-container {
+            position: absolute;
+            bottom: 0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-evenly;
+            width: calc(100% - 40px);
+        }
+
         .add-more {
             display: none;
         }
 
+
+
         .browse-btn-div {
             border: 2px solid #333;
             border-radius: 10px;
-            padding-left: 5px;
         }
 
-        
 
+        @media only screen and (max-width: 359px) {
+
+
+            .modal-content {
+                padding: 15px;
+                border-radius: 40px;
+                width: 85%;
+                height: 235px;
+            }
+
+            .plus-sign {
+                font-size: 85px;
+            }
+
+            .close-btn {
+                top: -15px;
+                right: -18px;
+                font-size: 20px;
+                border-radius: 4px;
+                width: 30px;
+                height: 32px;
+                font-weight: bold;
+                border: 2px solid darkred;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 35px;
+                padding: 2px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+                height: auto;
+            }
+
+            .file-info {
+                width: 65%;
+                max-width: 350px;
+                font-size: .677rem;
+            }
+
+            .file-info p b,
+            .file-info p:nth-child(2) {
+                width: 95%;
+            }
+
+            .remove-btn {
+                padding: 3px 0.5px;
+                margin: 2px 0;
+                border-radius: 4px;
+                width: 40px;
+                height: 25px;
+                font-size: 0.577rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 68px;
+                height: 29px;
+                font-size: 0.677rem;
+            }
+
+            .drag-text {
+                font-size: .677rem;
+                margin-bottom: 0;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 33px;
+            }
+
+            .upload-container {
+                height: calc(100% - 33px);
+                border: 2px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 5px 0 9px;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+
+        @media only screen and (min-width: 360px) and (max-width: 759px) {
+            .modal-content {
+                padding: 15px;
+                border-radius: 40px;
+                width: 85%;
+                height: 235px;
+            }
+
+            .plus-sign {
+                font-size: 85px;
+            }
+
+            .close-btn {
+                top: -15px;
+                right: -18px;
+                font-size: 20px;
+                border-radius: 4px;
+                width: 30px;
+                height: 32px;
+                font-weight: bold;
+                border: 2px solid darkred;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 35px;
+                padding: 2px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+                height: auto;
+            }
+
+            .file-info {
+                width: 65%;
+                max-width: 350px;
+                font-size: .677rem;
+            }
+
+            .file-info p b,
+            .file-info p:nth-child(2) {
+                width: 95%;
+            }
+
+            .remove-btn {
+                padding: 3px 5px;
+                margin: 2px 0;
+                border-radius: 4px;
+                font-size: .677rem;
+                height: 25px;
+                width: 50px;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 92px;
+                height: 29px;
+                font-size: 0.677rem;
+            }
+
+            .drag-text {
+                font-size: .677rem;
+                margin-bottom: 0;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 33px;
+            }
+
+            .upload-container {
+                height: calc(100% - 33px);
+                border: 2px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 5px 0 9px;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+        @media only screen and (min-width: 360px) and (max-width: 385px) {
+            .browse-btn {
+                width: 75px;
+            }
+        }
+
+        @media only screen and (min-width: 760px) and (max-width: 1024px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 50px;
+                width: 85%;
+                height: 410px;
+            }
+
+            .plus-sign {
+                font-size: 180px;
+            }
+
+            .close-btn {
+                top: -18px;
+                right: -23px;
+                font-size: 27px;
+                border-radius: 5px;
+                width: 35px;
+                height: 40px;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 50px;
+                padding: 4px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+            }
+
+            .file-info {
+                width: 450px;
+                font-size: .9rem;
+            }
+
+            .file-info p b {
+                width: 440px;
+            }
+
+            .remove-btn {
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: .877rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 108px;
+                height: 37px;
+                font-size: .8rem;
+            }
+
+            .drag-text {
+                font-size: .8rem;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 41px;
+            }
+
+            .upload-container {
+                height: calc(100% - 45px);
+                border: 3px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 10px 0;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+        @media only screen and (min-width: 1025px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 60px;
+                width: 885px;
+                height: 550px;
+            }
+
+            .plus-sign {
+                font-size: 180px;
+            }
+
+            .close-btn {
+                top: -28px;
+                right: -32px;
+                font-size: 38px;
+                border-radius: 5px;
+                width: 48px;
+                height: 52px;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 50px;
+                padding: 4px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+            }
+
+            .file-info {
+                width: 450px;
+            }
+
+            .file-info p b {
+                width: 440px;
+            }
+
+            .remove-btn {
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: .9rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 10px 20px;
+                border-radius: 0 7px 7px 0;
+                width: 150px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            #upload-submit {
+                border-radius: 10px;
+            }
+
+            .upload-container {
+                height: calc(100% - 55px);
+                border: 4px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 15px 0;
+            }
+
+            .browse-btn-div {
+                border-radius: 10px;
+                padding-left: 5px;
+            }
+        }
+
+        .browse-btn-hidden {
+            height: 33px;
+            border-radius: 6px;
+            display: none;
+        }
     </style>
 </head>
 
@@ -228,6 +571,7 @@
                         <span class="drag-text">Add More Images</span>
                         <button class="browse-btn">Browse files</button>
                     </div>
+                    <button class="browse-btn browse-btn-hidden">Browse files</button>
                     <input type="file" id="fileInput" multiple hidden>
                 </div>
             </div>
@@ -244,14 +588,16 @@
         const browseBtns = document.querySelectorAll('.browse-btn');
         const browseBtnDivs = document.querySelectorAll('.browse-btn-div');
         const modal = document.getElementById('upload-modal');
-        const closeBtn = document.getElementById('close-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeBtn = document.querySelector('.close-btn');
         const uploadButton = document.getElementById('upload-button');
+        const browseBtnHidden = document.querySelector(".browse-btn-hidden");
 
         uploadButton.addEventListener('click', () => {
             modal.showModal();
         });
 
-        closeBtn.addEventListener('click', () => {
+        closeModal.addEventListener('click', () => {
             modal.close();
         });
 
@@ -263,13 +609,18 @@
 
         browseBtns.forEach((btn, index) => {
             btn.addEventListener('mouseover', () => {
-                browseBtnDivs[index].style.borderColor = 'rgba(0, 0, 0, 0.60)';
+                if (browseBtnDivs[index]) {
+                    browseBtnDivs[index].style.borderColor = 'rgba(0, 0, 0, 0.60)';
+                }
             });
 
             btn.addEventListener('mouseout', () => {
-                browseBtnDivs[index].style.borderColor = 'black';
+                if (browseBtnDivs[index]) {
+                    browseBtnDivs[index].style.borderColor = 'black';
+                }
             });
         });
+
 
         modalContent.addEventListener('dragover', (e) => {
             e.preventDefault();
@@ -278,8 +629,8 @@
             plusSign.style.opacity = '1';
             modalContent.style.border = "4px dashed black";
             uploadContainer.style.border = "none";
-            document.querySelector('.close-btn').style.display = 'none';
-            modalContent.style.animation = 'rotateBorder 4s linear infinite';
+            closeBtn.style.display = 'none';
+            modalContent.style.animation = 'rotateBorder 4s ease infinite';
         });
 
         modalContent.addEventListener('dragleave', () => {
@@ -287,8 +638,7 @@
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
             modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8";
-            document.querySelector('.close-btn').style.display = 'block';
+            closeBtn.style.display = 'block';
             modalContent.style.animation = 'none';
         });
 
@@ -298,8 +648,7 @@
             modalContent.classList.remove('fade-out');
             plusSign.style.opacity = '0';
             modalContent.style.border = "none";
-            uploadContainer.style.border = "4px dashed #daa041b8";
-            document.querySelector('.close-btn').style.display = 'block';
+            closeBtn.style.display = 'block';
             modalContent.style.animation = 'none';
             const files = e.dataTransfer.files;
             handleFiles(files);
@@ -348,7 +697,6 @@
                     const imageContainer = document.createElement('div');
                     imageContainer.classList.add('image-container');
                     imageContainer.style.border = '1px solid red';
-                    imageContainer.style.top = '0';
                     imageContainer.dataset.fileName = file.name;
 
                     const fileInfo = document.createElement('div');
@@ -364,9 +712,11 @@
                     removeBtn.addEventListener('click', () => {
                         imagePreview.removeChild(imageContainer);
                         if (imagePreview.children.length === 0) {
-                            uploadContainer.style.border = "4px dashed #daa041b8";
+                            uploadContainer.style.border = "";
                             choseImages.style.display = "block";
                             addMore.style.display = "none";
+
+                            browseBtnHidden.style.display = "none";
                         }
                     });
 
@@ -376,16 +726,22 @@
                     imagePreview.appendChild(imageContainer);
 
                     choseImages.style.display = "none";
-                    uploadContainer.style.border = "none";
-                    addMore.style.display = "block";
+                    if (window.innerWidth < 359) {
+                        addMore.style.display = "none";
+                        browseBtnHidden.style.display = "block";
+                    } else {
+                        addMore.style.display = "block";
+                        browseBtnHidden.style.display = "none";
+                    }
+
                 };
                 reader.readAsDataURL(file);
             }
 
             if (!hasValidFile && isNewFileAdded) {
-                uploadContainer.style.border = "4px dashed #daa041b8";
                 choseImages.style.display = "block";
                 addMore.style.display = "none";
+                browseBtnHidden.style.display = "none";
             }
         }
 
