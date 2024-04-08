@@ -18,6 +18,7 @@
             background-size: cover;
             background-attachment: fixed;
             /* image need to fixed in frame  */
+            font-family: Arial, sans-serif;
         }
 
         main {
@@ -55,7 +56,6 @@
         }
 
         /* header */
-
 
         .header {
             width: 100%;
@@ -108,8 +108,539 @@
 
         /* header */
 
+        /* modal */
 
-        /* media quries */
+        .modal {
+            display: none;
+        }
+
+        .modal-overlay {
+            background-color: rgba(0, 0, 0, 0.2);
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: white;
+            padding: 20px;
+            border-radius: 60px;
+            width: 885px;
+            height: 550px;
+            display: flex;
+            position: relative;
+            transition: opacity 0.3s ease;
+            box-shadow: 0 4px 8px 0 #373737, 0 6px 20px 0 #272727;
+        }
+
+        @keyframes rotateBorder {
+            0% {
+                border: 2px dashed black;
+            }
+
+            50% {
+                border: 3px dashed black;
+            }
+
+            100% {
+                border: 4px dashed black;
+            }
+        }
+
+        .modal-content.fade-out {
+            opacity: 0.3777;
+        }
+
+        .plus-sign {
+            font-size: 180px;
+            color: black;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .modal-content .active .plus-sign {
+            opacity: 1;
+        }
+
+        .close-btn {
+            position: absolute;
+            top: -28px;
+            right: -32px;
+            cursor: pointer;
+            background-color: transparent;
+            font-size: 38px;
+            color: darkred;
+            border: 3px solid darkred;
+            border-radius: 5px;
+            width: 48px;
+            height: 52px;
+            box-shadow: 0 4px 8px 0 #373737, 0 6px 20px 0 #272727;
+            text-shadow: 0px 7px 9px #000;
+        }
+
+        .close-btn:hover {
+            color: #333;
+        }
+
+        .drag-text {
+            margin-bottom: 10px;
+        }
+
+        .image-preview {
+            display: flex;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+
+        .image-container {
+            width: 100%;
+            height: 50px;
+            border-top: 1px solid red;
+            text-align: center;
+            padding: 4px 0;
+            display: flex;
+            justify-content: space-evenly;
+        }
+
+        .preview-image {
+            width: 50px;
+        }
+
+        .file-info {
+            width: 450px;
+        }
+
+        .file-info p b {
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .remove-btn {
+            cursor: pointer;
+            background-color: #cc0000;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-size: .9rem;
+        }
+
+        .remove-btn:hover {
+            background-color: #ff3333;
+        }
+
+        #upload-submit,
+        .browse-btn {
+            padding: 10px 20px;
+            border: none;
+            background-color: #333;
+            color: white;
+            cursor: pointer;
+            border-radius: 0 7px 7px 0;
+            width: 150px;
+            height: 45px;
+            font-size: 1rem;
+        }
+
+        #upload-submit {
+            border-radius: 10px;
+        }
+
+        #upload-submit:hover,
+        .browse-btn:hover {
+            background-color: #555;
+        }
+
+        .upload-container {
+            width: 100%;
+            height: calc(100% - 55px);
+            border: 4px dashed #daa041b8;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #daa0414d;
+            overflow: scroll;
+        }
+
+        .btns-container {
+            position: absolute;
+            bottom: 0;
+            padding: 15px 0;
+            display: flex;
+            justify-content: space-evenly;
+            width: calc(100% - 40px);
+        }
+
+        .add-more {
+            display: none;
+        }
+
+        .browse-btn-div {
+            border: 2px solid #333;
+            border-radius: 10px;
+        }
+
+        /* modal */
+
+
+        @media only screen and (max-width: 359px) {
+
+            .modal-content {
+                padding: 15px;
+                border-radius: 40px;
+                width: 85%;
+                height: 235px;
+            }
+
+            .plus-sign {
+                font-size: 85px;
+            }
+
+            .close-btn {
+                top: -15px;
+                right: -18px;
+                font-size: 20px;
+                border-radius: 4px;
+                width: 30px;
+                height: 32px;
+                font-weight: bold;
+                border: 2px solid darkred;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 35px;
+                padding: 2px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+                height: auto;
+            }
+
+            .file-info {
+                width: 65%;
+                max-width: 350px;
+                font-size: .677rem;
+            }
+
+            .file-info p b,
+            .file-info p:nth-child(2) {
+                width: 95%;
+            }
+
+            .remove-btn {
+                padding: 3px 0.5px;
+                margin: 2px 0;
+                border-radius: 4px;
+                width: 40px;
+                height: 25px;
+                font-size: 0.577rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 68px;
+                height: 29px;
+                font-size: 0.677rem;
+            }
+
+            .drag-text {
+                font-size: .677rem;
+                margin-bottom: 0;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 33px;
+            }
+
+            .upload-container {
+                height: calc(100% - 33px);
+                border: 2px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 5px 0 9px;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+
+        @media only screen and (min-width: 360px) and (max-width: 759px) {
+            .modal-content {
+                padding: 15px;
+                border-radius: 40px;
+                width: 85%;
+                height: 235px;
+            }
+
+            .plus-sign {
+                font-size: 85px;
+            }
+
+            .close-btn {
+                top: -15px;
+                right: -18px;
+                font-size: 20px;
+                border-radius: 4px;
+                width: 30px;
+                height: 32px;
+                font-weight: bold;
+                border: 2px solid darkred;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 35px;
+                padding: 2px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+                height: auto;
+            }
+
+            .file-info {
+                width: 65%;
+                max-width: 350px;
+                font-size: .677rem;
+            }
+
+            .file-info p b,
+            .file-info p:nth-child(2) {
+                width: 95%;
+            }
+
+            .remove-btn {
+                padding: 3px 5px;
+                margin: 2px 0;
+                border-radius: 4px;
+                font-size: .677rem;
+                height: 25px;
+                width: 50px;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 92px;
+                height: 29px;
+                font-size: 0.677rem;
+            }
+
+            .drag-text {
+                font-size: .677rem;
+                margin-bottom: 0;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 33px;
+            }
+
+            .upload-container {
+                height: calc(100% - 33px);
+                border: 2px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 5px 0 9px;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+        @media only screen and (min-width: 360px) and (max-width: 385px) {
+            .browse-btn {
+                width: 75px;
+            }
+        }
+
+        @media only screen and (min-width: 760px) and (max-width: 1024px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 50px;
+                width: 85%;
+                height: 410px;
+            }
+
+            .plus-sign {
+                font-size: 180px;
+            }
+
+            .close-btn {
+                top: -18px;
+                right: -23px;
+                font-size: 27px;
+                border-radius: 5px;
+                width: 35px;
+                height: 40px;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 50px;
+                padding: 4px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+            }
+
+            .file-info {
+                width: 450px;
+                font-size: .9rem;
+            }
+
+            .file-info p b {
+                width: 440px;
+            }
+
+            .remove-btn {
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: .877rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 1px 3px;
+                border-radius: 0 3px 3px 0;
+                width: 108px;
+                height: 37px;
+                font-size: .8rem;
+            }
+
+            .drag-text {
+                font-size: .8rem;
+            }
+
+            #upload-submit {
+                border-radius: 6px;
+                height: 41px;
+            }
+
+            .upload-container {
+                height: calc(100% - 45px);
+                border: 3px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 10px 0;
+            }
+
+            .browse-btn-div {
+                border-radius: 6px;
+                padding-left: 5px;
+            }
+        }
+
+        @media only screen and (min-width: 1025px) {
+            .modal-content {
+                padding: 20px;
+                border-radius: 60px;
+                width: 885px;
+                height: 550px;
+            }
+
+            .plus-sign {
+                font-size: 180px;
+            }
+
+            .close-btn {
+                top: -28px;
+                right: -32px;
+                font-size: 38px;
+                border-radius: 5px;
+                width: 48px;
+                height: 52px;
+            }
+
+            .image-container {
+                width: 100%;
+                height: 50px;
+                padding: 4px 0;
+            }
+
+            .preview-image {
+                width: 50px;
+            }
+
+            .file-info {
+                width: 450px;
+            }
+
+            .file-info p b {
+                width: 440px;
+            }
+
+            .remove-btn {
+                padding: 5px 10px;
+                border-radius: 5px;
+                font-size: .9rem;
+            }
+
+            #upload-submit,
+            .browse-btn {
+                padding: 10px 20px;
+                border-radius: 0 7px 7px 0;
+                width: 150px;
+                height: 45px;
+                font-size: 1rem;
+            }
+
+            #upload-submit {
+                border-radius: 10px;
+            }
+
+            .upload-container {
+                height: calc(100% - 55px);
+                border: 4px dashed #daa041b8;
+                border-radius: 8px;
+            }
+
+            .btns-container {
+                padding: 15px 0;
+            }
+
+            .browse-btn-div {
+                border-radius: 10px;
+                padding-left: 5px;
+            }
+        }
+
+        .browse-btn-hidden {
+            height: 33px;
+            border-radius: 6px;
+            display: none;
+        }
 
         @media screen and (max-width: 329px) {
             .header {
@@ -159,8 +690,6 @@
                 padding-top: 59px;
             }
 
-
-
             .nav {
                 width: 78%;
             }
@@ -199,8 +728,6 @@
                 padding-top: 59px;
             }
 
-
-
             .nav {
                 width: 78%;
             }
@@ -235,13 +762,9 @@
                 height: 44px;
             }
 
-
-
             main {
                 padding-top: 59px;
             }
-
-
 
             .nav {
                 width: 78%;
@@ -277,13 +800,9 @@
                 height: 48px;
             }
 
-
-
             main {
                 padding-top: 59px;
             }
-
-
 
             .nav {
                 width: 78%;
@@ -426,8 +945,6 @@
                 padding-top: 72px;
             }
 
-
-
             .nav {
                 width: 80%;
             }
@@ -455,7 +972,6 @@
         }
 
         /* scroll bar media query added end reason conflict  */
-
 
         @media screen and (min-width: 1025px) and (max-width: 1150px) {
             .header {
@@ -564,9 +1080,6 @@
             }
         }
 
-        /* media quries */
-
-
         /* utilites */
 
         .flex {
@@ -624,7 +1137,7 @@
                             <li class="nav-li">
                                 <a class="text-dec-none nav-a" href="../about/">About me</a>
                             </li>
-                            <button class="nav-a upload-btn">
+                            <button class="nav-a upload-btn" id="upload-button">
                                 upload
                             </button>
                         </ul>
@@ -746,6 +1259,217 @@
             </div>
         </div>
     </main>
+    <dialog id="upload-modal">
+        <div class="modal-overlay">
+            <div class="modal-content" id="uploadArea">
+                <div class="upload-container">
+                    <button class="close-btn" id="close-modal">X</button>
+                    <div class="chose-images browse-btn-div">
+                        <span class="drag-text">Chose Images</span>
+                        <button class="browse-btn">Browse files</button>
+                    </div>
+                    <div class="plus-sign">+</div>
+                    <div class="image-preview" id="imagePreview"></div>
+                </div>
+                <div class="btns-container">
+                    <button id="upload-submit">Upload</button>
+                    <div class="add-more browse-btn-div">
+                        <span class="drag-text">Add More Images</span>
+                        <button class="browse-btn">Browse files</button>
+                    </div>
+                    <button class="browse-btn browse-btn-hidden">Browse files</button>
+                    <input type="file" id="fileInput" multiple hidden>
+                </div>
+            </div>
+        </div>
+    </dialog>
+    <script>
+        const modalContent = document.getElementById('uploadArea');
+        const imagePreview = document.getElementById('imagePreview');
+        const plusSign = document.querySelector('.plus-sign');
+        const fileInput = document.getElementById('fileInput');
+        const choseImages = document.querySelector('.chose-images');
+        const addMore = document.querySelector('.add-more');
+        const uploadContainer = document.querySelector('.upload-container');
+        const browseBtns = document.querySelectorAll('.browse-btn');
+        const browseBtnDivs = document.querySelectorAll('.browse-btn-div');
+        const modal = document.getElementById('upload-modal');
+        const closeModal = document.getElementById('close-modal');
+        const closeBtn = document.querySelector('.close-btn');
+        const uploadButton = document.getElementById('upload-button');
+        const browseBtnHidden = document.querySelector(".browse-btn-hidden");
+
+        uploadButton.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.close();
+        });
+
+        document.addEventListener('keydown', (event) => {
+            if (event.key === "Escape") {
+                modal.close();
+            }
+        });
+
+        browseBtns.forEach((btn, index) => {
+            btn.addEventListener('mouseover', () => {
+                if (browseBtnDivs[index]) {
+                    browseBtnDivs[index].style.borderColor = 'rgba(0, 0, 0, 0.60)';
+                }
+            });
+
+            btn.addEventListener('mouseout', () => {
+                if (browseBtnDivs[index]) {
+                    browseBtnDivs[index].style.borderColor = 'black';
+                }
+            });
+        });
+
+        modalContent.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            modalContent.classList.add('active');
+            modalContent.classList.add('fade-out');
+            plusSign.style.opacity = '1';
+            modalContent.style.border = "4px dashed black";
+            uploadContainer.style.border = "none";
+            closeBtn.style.display = 'none';
+            modalContent.style.animation = 'rotateBorder 4s ease infinite';
+        });
+
+        modalContent.addEventListener('dragleave', () => {
+            modalContent.classList.remove('active');
+            modalContent.classList.remove('fade-out');
+            plusSign.style.opacity = '0';
+            modalContent.style.border = "none";
+            closeBtn.style.display = 'block';
+            modalContent.style.animation = 'none';
+        });
+
+        modalContent.addEventListener('drop', (e) => {
+            e.preventDefault();
+            modalContent.classList.remove('active');
+            modalContent.classList.remove('fade-out');
+            plusSign.style.opacity = '0';
+            modalContent.style.border = "none";
+            closeBtn.style.display = 'block';
+            modalContent.style.animation = 'none';
+            const files = e.dataTransfer.files;
+            handleFiles(files);
+        });
+
+        fileInput.addEventListener('change', () => {
+            const files = fileInput.files;
+            handleFiles(files);
+        });
+
+        document.addEventListener('click', function (event) {
+            if (event.target.classList.contains('browse-btn')) {
+                fileInput.click();
+            }
+        });
+
+        function handleFiles(files) {
+            let hasValidFile = false;
+            let isNewFileAdded = false;
+
+            for (const file of files) {
+                if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
+                    alert(`Error: ${file.name} is not a supported file type.`);
+                    continue;
+                }
+
+                if (file.size > 1048576) {
+                    alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
+                    continue;
+                }
+
+                const existingFile = Array.from(imagePreview.children).find(child => child.dataset.fileName === file.name);
+                if (existingFile) {
+                    alert(`Error: ${file.name} is already added.`);
+                    continue;
+                }
+
+                hasValidFile = true;
+                isNewFileAdded = true;
+                const reader = new FileReader();
+                reader.onload = () => {
+                    const img = document.createElement('img');
+                    img.src = reader.result;
+                    img.classList.add('preview-image');
+
+                    const imageContainer = document.createElement('div');
+                    imageContainer.classList.add('image-container');
+                    imageContainer.style.border = '1px solid red';
+                    imageContainer.dataset.fileName = file.name;
+
+                    const fileInfo = document.createElement('div');
+                    fileInfo.classList.add('file-info');
+                    fileInfo.innerHTML = `
+                <p><b>${file.name}</b></p>
+                <p>Size: ${formatBytes(file.size)}</p>
+            `;
+
+                    const removeBtn = document.createElement('button');
+                    removeBtn.innerText = 'Remove';
+                    removeBtn.classList.add('remove-btn');
+                    removeBtn.addEventListener('click', () => {
+                        imagePreview.removeChild(imageContainer);
+                        if (imagePreview.children.length === 0) {
+                            uploadContainer.style.border = "";
+                            choseImages.style.display = "block";
+                            addMore.style.display = "none";
+
+                            browseBtnHidden.style.display = "none";
+                        }
+                    });
+
+                    imageContainer.appendChild(img);
+                    imageContainer.appendChild(fileInfo);
+                    imageContainer.appendChild(removeBtn);
+                    imagePreview.appendChild(imageContainer);
+
+                    choseImages.style.display = "none";
+                    if (window.innerWidth < 359) {
+                        addMore.style.display = "none";
+                        browseBtnHidden.style.display = "block";
+                    } else {
+                        addMore.style.display = "block";
+                        browseBtnHidden.style.display = "none";
+                    }
+
+                };
+                reader.readAsDataURL(file);
+            }
+
+            if (!hasValidFile && isNewFileAdded) {
+                choseImages.style.display = "block";
+                addMore.style.display = "none";
+                browseBtnHidden.style.display = "none";
+            }
+        }
+
+        function isSupportedVideoFormat(fileName) {
+            const supportedFormats = [
+                'mp4', 'mpeg', 'avi', 'webm', 'quicktime', 'x-matroska', 'x-flv', 'x-msvideo', 'x-ms-wmv'
+            ];
+            const fileExtension = fileName.split('.').pop().toLowerCase();
+            return supportedFormats.includes(fileExtension);
+        }
+
+        function formatBytes(bytes, decimals = 2) {
+            if (bytes === 0) return '0 Bytes';
+
+            const k = 1024;
+            const dm = decimals < 0 ? 0 : decimals;
+            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+
+            const i = Math.floor(Math.log(bytes) / Math.log(k));
+
+            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+        }
+    </script>
 </body>
 
 </html>
