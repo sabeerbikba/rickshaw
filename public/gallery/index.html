@@ -17,8 +17,6 @@
             background-image: url('../assets/gallery-background.svg');
             background-size: cover;
             background-attachment: fixed;
-            /* image need to fixed in frame  */
-            font-family: Arial, sans-serif;
         }
 
         main {
@@ -153,12 +151,14 @@
         }
 
         .modal-content.fade-out {
-            opacity: 0.3777;
+            opacity: 0.888;
+            background-color: rgba(185, 150, 93, 0.938);
         }
 
         .plus-sign {
             font-size: 180px;
-            color: black;
+            color: rgb(228, 143, 31);
+            text-shadow: 0px 7px 9px #000;
             opacity: 0;
             transition: opacity 0.3s ease;
             position: absolute;
@@ -230,6 +230,7 @@
             cursor: pointer;
             background-color: #cc0000;
             color: white;
+            font-weight: bold;
             border: none;
             padding: 5px 10px;
             border-radius: 5px;
@@ -935,7 +936,6 @@
             }
         }
 
-
         @media screen and (min-width: 867px) and (max-width: 1024px) {
             .header {
                 height: 57px;
@@ -995,6 +995,11 @@
                 margin-right: 22px;
             }
 
+            .nav-a {
+                padding-top: 17px;
+                font-size: 1.08rem;
+            }
+
             .nav-logo-div {
                 width: 5%;
             }
@@ -1027,6 +1032,11 @@
                 margin-right: 22px;
             }
 
+            .nav-a {
+                padding-top: 22px;
+                font-size: 1.1rem;
+            }
+
             .bar {
                 height: 80px;
                 border-radius: 0 0 25px 25px;
@@ -1042,6 +1052,13 @@
 
             .nav-nav-div {
                 width: 95%;
+            }
+        }
+
+        @media screen and (min-width: 788px) {
+            .image-item img {
+                height: 350px;
+                width: 350px;
             }
         }
 
@@ -1068,7 +1085,12 @@
             }
 
             .nav-ul {
-                margin-right: 45px;
+                margin-right: 20px;
+            }
+
+            .nav-a {
+                padding-top: 22px;
+                font-size: 1.2rem;
             }
 
             .nav-logo-div {
@@ -1158,104 +1180,107 @@
     </header>
     <main>
         <div class="image-gallery">
+            <!-- <div class="image-item">
+                <img src="https://i.imgur.com/P5gSYsx.jpg" alt="" />
+            </div> -->
             <div class="image-item">
-                <img class="image-item" src="https://i.imgur.com/P5gSYsx.jpg" alt="" />
+                <img src="../assets/testingImages/11.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
+                <img src="../assets/testingImages/12.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
+                <img src="../assets/testingImages/13.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+                <img src="../assets/testingImages/14.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+                <img src="../assets/testingImages/15.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+                <img src="../assets/testingImages/16.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+                <img src="../assets/testingImages/17.png" alt="" />
+            </div>
+            <!-- <div class="image-item">
+                <img src="../assets/testingImages/21.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+                <img src="../assets/testingImages/22.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
+                <img src="../assets/testingImages/23.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
+                <img src="../assets/testingImages/24.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
+                <img src="../assets/testingImages/11.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/24.png" alt="" />
+                <img src="../assets/testingImages/12.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
+                <img src="../assets/testingImages/13.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
+                <img src="../assets/testingImages/14.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+                <img src="../assets/testingImages/15.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+                <img src="../assets/testingImages/16.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+                <img src="../assets/testingImages/17.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+                <img src="../assets/testingImages/21.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+                <img src="../assets/testingImages/22.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
+                <img src="../assets/testingImages/23.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
+                <img src="../assets/testingImages/24.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
+                <img src="../assets/testingImages/11.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/24.png" alt="" />
+                <img src="../assets/testingImages/12.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/11.png" alt="" />
+                <img src="../assets/testingImages/13.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/12.png" alt="" />
+                <img src="../assets/testingImages/14.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/13.png" alt="" />
+                <img src="../assets/testingImages/15.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/14.png" alt="" />
+                <img src="../assets/testingImages/16.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/15.png" alt="" />
+                <img src="../assets/testingImages/17.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/16.png" alt="" />
+                <img src="../assets/testingImages/21.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/17.png" alt="" />
+                <img src="../assets/testingImages/22.png" alt="" />
             </div>
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/21.png" alt="" />
-            </div>
+                <img src="../assets/testingImages/23.png" alt="" />
+            </div> -->
             <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/22.png" alt="" />
-            </div>
-            <div class="image-item">
-                <img class="image-item" src=" ../assets/testingImages/23.png" alt="" />
+                <img src="https://i.imgur.com/P5gSYsx.jpg" alt="" />
             </div>
         </div>
     </main>
@@ -1272,7 +1297,7 @@
                     <div class="image-preview" id="imagePreview"></div>
                 </div>
                 <div class="btns-container">
-                    <button id="upload-submit">Upload</button>
+                    <button id="upload-submit" class="browse-btn">Upload</button>
                     <div class="add-more browse-btn-div">
                         <span class="drag-text">Add More Images</span>
                         <button class="browse-btn">Browse files</button>
@@ -1298,6 +1323,10 @@
         const closeBtn = document.querySelector('.close-btn');
         const uploadButton = document.getElementById('upload-button');
         const browseBtnHidden = document.querySelector(".browse-btn-hidden");
+
+        Array.from(document.querySelectorAll('.image-item')).reverse().forEach(item => {
+            document.querySelector('.image-gallery').appendChild(item);
+        });
 
         uploadButton.addEventListener('click', () => {
             modal.showModal();
@@ -1335,6 +1364,18 @@
             modalContent.style.border = "4px dashed black";
             uploadContainer.style.border = "none";
             closeBtn.style.display = 'none';
+            browseBtns.forEach(element => {
+                element.style.color = 'rgba(218, 160, 65, 0.87)';
+            });
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            removeBtns.forEach(element => {
+                element.style.color = 'rgba(218, 160, 65, 0.87)';
+            });
+            document.addEventListener('click', function (event) {
+                if (event.target.classList.contains('remove-btn')) {
+                    event.target.style.color = 'rgba(218, 160, 65, 0.87)';
+                }
+            });
             modalContent.style.animation = 'rotateBorder 4s ease infinite';
         });
 
@@ -1345,6 +1386,13 @@
             modalContent.style.border = "none";
             closeBtn.style.display = 'block';
             modalContent.style.animation = 'none';
+            browseBtns.forEach(element => {
+                element.style.color = '';
+            });
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            removeBtns.forEach(element => {
+                element.style.color = '';
+            });
         });
 
         modalContent.addEventListener('drop', (e) => {
@@ -1355,6 +1403,13 @@
             modalContent.style.border = "none";
             closeBtn.style.display = 'block';
             modalContent.style.animation = 'none';
+            browseBtns.forEach(element => {
+                element.style.color = '';
+            });
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            removeBtns.forEach(element => {
+                element.style.color = '';
+            });
             const files = e.dataTransfer.files;
             handleFiles(files);
         });
@@ -1460,13 +1515,10 @@
 
         function formatBytes(bytes, decimals = 2) {
             if (bytes === 0) return '0 Bytes';
-
             const k = 1024;
             const dm = decimals < 0 ? 0 : decimals;
             const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-
             const i = Math.floor(Math.log(bytes) / Math.log(k));
-
             return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
         }
     </script>

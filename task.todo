@@ -12,10 +12,12 @@
 * remove  test from code
 *8 border radius 
 *nav need to fixed at top 
+* need to crate seo meta tags with card photo 
 
+** if nothing opened when clicked call to action button need to open  whatsapp chat 
 
 *** * less number higher priority * ***
 
-public/about/index.html
-
-dialog reponsiveness 
+------------ BACK-END ------------------- 
+* new images need to append first then contitinue 
+* if new image is uploaded then also append it 
