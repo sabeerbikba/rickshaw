@@ -1,0 +1,36 @@
+
+<!--**  Github: https://github.com/sabeerbikba/rickshaw  **-->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <button id="btn">test</button>
+    <script>
+        const btn = document.getElementById('btn');
+        const phoneNumber = "918970517155";
+
+        function isMobileDevice() {
+            const userAgent = navigator.userAgent;
+            return (typeof window.orientation !== "undefined") ||
+                (userAgent.indexOf('Mobile') !== -1) ||
+                (userAgent.indexOf('touch') !== -1);
+        }
+
+        btn.onclick = () => {
+            if (!isMobileDevice()) {
+                // window.open(`https://web.whatsapp.com/send?phone=${phoneNumber}&text=${encodeURIComponent("I would like to call you")}`, "_blank");
+                window.open(`https://wa.me/${phoneNumber}/?text=${encodeURIComponent("I would like to call you")}`, "_blank");
+            } else {
+                window.open(`tel:${phoneNumber}`, "_self");
+            }
+        };
+    </script>
+</body>
+
+</html>
