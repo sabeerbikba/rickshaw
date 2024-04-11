@@ -56,7 +56,6 @@
             display: inline-block;
             padding-top: 13px;
             padding-bottom: 13px;
-
         }
 
         .nav-ul {
@@ -134,6 +133,26 @@
             border: 2px solid black;
             background-color: #C9A10D;
             cursor: pointer;
+            transition: all 0.2s ease; 
+            /* check this transiction used or not */
+        }
+
+        .spongeAnimation {
+            animation: sponge 1s ease;
+        }
+
+        @keyframes sponge {
+            0% {
+                transform: scale(1);
+            }
+
+            50% {
+                transform: scale(1.03);
+            }
+
+            100% {
+                transform: scale(1);
+            }
         }
 
         .btn-div {
@@ -203,11 +222,17 @@
         }
 
         .bottom-div {
+            padding-top: 3px;
             position: absolute;
             bottom: 0;
             width: 100%;
             z-index: 10;
             background-color: #daa041;
+        }
+
+        .bottom-div div svg {
+            height: 15px;
+            width: auto;
         }
 
         @media only screen and (max-width: 329px) {
@@ -229,6 +254,10 @@
             .content-content {
                 margin-top: 28px;
                 margin-bottom: 8px;
+            }
+
+            .bottom-div div svg {
+                height: 11px;
             }
 
             .main-image {
@@ -327,6 +356,10 @@
             .content-content {
                 margin-top: 28px;
                 margin-bottom: 8px;
+            }
+
+            .bottom-div div svg {
+                height: 11.2px;
             }
 
             .main-image {
@@ -442,6 +475,10 @@
                 height: 205px;
             }
 
+            .bottom-div div svg {
+                height: 11.9px;
+            }
+
             .bar {
                 height: 60px;
             }
@@ -551,6 +588,10 @@
                 height: 230px;
             }
 
+            .bottom-div div svg {
+                height: 12.2px;
+            }
+
             .bar {
                 height: 60px;
                 border-radius: 0 0 12px 12px;
@@ -649,7 +690,7 @@
             }
 
             .content {
-                height: 205px;
+                height: 220px;
             }
 
             .content-content {
@@ -659,6 +700,10 @@
 
             .main-image {
                 height: 230px;
+            }
+
+            .bottom-div div svg {
+                height: 12.6px;
             }
 
             .bar {
@@ -767,6 +812,10 @@
 
             .main-image {
                 height: 270px;
+            }
+
+            .bottom-div div svg {
+                height: 13px;
             }
 
             .bar {
@@ -886,6 +935,10 @@
                 height: 335px;
             }
 
+            .bottom-div div svg {
+                height: 13.5px;
+            }
+
             .bar {
                 height: 72px;
                 border-radius: 0 0 16px 16px;
@@ -999,6 +1052,10 @@
                 height: 415px;
             }
 
+            .bottom-div div svg {
+                height: 13.9px;
+            }
+
             .bar {
                 height: 75px;
                 border-radius: 0 0 17px 17px;
@@ -1109,6 +1166,10 @@
                 height: 450px;
             }
 
+            .bottom-div div svg {
+                height: 14.2px;
+            }
+
             .bar {
                 height: 90px;
                 border-radius: 0 0 18px 18px;
@@ -1216,6 +1277,10 @@
                 height: 550px;
             }
 
+            .bottom-div div svg {
+                height: 14.6px;
+            }
+
             .hero-img {
                 height: 520px;
             }
@@ -1307,6 +1372,10 @@
 
             .main-image {
                 height: 580px;
+            }
+
+            .bottom-div div svg {
+                height: 14.7px;
             }
 
             .hero-img {
@@ -1726,37 +1795,21 @@
         <!-- MAIN  PAGE -->
         <div class="main-image">
 
-            <div>
+            <!-- <div> -->
                 <div class="hero-img-div flex-center">
                     <img class="hero-img" src="./assets/sunshine-ocean.jpg" alt="sunshine-ocean">
                 </div>
-            </div>
+            <!-- </div> -->
 
 
             <div class="text-center bottom-div">
                 <div class="inline">
-                    <span>widht: <b id="width">0</b><b>px</b></span>
-                    <span>height: <b id="height"></b><b>px</b></span>
+                    <svg viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="7.5" cy="7.5" r="7.5" transform="matrix(1 0 0 -1 0 15)" fill="#242424" />
+                    </svg>
                 </div>
-                <!-- circles -->
-
-                <!-- testing -->
-                <script>
-                    const width = document.getElementById('width');
-                    const height = document.getElementById('height');
-                    width.textContent = window.innerWidth;
-                    height.textContent = window.innerHeight;
-                    window.addEventListener('resize', () => {
-                        width.textContent = window.innerWidth;
-                        height.textContent = window.innerHeight;
-                    });
-                </script>
-                <!-- testing -->
-
             </div>
-
         </div>
-
 
 
         <div class="content">
@@ -2251,7 +2304,18 @@
     const indicatorOffIndicators = document.querySelectorAll('#indicator-remove');
     const navLogoDiv = document.querySelector('.nav-logo-div');
     const btnDiv = document.querySelector('.btn-div');
-    const phoneNumber = "918970517155"; //
+    const phoneNumber = "918970517155";
+
+    function getUrlParameter(name) {
+        name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+        var regex = new RegExp('[\\?&]' + name + '=([^&#]*)');
+        var results = regex.exec(location.search);
+        return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+    };
+
+    if (getUrlParameter('tourClicked') === 'true') {
+        breakElement.classList.add('spongeAnimation');
+    }
 
     function isMobileDevice() {
         const userAgent = navigator.userAgent;

@@ -9,6 +9,10 @@
 * need to crate seo meta tags with card photo 
 * if needed compress images 
 * mouse head need to change
+* home page hero image circle 
+* if i slide left or right on image need to open indicator by focusing on button or with little bit animtion on button 
+* need to check link is better to use ./ or directly or better then this 
+* after done home page need to use hammer lib cdn link or use minified hammer js code directly into html 
 
 ** if nothing opened when clicked call to action button need to open  whatsapp chat 
 ** open link by detecting browser type if even dailer not opened open whatapp msg link 
@@ -23,3 +27,8 @@
 * all data need to send to 2 emails to security reason every week 
 
 * need to change and edit ip address in mongod db in network access tab 
+
+
+///////// after all done ////////////
+
+now i set image if i swipe image only run animation once if possible in feature make it unlimited time 
