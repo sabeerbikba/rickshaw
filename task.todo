@@ -13,6 +13,8 @@
 * if i slide left or right on image need to open indicator by focusing on button or with little bit animtion on button 
 * need to check link is better to use ./ or directly or better then this 
 * after done home page need to use hammer lib cdn link or use minified hammer js code directly into html 
+* need to use css autoprefixer 
+* when select text need to change color #38d878
 
 ** if nothing opened when clicked call to action button need to open  whatsapp chat 
 ** open link by detecting browser type if even dailer not opened open whatapp msg link 
