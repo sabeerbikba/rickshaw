@@ -10,7 +10,7 @@ app.use(express.static('public', {
     maxAge: 2592000
 }));
 app.use((req, res) => {
-    res.status(404).sendFile(path.join(__dirname, 'error.html'));
+    res.status(404).sendFile(path.join(__dirname, '404.html'));
 });
 
 app.listen(3005);
