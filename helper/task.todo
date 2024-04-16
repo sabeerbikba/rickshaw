@@ -6,7 +6,7 @@ card
 home iamges 
 about image
 gallery image
-
+* about image in gallery page 
 
 ------------ BACK-END ------------------- 
 * new images need to append first then contitinue 
