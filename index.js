@@ -14,3 +14,5 @@ app.use((req, res) => {
 });
 
 app.listen(3005);
+
+// imageUploadLink:: https://imgur.com/a/IAdA143

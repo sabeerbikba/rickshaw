@@ -4,8 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Image Gallery</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>Document</title>
     <style>
         #imageModal {
             position: fixed;
@@ -15,14 +14,26 @@
             width: 100%;
             height: 100%;
             overflow: auto;
-            background-color: rgba(0, 0, 0, 0.9);
+            margin: auto;
+            border: none;
+            background-color: #43350029;
+            box-shadow: 0px 0px 198px 70px rgba(67, 53, 0, 0.23);
+            -webkit-box-shadow: 0px 0px 198px 70px rgba(67, 53, 0, 0.23);
+            -moz-box-shadow: 0px 0px 198px 70px rgba(67, 53, 0, 0.23);
         }
 
         .imagePreview-modal-content {
+            /* e */
             margin: auto;
             display: block;
+            border: 3px solid grey;
+            border-bottom: 0;
+            border-radius: 5px 5px 0 0;
             max-width: 80%;
             max-height: 80%;
+            box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
+            -webkit-box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
+            -moz-box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
         }
 
         .imagePreview-close {
@@ -34,38 +45,180 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        .image-gallery {
+            display: -webkit-box;
+            display: -webkit-flex;
+            display: -ms-flexbox;
+            display: flex;
+            -webkit-flex-wrap: wrap;
+            -ms-flex-wrap: wrap;
+            flex-wrap: wrap;
+            -webkit-box-pack: center;
+            -webkit-justify-content: center;
+            -ms-flex-pack: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .image-item {
+            -webkit-flex-basis: 350px;
+            -ms-flex-preferred-size: 350px;
+            flex-basis: 350px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-gallery::after {
+            content: "";
+            -webkit-flex-basis: 350px;
+            -ms-flex-preferred-size: 350px;
+            flex-basis: 350px;
+        }
+
+        .image-item {
+            -webkit-flex-basis: 350px;
+            -ms-flex-preferred-size: 350px;
+            flex-basis: 350px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .image-gallery::after {
+            content: "";
+            -webkit-flex-basis: 350px;
+            -ms-flex-preferred-size: 350px;
+            flex-basis: 350px;
+        }
+
+        .image-item img {
+            -o-object-fit: cover;
+            object-fit: cover;
+            max-width: 100%;
+            height: auto;
+            vertical-align: middle;
+            -webkit-border-radius: 5px;
+            border-radius: 5px;
+        }
+
+        @media screen and (min-width: 788px) {
+            .image-item img {
+                height: 350px;
+                width: 350px;
+            }
+        }
+
+        .imagePreview-info {
+            background-color: #FFFFFF40;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 720px;
+            height: 32px;
+            font-size: 1.34rem;
+            border: 3px solid gray;
+            border-radius: 0 0 5px 5px;
+            border-top: 1px solid #0000004f;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: capitalize;
+        }
+
+        .imagePreview-info-mobile {
+            text-align: center;
+            background-color: #76767663;
+            width: 100%;
+            border-top: 1px solid grey;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 720px;
+            height: 32px;
+            font-size: 1.34rem;
+            border-radius: 0 0 5px 5px;
+            text-transform: capitalize;
+            color: block;
+        }
     </style>
 </head>
 
 <body>
-
-    <div class="image-gallery">
-        <div class="image-item">
-            <img src="../assets/testingImages/16.png" alt="" class="gallery-img" />
+    <main>
+        <div class="image-gallery">
+            <div class="image-item">
+                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">sabeer bikba</div>
+            </div>
         </div>
-        <div class="image-item">
-            <img src="../assets/testingImages/17.png" alt="" class="gallery-img" />
-        </div>
-        <div class="image-item">
-            <img src="../assets/testingImages/11.png" alt="" class="gallery-img" />
-        </div>
-    </div>
+    </main>
 
     <dialog id="imageModal">
         <span class="imagePreview-close">&times;</span>
         <img src="" alt="" class="imagePreview-modal-content">
+        <div class="imagePreview-info">sabeer bikba</div>
     </dialog>
+</body>
 
-    <script>
-        const imagePreview_modal = document.getElementById("imageModal");
-        const imagePreview_images = document.querySelectorAll(".gallery-img");
-        const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
-        const imagePreview_closeBtn = document.querySelector(".imagePreview-close");
+<script>
+    const imagePreview_modal = document.getElementById("imageModal");
+    const imagePreview_images = document.querySelectorAll(".gallery-img");
+    const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
+    const imagePreview_closeBtn = document.querySelector(".imagePreview-close");
+    const imagePreview_info = document.querySelector(".imagePreview-info");
+    const imagePreview_imageItem = document.querySelectorAll(".image-item");
+    const imagePreviewInfoMobile = document.querySelectorAll(".imagePreview-info-mobile");
 
+    function isMobileDevice() {
+        const userAgent = navigator.userAgent;
+        return (typeof window.orientation !== "undefined") ||
+            (userAgent.indexOf('Mobile') !== -1) ||
+            (userAgent.indexOf('touch') !== -1);
+    }
+
+    if (isMobileDevice()) {
+        imagePreviewInfoMobile.forEach((image) => {
+            image.style.display = "block";
+        });
         imagePreview_images.forEach((image) => {
-            image.addEventListener('click', function() {
+            image.style.borderRadius = "0";
+        });
+        imagePreview_imageItem.forEach((image) => {
+            image.style.border = "2px solid grey";
+            image.style.borderRadius = "5px";
+        });
+    } else {
+        imagePreviewInfoMobile.forEach((image) => {
+            image.style.display = "none";
+        });
+    }
+
+    if (!isMobileDevice()) {
+        imagePreview_images.forEach((image) => {
+            image.addEventListener('click', function () {
                 imagePreview_modal.showModal();
                 imagePreview_modalImg.src = this.src;
+                imagePreview_modalImg.alt = this.alt;
+                imagePreview_info.textContent = this.alt.replace(/-/g, ' ');
                 imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
             });
         });
@@ -79,8 +232,7 @@
                 imagePreview_modal.close();
             }
         });
-    </script>
-
-</body>
+    }
+</script>
 
 </html>

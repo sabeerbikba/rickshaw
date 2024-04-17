@@ -19,14 +19,14 @@
     <meta property="og:title" content="Honnavar Gallery - Khaleel's Rickshaw Service">
     <meta property="og:description"
         content="Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!">
-    <meta property="og:image" content="https://i.imgur.com/7XipwZo.jpeg"> <!--  -->
+    <meta property="og:image" content="https://i.imgur.com/7XipwZo.jpg">
     <meta property="og:image:alt" content="Rickshaw Card">
     <meta property="twitter:card" content="summary_large_image">
     <meta property="twitter:url" content="https://khaleel-rickshaw.vercel.app/gallery/">
     <meta property="twitter:title" content="Honnavar Gallery - Khaleel's Rickshaw Service">
     <meta property="twitter:description"
         content="Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!">
-    <meta property="twitter:image" content="https://i.imgur.com/7XipwZo.jpeg"> <!--  -->
+    <meta property="twitter:image" content="https://i.imgur.com/7XipwZo.jpg">
     <style>
         * {
             margin: 0;
@@ -113,6 +113,7 @@
             vertical-align: middle;
             -webkit-border-radius: 5px;
             border-radius: 5px;
+            box-shadow: 0 0 10px gray;
         }
 
         /* header */
@@ -452,6 +453,9 @@
         .imagePreview-modal-content {
             margin: auto;
             display: block;
+            border: 3px solid grey;
+            border-bottom: 0;
+            border-radius: 5px 5px 0 0;
             max-width: 80%;
             max-height: 80%;
             box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
@@ -467,6 +471,38 @@
             font-size: 30px;
             font-weight: bold;
             cursor: pointer;
+        }
+
+        .imagePreview-info {
+            background-color: #8C8C8CC9;
+            width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 720px;
+            height: 32px;
+            font-size: 1.34rem;
+            border: 3px solid gray;
+            border-top: 1px solid #0000004f;
+            border-radius: 0 0 5px 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-transform: capitalize;
+        }
+
+        .imagePreview-info-mobile {
+            text-align: center;
+            background-color: #76767663;
+            width: 100%;
+            border-top: 1px solid grey;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 720px;
+            height: 32px;
+            font-size: 1.34rem;
+            border-radius: 0 0 5px 5px;
+            text-transform: capitalize;
+            color: block;
         }
 
         /* uploadIMage-modal */
@@ -1392,31 +1428,92 @@
     <main>
         <div class="image-gallery">
             <div class="image-item">
-                <img src="../assets/images/apsarkoda-falls-3.png" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/lj1YChB.jpg" alt="apsarkonda-falls-2" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/eco-beach.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/AELVLIx.jpeg" alt="mangrove-boardwalk-front" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/apsarkonda-falls-2.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/RcHMB4v.jpg" alt="eco-beach" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Eco Beach</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/eco-beach-2.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/wLlFcOz.jpeg" alt="rickshaw-and-ecobeach-3" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/apsarkonda-falls.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/G4vcSYV.jpeg" alt="rickshaw-and-ecobeach-2" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/apsarkonda.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/Sk0pt8f.jpg" alt="apsarkonda-falls" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkonda Falls</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/apsarkonda-hill-beach.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/oYli6S9.jpeg" alt="Mangrove -walk-bridge" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Mangrove Walk Bridge</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/apsarkonda-in-rainy-season.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/CM3A2GU.jpg" alt="khaleel-rickshaw-1" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
             </div>
             <div class="image-item">
-                <img src="../assets/images/khaleel-rickshaw-1.jpeg" alt="" class="gallery-img" />
+                <img src="https://i.imgur.com/PYJj2kc.jpg" alt="apsarkonda-hill-beach" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkonda Hill And Beach</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/2dGwyFP.jpg" alt="apsarkonda-in-rainy-season" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkonda In Rainy Season</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/2BYPVup.jpeg" alt="Mangrove Honnavar" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Mangrove Honnavar</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/CRjpr6X.jpg" alt="apsarkonda" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkonda</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/wMBpwZ6.jpeg" alt="rickshaw-and-ecobeach-1" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/IQUV13B.jpeg" alt="Boating-in-honnavar" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Boating In Honnavar</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/BEXx6V3.jpg" alt="eco-beach-2" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Eco Beach</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/PktW3cf.png" alt="apsarkoda-falls-3" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Ricksahw Seats</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/MHQApPe.jpeg" alt="mangrove-boardwalk-front-2" class="gallery-img"
+                    loading="lazy" />
+                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
+            </div>
+            <div class="image-item">
+                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
+                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
             </div>
         </div>
     </main>
@@ -1447,6 +1544,7 @@
     <dialog id="imageModal">
         <span class="imagePreview-close">&times;</span>
         <img src="" alt="" class="imagePreview-modal-content">
+        <div class="imagePreview-info"></div>
     </dialog>
     <script>
         const uploadModal_modalContent = document.getElementById('uploadArea');
@@ -1468,6 +1566,9 @@
         const imagePreview_images = document.querySelectorAll(".gallery-img");
         const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
         const imagePreview_closeBtn = document.querySelector(".imagePreview-close");
+        const imagePreview_info = document.querySelector(".imagePreview-info");
+        const imagePreview_imageItem = document.querySelectorAll(".image-item");
+        const imagePreviewInfoMobile = document.querySelectorAll(".imagePreview-info-mobile");
 
         function isMobileDevice() {
             const userAgent = navigator.userAgent;
@@ -1476,11 +1577,31 @@
                 (userAgent.indexOf('touch') !== -1);
         }
 
+        if (isMobileDevice()) {
+            imagePreviewInfoMobile.forEach((image) => {
+                image.style.display = "block";
+            });
+            imagePreview_images.forEach((image) => {
+                image.style.borderRadius = "0";
+            });
+            imagePreview_imageItem.forEach((image) => {
+                image.style.border = "2px solid grey";
+                image.style.borderRadius = "5px";
+            });
+        } else {
+            imagePreviewInfoMobile.forEach((image) => {
+                image.style.display = "none";
+            });
+        }
+
         if (!isMobileDevice()) {
             imagePreview_images.forEach((image) => {
                 image.addEventListener('click', function () {
                     imagePreview_modal.showModal();
                     imagePreview_modalImg.src = this.src;
+                    imagePreview_modalImg.alt = this.alt;
+                    imagePreview_info.style.maxWidth = `${imagePreview_modalImg.clientWidth + 6}px`;
+                    imagePreview_info.textContent = this.alt.replace(/-/g, ' ').replace(/\d+/g, '');
                     imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
                 });
             });
@@ -1598,10 +1719,22 @@
         });
 
         function handleFiles(files) {
+            const maxAllowedImages = 5;
+            const currentUploadedImages = uploadModal_imagePreview.children.length;
+            const remainingSlots = maxAllowedImages - currentUploadedImages;
+
+            if (currentUploadedImages >= maxAllowedImages) {
+                alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
+                return;
+            }
+
+            const filesArray = Array.from(files);
+            const filesToAdd = filesArray.slice(0, remainingSlots);
+
             let hasValidFile = false;
             let isNewFileAdded = false;
 
-            for (const file of files) {
+            for (const file of filesToAdd) {
                 if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
                     alert(`Error: ${file.name} is not a supported file type.`);
                     continue;
@@ -1647,7 +1780,6 @@
                             uploadModal_uploadContainer.style.border = "";
                             uploadModal_choseImages.style.display = "block";
                             uploadModal_addMore.style.display = "none";
-
                             uploadModal_browseBtnHidden.style.display = "none";
                         }
                     });
@@ -1656,7 +1788,7 @@
                     imageContainer.appendChild(fileInfo);
                     imageContainer.appendChild(removeBtn);
                     uploadModal_imagePreview.appendChild(imageContainer);
-
+                    uploadModal_uploadContainer.style.border = "none";
                     uploadModal_choseImages.style.display = "none";
                     if (window.innerWidth < 359) {
                         uploadModal_addMore.style.display = "none";

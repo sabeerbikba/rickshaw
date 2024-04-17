@@ -1,12 +1,4 @@
-* after done home page need to use hammer lib cdn link or use minified hammer js code directly into html 
-* need to use css autoprefixer 
-** need to crate 404 page 
-* images need to upload 
-card
-home iamges 
-about image
-gallery image
-* about image in gallery page 
+* left right on computer to scroll images 
 
 ------------ BACK-END ------------------- 
 * new images need to append first then contitinue 
