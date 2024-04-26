@@ -8,3 +8,4 @@ area type: beach, hills, rivers
 rikshaw drive name: khaleel 
 know languages: locale languages hindi, urdu, kannda and other marathi 
 
+

@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-9">
+    <meta name="viewport" content="width=device-width, initial-scale=0.0">
+    <title>Image Upload</title>
+
+    <style>
+        #upload-progress {
+            width: 100%;
+            text-align: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        #upload-progress-bar {
+            width: 50%;
+        }
+
+        #upload-progress-text {
+            margin-top: 5px;
+            font-size: 14px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Image Upload</h1>
+    <form id="upload-form" method="post" enctype="multipart/form-data">
+        <input type="file" name="image" accept="image/*" multiple>
+        <button type="submit">Upload Image</button>
+    </form>
+
+    <div id="upload-progress">
+        <progress id="upload-progress-bar" value="0" max="100"></progress>
+        <p id="upload-progress-text">0%</p>
+    </div>
+
+
+    <div id="image-gallery"></div>
+
+</body>
+<script>
+    async function loadImages() {
+        try {
+            const response = await fetch('/images');
+            if (!response.ok) {
+                console.error('Network response was not ok', response.statusText);
+                return;
+            }
+            const images = await response.json();
+            const gallery = document.getElementById('image-gallery');
+            gallery.innerHTML = ''; // Clear the gallery before adding new images
+            images.forEach(image => {
+                const img = document.createElement('img');
+                img.src = `data:image/png;base64,${image.imageBinary}`; // Adjust the MIME type as necessary
+                img.style.width = '200px'; // Set the width of the image to 200px
+                img.alt = image.alt || '';
+                gallery.appendChild(img);
+            });
+        } catch (error) {
+            console.error('Fetch error:', error);
+        }
+    }
+
+    async function handleUpload(event) {
+        event.preventDefault(); // Prevent the default form submission
+        const formData = new FormData(event.target);
+        const progressBar = document.getElementById('upload-progress-bar');
+        const progressText = document.getElementById('upload-progress-text');
+        const progressDiv = document.getElementById('upload-progress');
+        progressDiv.style.display = 'flex'; // Show the progress bar
+
+        try {
+            const response = await fetch('/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            if (!response.ok) { 
+                console.error('Upload failed', response.statusText);
+                return;
+            }
+
+            const reader = response.body.getReader();
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+
+                // Parse the progress value and ensure it's a valid number
+                const progressString = new TextDecoder("utf-8").decode(value);
+                // Strip out the 'data:' prefix and newline characters
+                const cleanedProgressString = progressString.replace(/^data: /, '').replace(/\n$/, '');
+                const progress = parseFloat(cleanedProgressString);
+                if (isFinite(progress)) {
+                    progressBar.value = progress;
+                    progressText.textContent = `${progress.toFixed(2)}%`;
+                } else {
+                    console.error('Invalid progress value received:', progressString);
+                }
+            }
+
+            // Fetch and display the latest images after a successful upload
+            loadImages();
+            progressDiv.style.display = 'none'; // Hide the progress bar after upload
+        } catch (error) {
+            console.error('Upload error:', error);
+            progressDiv.style.display = 'none'; // Hide the progress bar in case of error
+        }
+    }
+
+
+    document.querySelector('form').addEventListener('submit', handleUpload);
+
+    document.addEventListener('DOMContentLoaded', loadImages);
+</script>
+
+</html>

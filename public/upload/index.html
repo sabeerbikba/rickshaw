@@ -1,3 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Upload</title>
+    <style>
+        progress {
+            width: 100%;
+            height: 20px;
+            background-color: #f3f3f3;
+            border: none;
+        }
+
+        #uploadProgress::-webkit-progress-bar {
+            background-color: #f3f3f3;
+        }
+
+        #uploadProgress::-webkit-progress-value {
+            background-color: #4CAF50;
+        }
+
+        #uploadProgress::-moz-progress-bar {
+            background-color: #4CAF50;
+        }
+
+        .error {
+            background-color: red;
+        }
+    </style>
+</head>
+
+<body>
+    <button id="open-modal">modoal open</button>
+    <dialog id="upload-modal">
+        <h1>Image Upload</h1>
+        <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+            <label for="images">Select Images:</label>
+            <input type="file" id="images" name="images" multiple>
+            <button type="submit">Upload Images</button>
+            <button id="close-modal">colse modal</button>
+        </form>
+        <button id="clear" onclick="clearInput()">clear</button>
+
+        <progress id="uploadProgress" value="0" max="100"></progress>
+    </dialog>
+
+    <div id="image-gallery" class="image-gallery">
+    </div>
+
+
+    <script>
+        const uploadedImages = [];
+        const openModalBtn = document.getElementById('open-modal');
+        const closeModalBtn = document.getElementById('close-modal');
+        const modal = document.getElementById('upload-modal');
+        const progressBar = document.getElementById('uploadProgress');
+        const uploadForm = document.getElementById('uploadForm');
+        const imagesInput = document.getElementById('images');
+        const uploadButton = document.querySelector('#uploadForm button[type="submit"]');
+
+        function clearInput() {
+            imagesInput.value = '';
+            imagesInput.type = '';
+            imagesInput.type = 'file';
+        }
+
+        function checkUploadButtonState() {
+            if (imagesInput.files.length > 0) {
+                uploadButton.disabled = false;
+            } else {
+                uploadButton.disabled = true;
+            }
+        }
+
+        checkUploadButtonState();
+        document.querySelector('#clear').addEventListener('click', checkUploadButtonState);
+
+        openModalBtn.addEventListener('click', () => {
+            modal.showModal();
+        });
+
+        closeModalBtn.addEventListener('click', () => {
+            modal.close();
+        });
+
+        async function loadImages(imageNames) {
+            try {
+                const response = await fetch(`/images?img=${imageNames.join('&img=')}`);
+                if (!response.ok) {
+                    console.error('Network response was not ok', response.statusText);
+                    return;
+                }
+
+                const { imagesOut } = await response.json();
+                console.log(imagesOut);
+
+                console.log(imagesOut.length)
+                if (imagesOut && imagesOut.length > 0) {
+                    progressBar.value = 100;
+
+                    const imageGallery = document.getElementById('image-gallery');
+                    imagesOut.forEach(image => {
+                        const imageItem = document.createElement('div');
+                        imageItem.classList.add('image-item');
+                        const img = document.createElement('img');
+                        img.width = "100";
+                        img.src = image.srcUrl;
+                        img.alt = image.alt;
+                        img.classList.add('gallery-img');
+                        img.setAttribute('loading', 'lazy');
+                        const imagePreviewInfo = document.createElement('div');
+                        imagePreviewInfo.classList.add('imagePreview-info-mobile');
+                        imagePreviewInfo.textContent = image.alt;
+                        imageItem.appendChild(img);
+                        imageItem.appendChild(imagePreviewInfo);
+                        imageGallery.appendChild(imageItem);
+                    });
+                    setTimeout(() => {
+                        modal.close();
+                        setTimeout(() => {
+                            progressBar.value = 0;
+                        }, 1000);
+                    }, 1500);
+                    imageNames.forEach(name => uploadedImages.push(name));
+                    clearInput();
+                } else {
+                    progressBar.classList.add('error');
+                    setTimeout(() => {
+                        alert('Failed to upload images. Please try again.');
+                        progressBar.classList.remove('error');
+                        setTimeout(() => {
+                            progressBar.value = 0;
+                        }, 500);
+                    }, 3000);
+
+                    console.log('server recived array is empty!');
+                }
+            } catch (error) {
+                console.error('Fetch error:', error);
+            }
+        }
+
+        uploadForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const formData = new FormData(this);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', this.action, true);
+
+            xhr.upload.addEventListener('progress', function (event) {
+                if (event.lengthComputable) {
+                    const progress = (event.loaded / event.total) * 76;
+                    progressBar.value = progress;
+                }
+            });
+
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Image uploaded successfully');
+                    const imageFiles = imagesInput.files;
+                    const imageNames = Array.from(imageFiles).map(file => file.name);
+                    loadImages(imageNames);
+
+                    uploadButton.disabled = true;
+                } else {
+                    console.error('Upload failed:', xhr.statusText);
+                }
+            };
+
+            xhr.send(formData);
+        });
+
+        imagesInput.addEventListener('change', function () {
+            checkUploadButtonState();
+            const selectedFiles = Array.from(this.files);
+            const imageFiles = Array.from(this.files);
+            const imageNames = imageFiles.map(file => file.name);
+            const allImagesMatch = imageNames.every(name => uploadedImages.includes(name));
+
+            if (selectedFiles.length > 5) {
+                const remainingFiles = selectedFiles.slice(0, 5);
+                const dataTransfer = new DataTransfer();
+                remainingFiles.forEach(file => {
+                    dataTransfer.items.add(file);
+                });
+                this.files = dataTransfer.files;
+                alert('You can only select up to 5 images.');
+            }
+
+            if (!allImagesMatch) {
+                uploadButton.disabled = false;
+            } else {
+                uploadButton.disabled = true;
+                alert('Please select only images that have not been uploaded before.');
+            }
+        });
+    </script>
+
+</body>
+
+</html>
+
+
 <!--**  Github: https://github.com/sabeerbikba/rickshaw  **-->
 <!DOCTYPE html>
 <html lang="en">
@@ -1719,14 +1923,14 @@
         });
 
         // TODO: if working need to remove 
-        document.addEventListener('click', function (event) { 
+        document.addEventListener('click', function (event) {
             if (event.target.classList.contains('browse-btn-upload')) {
                 uploadModal_fileInput.click();
             }
         });
 
         uploadModal_browseServerUpload.addEventListener('click', async (event) => {
-            event.preventDefault();            
+            event.preventDefault();
             const files = uploadModal_fileInput.files;
             if (files.length === 0) return;
 
