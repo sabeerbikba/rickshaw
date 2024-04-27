@@ -20,13 +20,16 @@ Upload failed: Internal Server Error upload:314:29
 * if image upload sucessful save in variable before again upload buttong hitting check name of image is that user re uploading 
 * if images not uplaoded show error 
 * if no images set in form disable button 
-*/ mamu ko link bhejna imgbb ke account ke 
 * double images need to fix 
 * replace alert with fancy notification bar 
-
-%^^&*^&**(*(*(^(^&^(^^&*())))))
- task fro 26/04 copy modal code of gallery and implement code edit imageName
-%^^&*^&**(*(*(^(^&^(^^&*())))))
+* upload fileInput and images need to sync now it manually showing 
+* convert fucntion (event) to (event) =>
+* when click upload disable remove buttons and uplaod buttons 
+* use fast quering technic in mongodb 
+* again same images uplaoded just showing error also don't need to allow that image input 
+* progress bar height need to set in meidaquries 
+* edit name before uploading image
+* after done need to check form is mongodb insert value need to change or not 
 
 ------------ BACK-END ------------------- 
 * new images need to append first then contitinue 
