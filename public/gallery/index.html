@@ -302,7 +302,7 @@
             height: 10px;
             background-color: #f3f3f3;
             border: none;
-            /* visibility: hidden; */
+            visibility: hidden;
             position: absolute;
             bottom: 0;
         }
@@ -379,6 +379,10 @@
 
         .remove-btn:hover {
             background-color: #ff3333;
+        }
+
+        .remove-btn:disabled {
+            background-color: #cc000081;
         }
 
         .browse-server-upload:disabled {
@@ -1596,6 +1600,7 @@
         const uploadModal_browseServerUpload = document.querySelector('.browse-server-upload');
         const uploadModal_progressBar = document.getElementById('uploadProgress');
         const uploadModal_uploadForm = document.getElementById('uploadForm');
+        const uploadModal_removeBtns = document.querySelectorAll('.remove-btn');
 
         const imagePreview_modal = document.getElementById("imageModal");
         const imagePreview_images = document.querySelectorAll(".gallery-img");
@@ -1691,8 +1696,8 @@
             uploadModal_browseBtns.forEach(element => {
                 element.style.color = 'rgba(218, 160, 65, 0.87)';
             });
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            removeBtns.forEach(element => {
+            // const removeBtns = document.querySelectorAll('.remove-btn');
+            uploadModal_removeBtns.forEach(element => {
                 element.style.color = 'rgba(218, 160, 65, 0.87)';
             });
             document.addEventListener('click', function (event) {
@@ -1713,8 +1718,8 @@
             uploadModal_browseBtns.forEach(element => {
                 element.style.color = '';
             });
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            removeBtns.forEach(element => {
+            // const removeBtns = document.querySelectorAll('.remove-btn');
+            uploadModal_removeBtns.forEach(element => {
                 element.style.color = '';
             });
         });
@@ -1730,12 +1735,21 @@
             uploadModal_browseBtns.forEach(element => {
                 element.style.color = '';
             });
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            removeBtns.forEach(element => {
+            // const removeBtns = document.querySelectorAll('.remove-btn');
+            uploadModal_removeBtns.forEach(element => {
                 element.style.color = '';
             });
+
             const files = e.dataTransfer.files;
-            handleFiles(files);
+            if (files.length > 0) {
+                const filesToAdd = Array.from(files).slice(0, 5);
+                const dataTransfer = new DataTransfer();
+                filesToAdd.forEach(file => {
+                    dataTransfer.items.add(file);
+                });
+                uploadModal_fileInput.files = dataTransfer.files;
+                handleFiles(filesToAdd);
+            }
         });
 
         // TODO: if working need to remove 
@@ -1759,6 +1773,7 @@
                 console.log(imagesOut.length)
                 if (imagesOut && imagesOut.length > 0) {
                     updateProgressBar('visible', 100);
+                    removeBtnsDisable(false);
                     imagesOut.forEach(image => {
                         const imageItem = document.createElement('div');
                         imageItem.classList.add('image-item');
@@ -1802,6 +1817,7 @@
                     }, 1500);
                     imageNames.forEach(name => uploadModal_uploadedImages.push(name));
                     clearInput();
+                    removeBtnsDisable(false);
                 } else {
                     uploadModal_progressBar.style.backgroundColor = '#ff000073';
                     setTimeout(() => {
@@ -1809,6 +1825,7 @@
                         uploadModal_progressBar.style.backgroundColor = '';
                         setTimeout(() => {
                             updateProgressBar('hidden', 0);
+                            removeBtnsDisable(false);
                         }, 500);
                     }, 3000);
 
@@ -1816,12 +1833,16 @@
                 }
             } catch (error) {
                 console.error('Fetch error:', error);
+                removeBtnsDisable(false);
             }
         }
 
-        uploadModal_uploadForm.addEventListener('submit', function (event) {
+        uploadModal_uploadForm.addEventListener('submit', function (event) { // better to use function 
             event.preventDefault();
-            uploadModal_progressBar.style.visibility = 'visible'
+            uploadButtonDisable(true);
+            removeBtnsDisable(true);
+            // uploadModal_progressBar.style.visibility = 'visible'
+            progressBarVisibility('visible');
             if (uploadModal_fileInput.files.length <= 0) {
                 console.log('inside condtion 0 images')
                 alert('No images selected! Try again by selecting images');
@@ -1852,7 +1873,8 @@
                     uploadModal_progressBar.style.backgroundColor = '#ff000073';
                     setTimeout(() => {
                         uploadModal_progressBar.style.backgroundColor = '';
-                        uploadModal_progressBar.style.visibility = 'hidden';
+                        // uploadModal_progressBar.style.visibility = 'hidden';
+                        progressBarVisibility('hidden');
                     }, 1000);
                 }
             };
@@ -1860,16 +1882,58 @@
             xhr.send(formData);
         });
 
-        uploadModal_fileInput.addEventListener('change', function () {
-            handleUploadButtonState()
-            handleFiles(this.files);
-            const selectedFiles = Array.from(this.files);
-            const imageFiles = Array.from(this.files);
-            const imageNames = imageFiles.map(file => file.name);
-            const allImagesMatch = imageNames.every(name => uploadModal_uploadedImages.includes(name));
+        // uploadModal_fileInput.addEventListener('change', function () {
+        //     const selectedFiles = Array.from(this.files);
+        //     const imageFiles = Array.from(this.files);
+        //     const imageNames = imageFiles.map(file => file.name);
+        //     const allImagesMatch = imageNames.every(name => uploadModal_uploadedImages.includes(name));
+        //     handleFiles(this.files);
 
+        //     if (selectedFiles.length > 5) {
+        //         const remainingFiles = selectedFiles.slice(0, 5);
+        //         const dataTransfer = new DataTransfer();
+        //         remainingFiles.forEach(file => {
+        //             dataTransfer.items.add(file);
+        //         });
+        //         this.files = dataTransfer.files;
+        //         alert('You can only select up to 5 images.');
+        //     }
+
+        //     if (!allImagesMatch) {
+        //         uploadButtonDisable(false);
+        //     } else {
+        //         uploadButtonDisable(true);
+        //         alert('Please select only images that have not been uploaded before.');
+        //     }
+        //     handleUploadButtonState()
+        // });
+
+
+        uploadModal_fileInput.addEventListener('change', function () {
+            const selectedFiles = Array.from(this.files); // Convert FileList to array
+            const validFiles = selectedFiles.filter(file => file.size <= 1048576); // 1MB limit
+
+            if (validFiles.length < selectedFiles.length) {
+                alert('One or more files exceed the 1MB size limit and have been removed.');
+            }
+
+            const dataTransfer = new DataTransfer();
+            let filesToUpload = [];
+
+            validFiles.forEach(file => {
+                if (!uploadModal_uploadedImages.includes(file.name)) {
+                    dataTransfer.items.add(file);
+                    filesToUpload.push(file);
+                } else {
+                    alert(`File ${file.name} is already uploaded.`);
+                    console.log(file);
+                }
+            });
+
+            this.files = dataTransfer.files;
+
+            const remainingFiles = Array.from(this.files).slice(0, 5);
             if (selectedFiles.length > 5) {
-                const remainingFiles = selectedFiles.slice(0, 5);
                 const dataTransfer = new DataTransfer();
                 remainingFiles.forEach(file => {
                     dataTransfer.items.add(file);
@@ -1878,13 +1942,12 @@
                 alert('You can only select up to 5 images.');
             }
 
-            if (!allImagesMatch) {
-                uploadButtonDisable(false);
-            } else {
-                uploadButtonDisable(true);
-                alert('Please select only images that have not been uploaded before.');
-            }
+            // Assuming handleFiles is a function that processes the filesToUpload array
+            handleFiles(filesToUpload); // Pass the filtered files object to handleFiles
+
+            handleUploadButtonState();
         });
+
 
         function handleFiles(files) {
             const maxAllowedImages = 5;
@@ -1893,7 +1956,7 @@
 
             console.log(files.length);
             console.log(files);
-            handleUploadButtonState(files.length)
+            // handleUploadButtonState(files.length);
 
             if (currentUploadedImages >= maxAllowedImages) {
                 alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
@@ -1939,9 +2002,9 @@
                     const fileInfo = document.createElement('div');
                     fileInfo.classList.add('file-info');
                     fileInfo.innerHTML = `
-                <p><b>${file.name}</b></p>
-                <p>Size: ${formatBytes(file.size)}</p>
-            `;
+                    <p><b>${file.name}</b></p>
+                    <p>Size: ${formatBytes(file.size)}</p>
+                    `;
 
                     const removeBtn = document.createElement('button');
                     removeBtn.innerText = 'Remove';
@@ -1992,7 +2055,7 @@
             }
         }
 
-        handleUploadButtonState();
+        // handleUploadButtonState();
         window.addEventListener('load', clearInput);
         document.addEventListener('DOMContentLoaded', clearInput);
 
@@ -2012,9 +2075,20 @@
             uploadButtonDisable(true);
         }
 
+        function removeBtnsDisable(boolean) {
+            const removeBtns = document.querySelectorAll('.remove-btn');
+            removeBtns.forEach(button => {
+                button.disabled = boolean;
+            });
+        }
+
         function updateProgressBar(visibility, value) {
             uploadModal_progressBar.style.visibility = visibility;
             uploadModal_progressBar.value = value;
+        }
+
+        function progressBarVisibility(visibility) {
+            uploadModal_progressBar.style.visibility = visibility;
         }
 
         function handleUploadButtonState(filesLength = uploadModal_fileInput.files.length) {

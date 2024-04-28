@@ -93,7 +93,7 @@ app.post('/upload', upload, async (req, res) => {
     console.log(`
     
     
-((((([[[  POST  ]]])))))
+((((([[[  POST || /upload ]]])))))
 New POST req hit with ${req.files.length} images at ${Date()}`);
     if (req.files.length <= 0) {
         console.log('no images uplaoded!')
@@ -106,6 +106,7 @@ New POST req hit with ${req.files.length} images at ${Date()}`);
         for (const file of req.files) {
             console.log('inside for loop');
             console.log(file);
+            const collectionCount = await collection.countDocuments();
 
             const command = `curl -X POST https://api.imgbb.com/1/upload \
                         -F "key=${imgbbUrl}" \
@@ -127,6 +128,7 @@ New POST req hit with ${req.files.length} images at ${Date()}`);
 
             console.log('everthing okay inserting to db');
             const result = await collection.insertOne({
+                id: collectionCount + 1,
                 imageName: file.originalname,
                 srcUrl: response.data.url,
                 alt: req.body.alt || '',
@@ -187,7 +189,7 @@ console.time('get');
 app.get('/images', async (req, res) => {
     console.log(`
     
-((((([[[  GET  ]]])))))
+((((([[[  GET || /images ]]])))))
 New GET req hit at ${Date()}`);
     let imageNames = req.query.img;
     if (!Array.isArray(imageNames)) {
@@ -248,6 +250,37 @@ New GET req hit at ${Date()}`);
     }
 });
 console.timeEnd('get');
+
+
+app.get('/loadimages', async (req, res) => {
+    console.log(`
+    
+((((([[[  GET || /loadimages ]]])))))
+New GET req hit at ${Date()}`);
+    const { page } = req.query;
+    const perPage = 5;
+    const skip = (page - 1) * perPage;
+
+    try {
+        const collection = await connectDB('images');
+        const images = await collection.find({}, {
+            projection: {
+                _id: 0, id: 1, srcUrl: 1, alt: 1
+            }
+        }).skip(skip).limit(perPage).toArray();
+        if (images.length === 0) {
+            return res.json({ message: "All images have been shown" });
+        }
+        res.json(images);
+    } catch (error) {
+        console.error(error);
+        res.status(500).send('Internal Server Error');
+    } finally {
+        console.log('POST Request completed.');
+        res.end();
+    }
+});
+
 
 app.listen(port, () => {
     console.log(`Express server is running on http://localhost:${port}`);
