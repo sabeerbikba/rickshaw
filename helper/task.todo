@@ -44,6 +44,7 @@ Upload failed: Internal Server Error upload:314:29
 * need to update file supported by imgbb 
 * to decrease size of file crate array of image and put those image crate 
 * newly uploaded images need to append to top 
+* if server not response when uploading fix issue
 
 when uploading not buttons going to disable
 add progress bar in click

@@ -389,6 +389,10 @@
             opacity: 0.6;
         }
 
+        .browse-btn-upload:disabled {
+            opacity: 0.6;
+        }
+
         #upload-submit,
         .browse-btn {
             padding: 10px 20px;
@@ -1486,96 +1490,7 @@
         </div>
     </header>
     <main>
-        <div class="image-gallery">
-            <div class="image-item">
-                <img src="https://i.imgur.com/lj1YChB.jpg" alt="apsarkonda-falls-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/AELVLIx.jpeg" alt="mangrove-boardwalk-front" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/RcHMB4v.jpg" alt="eco-beach" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Eco Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/wLlFcOz.jpeg" alt="rickshaw-and-ecobeach-3" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/G4vcSYV.jpeg" alt="rickshaw-and-ecobeach-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/Sk0pt8f.jpg" alt="apsarkonda-falls" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/oYli6S9.jpeg" alt="Mangrove -walk-bridge" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Walk Bridge</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/CM3A2GU.jpg" alt="khaleel-rickshaw-1" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/PYJj2kc.jpg" alt="apsarkonda-hill-beach" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda Hill And Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/2dGwyFP.jpg" alt="apsarkonda-in-rainy-season" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda In Rainy Season</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/2BYPVup.jpeg" alt="Mangrove Honnavar" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Honnavar</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/CRjpr6X.jpg" alt="apsarkonda" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/wMBpwZ6.jpeg" alt="rickshaw-and-ecobeach-1" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/IQUV13B.jpeg" alt="Boating-in-honnavar" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Boating In Honnavar</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/BEXx6V3.jpg" alt="eco-beach-2" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Eco Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/PktW3cf.png" alt="apsarkoda-falls-3" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Ricksahw Seats</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/MHQApPe.jpeg" alt="mangrove-boardwalk-front-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
-            </div>
-        </div>
+        <div class="image-gallery"></div>
         <div id="message"></div>
         <div id="loading-spinner"></div>
     </main>
@@ -1598,11 +1513,11 @@
                         <span class="drag-text">Add More Images</span>
                         <button class="browse-btn browse-btn-upload">Browse files</button>
                     </div>
-                    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
-                        <input type="file" id="fileInput" name="images" accept="image/*" multiple hidden>
+                    <div>
+                        <input type="file" id="fileInput" name="images[]" accept="image/*" multiple hidden />
                         <button id="upload-submit" class="browse-btn browse-server-upload" type="submit">Upload</button>
-                    </form>
-                    <button class="browse-btn browse-btn-upload browse-btn-hidden">Browse files</button>
+                        <!-- <button class="browse-btn browse-btn-upload browse-btn-hidden">Browse files</button> -->
+                    </div>
                 </div>
             </div>
         </div>
@@ -1613,7 +1528,10 @@
         <div class="imagePreview-info"></div>
     </dialog>
     <script>
-        // const uploadModal_uploadedImages = [];
+        const uploadModal_allFiles = [];
+        const uploadModal_fileMap = {};
+        const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+        const uploadModal_uploadedImages = [];
         const uploadModal_modalContent = document.getElementById('uploadArea');
         const uploadModal_imagePreview = document.getElementById('imagePreview');
         const uploadModal_plusSign = document.querySelector('.plus-sign');
@@ -1648,7 +1566,33 @@
         const infiniteScrool_messageElement = document.getElementById('message');
         const infiniteScrool_spinnerDiv = document.getElementById('loading-spinner');
 
+        const imageInfo = [
+            { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+            { srcUrl: "https://i.imgur.com/AELVLIx.jpeg", alt: "mangrove-boardwalk-front" },
+            { srcUrl: "https://i.imgur.com/RcHMB4v.jpg", alt: "eco-beach" },
+            { srcUrl: "https://i.imgur.com/wLlFcOz.jpeg", alt: "rickshaw-and-ecobeach-3" },
+            { srcUrl: "https://i.imgur.com/G4vcSYV.jpeg", alt: "rickshaw-and-ecobeach-2" },
+            { srcUrl: "https://i.imgur.com/Sk0pt8f.jpg", alt: "apsarkonda-falls" },
+            { srcUrl: "https://i.imgur.com/oYli6S9.jpeg", alt: "Mangrove -walk-bridge" },
+            { srcUrl: "https://i.imgur.com/CM3A2GU.jpg", alt: "khaleel-rickshaw-1" },
+            { srcUrl: "https://i.imgur.com/PYJj2kc.jpg", alt: "apsarkonda-hill-beach" },
+            { srcUrl: "https://i.imgur.com/2dGwyFP.jpg", alt: "apsarkonda-in-rainy-season" },
+            { srcUrl: "https://i.imgur.com/2BYPVup.jpeg", alt: "Mangrove Honnavar" },
+            { srcUrl: "https://i.imgur.com/CRjpr6X.jpg", alt: "apsarkonda" },
+            { srcUrl: "https://i.imgur.com/wMBpwZ6.jpeg", alt: "rickshaw-and-ecobeach-1" },
+            { srcUrl: "https://i.imgur.com/IQUV13B.jpeg", alt: "Boating-in-honnavar" },
+            { srcUrl: "https://i.imgur.com/BEXx6V3.jpg", alt: "eco-beach-2" },
+            { srcUrl: "https://i.imgur.com/PktW3cf.png", alt: "apsarkoda-falls-3" },
+            { srcUrl: "https://i.imgur.com/NkuPoyi.jpeg", alt: "ricksahw-seats" },
+            { srcUrl: "https://i.imgur.com/MHQApPe.jpeg", alt: "mangrove-boardwalk-front-2" },
+            { srcUrl: "https://i.imgur.com/NtTKFde.jpg", alt: "khaleel-rickshaw" }
+        ];
+
         // checkUploadButtonState();
+        window.addEventListener('load', () => {
+            clearInput();
+            appendImages(imageInfo);
+        });
 
         if (isMobileDevice()) {
             imagePreviewInfoMobile.forEach((image) => {
@@ -1690,10 +1634,6 @@
             });
         }
 
-        Array.from(document.querySelectorAll('.image-item')).reverse().forEach(item => {
-            imagePreview_imageGallery.appendChild(item);
-        });
-
         uploadModal_uploadButton.addEventListener('click', () => {
             uploadModal_uploadModal.showModal();
         });
@@ -1724,72 +1664,29 @@
 
         uploadModal_modalContent.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadModal_modalContent.classList.add('active');
-            uploadModal_modalContent.classList.add('fade-out');
-            uploadModal_plusSign.style.opacity = '1';
-            uploadModal_modalContent.style.border = "4px dashed black";
+            dragnDropToogle(true);
             uploadModal_uploadContainer.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = 'rgba(218, 160, 65, 0.87)';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = 'rgba(218, 160, 65, 0.87)';
-            });
+
             document.addEventListener('click', function (event) {
                 if (event.target.classList.contains('remove-btn')) {
                     event.target.style.color = 'rgba(218, 160, 65, 0.87)';
                 }
             });
-            uploadModal_modalContent.style.animation = 'rotateBorder 4s ease infinite';
         });
 
         uploadModal_modalContent.addEventListener('dragleave', () => {
-            uploadModal_modalContent.classList.remove('active');
-            uploadModal_modalContent.classList.remove('fade-out');
-            uploadModal_plusSign.style.opacity = '0';
-            uploadModal_modalContent.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'block';
-            uploadModal_modalContent.style.animation = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = '';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = '';
-            });
+            dragnDropToogle(false);
         });
 
         uploadModal_modalContent.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadModal_modalContent.classList.remove('active');
-            uploadModal_modalContent.classList.remove('fade-out');
-            uploadModal_plusSign.style.opacity = '0';
-            uploadModal_modalContent.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'block';
-            uploadModal_modalContent.style.animation = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = '';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = '';
-            });
+            dragnDropToogle(false);
 
             const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const filesToAdd = Array.from(files).slice(0, 5);
-                const dataTransfer = new DataTransfer();
-                filesToAdd.forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                uploadModal_fileInput.files = dataTransfer.files;
-                handleFiles(filesToAdd);
-            }
+            addFiles(files);
+            displayImages();
         });
 
-        // TODO: if working need to remove 
         document.addEventListener('click', function (event) {
             if (event.target.classList.contains('browse-btn-upload')) {
                 uploadModal_fileInput.click();
@@ -1810,26 +1707,25 @@
                 console.log(imagesOut.length)
                 if (imagesOut && imagesOut.length > 0) {
                     updateProgressBar('visible', 100);
-                    removeBtnsDisable(true);
+                    // removeBtnsDisable(true);
                     appendImages(imagesOut, '0 0 10px #b04a00');
                     setTimeout(() => {
                         uploadModal_uploadModal.close();
+                        btnsDisable(false);
                         setTimeout(() => {
                             updateProgressBar('hidden', 0);
                             uploadModal_imagePreview.innerHTML = "";
                             uploadModal_uploadContainer.style.border = "";
-                            uploadModal_choseImages.style.display = "block";
-                            uploadModal_addMore.style.display = "none";
-                            setTimeout(() => {
-                                removeBtnsDisable(true);
-                                uploadButtonDisable(true);
-                            }, 1500);
+                            handleImgAddingBtns();
+                            // setTimeout(() => {
+                            //     // removeBtnsDisable(true);
+                            //     // uploadBtnDisable(true);
+                            // }, 1500);
                         }, 1000);
                     }, 1500);
-                    // imageNames.forEach(name => uploadModal_uploadedImages.push(name));
                     clearInput();
                     handleUploadButtonState();
-                    uploadButtonDisable(true);
+                    // uploadBtnDisable(true);
                 } else {
                     uploadModal_progressBar.style.backgroundColor = '#ff000073';
                     setTimeout(() => {
@@ -1837,8 +1733,8 @@
                         uploadModal_progressBar.style.backgroundColor = '';
                         setTimeout(() => {
                             updateProgressBar('hidden', 0);
-                            removeBtnsDisable(true);
-                            uploadButtonDisable(true);
+                            // removeBtnsDisable(true);
+                            // uploadBtnDisable(true);
                         }, 500);
                     }, 3000);
 
@@ -1846,40 +1742,118 @@
                 }
             } catch (error) {
                 console.error('Fetch error:', error);
-                removeBtnsDisable(true);
-                uploadButtonDisable(true);
+                // removeBtnsDisable(true);
+                // uploadBtnDisable(true);
             }
         }
 
-        uploadModal_uploadForm.addEventListener('submit', function (event) { // better to use function 
-            console.log('inside onsubmit eventlistner');
-            event.preventDefault();
-            uploadButtonDisable(true);
-            removeBtnsDisable(true);
-            progressBarVisibility('visible');
-            if (uploadModal_fileInput.files.length <= 0) {
-                console.log('inside condtion 0 images')
-                alert('No images selected! Try again by selecting images');
-                console.log('request failed!');
-                return;
-            }
+        uploadModal_fileInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            addFiles(files);
+            displayImages();
+        });
 
-            const formData = new FormData(this);
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', this.action, true);
-
-            xhr.upload.addEventListener('progress', function (event) {
-                if (event.lengthComputable) {
-                    const progress = (event.loaded / event.total) * 76;
-                    updateProgressBar('visible', progress);
+        function addFiles(files) { // TODO: check where needed displayImages() function if not needed remove;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (uploadModal_allFiles.length >= 5) {
+                    displayImages();
+                    alert("You can only select up to 5 images.");
+                    return;
                 }
+                if (uploadModal_allFiles.some(existingFile => existingFile.name === file.name)) {
+                    displayImages();
+                    alert(`Image ${file.name} is already selected.`);
+                    return;
+                }
+                if (uploadModal_uploadedImages.includes(file.name)) {
+                    displayImages();
+                    alert(`File ${file.name} is already uploaded.`);
+                    return;
+                }
+                if (file.size > 1024 * 1024) {
+                    displayImages();
+                    alert("File size exceeds 1 MB. Please select a smaller file.");
+                    return;
+                }
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!supportedFormats.includes(fileExtension)) {
+                    displayImages();
+                    alert(`Unsupported image format: "${fileExtension.toUpperCase()}".`);
+                    return;
+                }
+                uploadModal_allFiles.push(file);
+                uploadModal_fileMap[file.name] = file;
+            }
+        }
+
+        function displayImages() {
+            console.log(uploadModal_allFiles);
+            console.log(uploadModal_fileMap);
+
+            handleUploadButtonState();
+            handleImgAddingBtns();
+            uploadContainerBorder();
+            uploadModal_imagePreview.innerHTML = "";
+            uploadModal_allFiles.forEach((file, index) => {
+                if (!file.type.match('image')) return;
+                const picReader = new FileReader();
+                picReader.addEventListener("load", (event) => {
+                    const picFile = event.target;
+                    const div = document.createElement("div");
+                    div.classList.add('image-container');
+                    div.style.border = '1px solid red';
+                    div.dataset.fileName = file.name;
+                    div.innerHTML = `<img
+                src="${picFile.result}"
+                class="preview-image">
+            <div class="file-info">
+                <p><b>${file.name}</b></p>
+                <p>${formatBytes(uploadModal_fileMap[file.name].size)}</p>
+            </div>
+            <button onclick='removeImage(${index})' class="remove-btn">Remove</button>`;
+                    uploadModal_imagePreview.appendChild(div);
+                });
+                picReader.readAsDataURL(file);
             });
+        }
+
+        function removeImage(index) {
+            uploadModal_allFiles.splice(index, 1);
+            displayImages();
+        }
+
+        function btnsDisable(boolean) {
+            uploadBtnDisable(boolean);
+            removeBtnsDisable(boolean);
+            browseFilesBtnsDisable(boolean);
+            progressBarVisibility(boolean ? 'visible' : 'hidden');
+        }
+
+        uploadModal_browseServerUpload.addEventListener('click', () => {
+            btnsDisable(true);
+            const formData = new FormData();
+            uploadModal_allFiles.forEach((file) => {
+                formData.append('images[]', file);
+            });
+
+
+            uploadModal_progressBar.value = 0; // reset before start
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 76;
+                    uploadModal_progressBar.value = percentComplete;
+                }
+            };
 
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log('Image uploaded successfully');
-                    const imageFiles = uploadModal_fileInput.files;
+                    const imageFiles = uploadModal_allFiles;
                     const imageNames = Array.from(imageFiles).map(file => file.name);
+
                     console.log('timer start!');
                     console.time();
                     loadUploadedImages(imageNames);
@@ -1891,169 +1865,12 @@
                     uploadModal_progressBar.style.backgroundColor = '#ff000073';
                     setTimeout(() => {
                         uploadModal_progressBar.style.backgroundColor = '';
-                        progressBarVisibility('hidden');
+                        btnsDisable(false);
                     }, 1000);
                 }
             };
-
             xhr.send(formData);
         });
-
-        uploadModal_fileInput.addEventListener('change', function () {
-            const supportedFormats = [
-                'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
-            ];
-            const selectedFiles = Array.from(this.files);
-            const validFiles = selectedFiles.filter(file => file.size <= 1048576);
-
-            if (validFiles.length < selectedFiles.length) {
-                alert('One or more files exceed the 1MB size limit and have been removed.');
-            }
-
-            const dataTransfer = new DataTransfer();
-            let filesToUpload = [];
-
-            validFiles.forEach(file => {
-                // if (!uploadModal_uploadedImages.includes(file.name)) {
-                dataTransfer.items.add(file);
-                filesToUpload.push(file);
-                // } else {
-                //     alert(`File ${file.name} is already uploaded.`);
-                //     console.log(file);
-                // }
-            });
-
-            // validFiles.forEach(file => {
-            //     const fileExtension = file.name.split('.').pop().toLowerCase();
-            //     if (supportedFormats.includes(fileExtension)) {
-            //         dataTransfer.items.add(file);
-            //         filesToUpload.push(file);
-            //     } else {
-            //         alert(`File ${file.name} has an unsupported format and has been removed.`);
-            //     }
-            // });
-
-            this.files = dataTransfer.files;
-
-            const remainingFiles = Array.from(this.files).slice(0, 5);
-            if (selectedFiles.length > 5) {
-                const dataTransfer = new DataTransfer();
-                remainingFiles.forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                this.files = dataTransfer.files;
-                alert('You can only select up to 5 images.');
-            }
-
-            handleFiles(filesToUpload);
-            handleUploadButtonState();
-        });
-
-        function handleFiles(files) {
-            const maxAllowedImages = 5;
-            const currentUploadedImages = uploadModal_imagePreview.children.length;
-            const remainingSlots = maxAllowedImages - currentUploadedImages;
-
-            console.log(files.length);
-            console.log(files);
-            // handleUploadButtonState(files.length);
-
-            if (currentUploadedImages >= maxAllowedImages) {
-                alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
-                return;
-            }
-
-            const filesArray = Array.from(files);
-            const filesToAdd = filesArray.slice(0, remainingSlots);
-
-            let hasValidFile = false;
-            let isNewFileAdded = false;
-
-            for (const file of filesToAdd) {
-                if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
-                    alert(`Error: ${file.name} is not a supported file type.`);
-                    continue;
-                }
-
-                if (file.size > 1048576) {
-                    alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
-                    continue;
-                }
-
-                const existingFile = Array.from(uploadModal_imagePreview.children).find(child => child.dataset.fileName === file.name);
-                if (existingFile) {
-                    alert(`Error: ${file.name} is already added.`);
-                    continue;
-                }
-
-                hasValidFile = true;
-                isNewFileAdded = true;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const img = document.createElement('img');
-                    img.src = reader.result;
-                    img.classList.add('preview-image');
-
-                    const imageContainer = document.createElement('div');
-                    imageContainer.classList.add('image-container');
-                    imageContainer.style.border = '1px solid red';
-                    imageContainer.dataset.fileName = file.name;
-
-                    const fileInfo = document.createElement('div');
-                    fileInfo.classList.add('file-info');
-                    fileInfo.innerHTML = `
-                    <p><b>${file.name}</b></p>
-                    <p>Size: ${formatBytes(file.size)}</p>
-                    `;
-
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerText = 'Remove';
-                    removeBtn.classList.add('remove-btn');
-                    removeBtn.addEventListener('click', () => {
-                        const fileName = imageContainer.dataset.fileName;
-                        const indexToRemove = Array.from(uploadModal_fileInput.files).findIndex(file => file.name === fileName);
-                        if (indexToRemove !== -1) {
-                            const newFiles = Array.from(uploadModal_fileInput.files);
-                            newFiles.splice(indexToRemove, 1);
-                            const dataTransfer = new DataTransfer();
-                            newFiles.forEach(file => dataTransfer.items.add(file));
-                            uploadModal_fileInput.files = dataTransfer.files;
-                        }
-                        uploadModal_imagePreview.removeChild(imageContainer);
-                        if (uploadModal_imagePreview.children.length === 0) {
-                            uploadModal_uploadContainer.style.border = "";
-                            uploadModal_choseImages.style.display = "block";
-                            uploadModal_addMore.style.display = "none";
-                            uploadModal_browseBtnHidden.style.display = "none";
-                        }
-                        handleUploadButtonState();
-                        console.log(uploadModal_fileInput.files.length);
-                        console.log(uploadModal_fileInput.files);
-                    });
-
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(fileInfo);
-                    imageContainer.appendChild(removeBtn);
-                    uploadModal_imagePreview.appendChild(imageContainer);
-                    uploadModal_uploadContainer.style.border = "none";
-                    uploadModal_choseImages.style.display = "none";
-                    if (window.innerWidth < 359) {
-                        uploadModal_addMore.style.display = "none";
-                        uploadModal_browseBtnHidden.style.display = "block";
-                    } else {
-                        uploadModal_addMore.style.display = "block";
-                        uploadModal_browseBtnHidden.style.display = "none";
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-
-            if (!hasValidFile && isNewFileAdded) {
-                uploadModal_choseImages.style.display = "block";
-                uploadModal_addMore.style.display = "none";
-                uploadModal_browseBtnHidden.style.display = "none";
-            }
-        }
 
         window.addEventListener('scroll', () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -2125,9 +1942,22 @@
             }
         };
 
-        // handleUploadButtonState();
-        window.addEventListener('load', clearInput);
-        document.addEventListener('DOMContentLoaded', clearInput);
+        function dragnDropToogle(boolean) {
+            boolean
+                ? uploadModal_modalContent.classList.add("active", "fade-out")
+                : uploadModal_modalContent.classList.remove("active", "fade-out");
+
+            uploadModal_modalContent.style.border = boolean ? "4px dashed black" : "none";
+            uploadModal_plusSign.style.opacity = boolean ? '1' : "0";
+            uploadModal_CloseBtn.style.display = boolean ? "none" : "block";
+            uploadModal_modalContent.style.animation = boolean ? "rotateBorder 4s ease infinite" : "none";
+            uploadModal_browseBtns.forEach(element => {
+                element.style.color = boolean ? "rgba(218, 160, 65, 0.87)" : "";
+            });
+            uploadModal_removeBtns.forEach(element => {
+                element.style.color = boolean ? "rgba(218, 160, 65, 0.87)" : "";
+            });
+        }
 
         function isMobileDevice() {
             const userAgent = navigator.userAgent;
@@ -2137,19 +1967,13 @@
         }
 
         function clearInput() {
-            uploadModal_uploadForm.reset();
+            uploadModal_allFiles.length = 0;
+            Object.keys(uploadModal_fileMap).forEach(key => delete uploadModal_fileMap[key]);
             uploadModal_fileInput.value = '';
             uploadModal_fileInput.type = 'text';
             uploadModal_fileInput.type = 'file';
             uploadModal_fileInput.value = '';
-            uploadButtonDisable(true);
-        }
-
-        function removeBtnsDisable(boolean) {
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            removeBtns.forEach(button => {
-                button.disabled = boolean;
-            });
+            uploadBtnDisable(true);
         }
 
         function updateProgressBar(visibility, value) {
@@ -2161,12 +1985,42 @@
             uploadModal_progressBar.style.visibility = visibility;
         }
 
-        function handleUploadButtonState(filesLength = uploadModal_fileInput.files.length) {
+        handleUploadButtonState();
+        function handleUploadButtonState(filesLength = uploadModal_allFiles.length) {
             uploadModal_browseServerUpload.disabled = filesLength <= 0;
         }
 
-        function uploadButtonDisable(boolean) {
+        function handleImgAddingBtns() {
+            const uploadModal_imageLength = uploadModal_allFiles.length;
+            uploadModal_choseImages.style.display = uploadModal_imageLength ? 'none' : 'block';
+            uploadModal_addMore.style.display = uploadModal_imageLength ? 'block' : 'none';
+        }
+
+        function uploadContainerBorder() {
+            const uploadModal_imageLength = uploadModal_allFiles.length;
+            uploadModal_uploadContainer.style.border = uploadModal_imageLength ? "" : "none";
+            uploadModal_uploadContainer.style.border = uploadModal_imageLength ? "none" : "";
+        }
+
+        function uploadBtnDisable(boolean) {
             uploadModal_browseServerUpload.disabled = boolean;
+        }
+
+        function removeBtnsDisable(boolean) {
+            document.querySelectorAll('.remove-btn').forEach(btn => {
+                btn.disabled = boolean;
+            });
+        }
+
+        function browseFilesBtnsDisable(boolean) {
+            document.querySelectorAll('.browse-btn-upload').forEach(btn => {
+                btn.disabled = boolean;
+            });
+
+            document.querySelectorAll('.browse-btn-div').forEach(div => {
+                div.style.opacity = boolean ? "0.6" : "";
+                div.style.border = boolean ? "2px solid rgba(0, 0, 0, 0.5)" : "";
+            });
         }
 
         function isSupportedVideoFormat(fileName) {

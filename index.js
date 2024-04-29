@@ -56,8 +56,8 @@ app.use(express.static('public', {
     maxAge: 2592000
 }));
 const asyncExec = promisify(exec);
-const imgbbUrl = process.env.IMGBB_API2;
-const mongoUrl = process.env.MONGODB_URI1;
+const imgbbUrl = process.env.IMGBB_API1;
+const mongoUrl = process.env.MONGODB_URI2;
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
 // const upload = multer({ dest: 'uploads/' }).array('images', 5); // ################################
