@@ -1695,7 +1695,7 @@
 
         async function loadUploadedImages(imageNames) {
             try {
-                const response = await fetch(`/images?img=${imageNames.join('&img=')}`);
+                const response = await fetch(`/api/images?img=${imageNames.join('&img=')}`);
                 if (!response.ok) {
                     console.error('Network response was not ok', response.statusText);
                     return;
@@ -1840,7 +1840,7 @@
 
             uploadModal_progressBar.value = 0; // reset before start
             const xhr = new XMLHttpRequest();
-            xhr.open('POST', '/upload', true);
+            xhr.open('POST', '/api/upload', true);
             xhr.upload.onprogress = function (event) {
                 if (event.lengthComputable) {
                     const percentComplete = (event.loaded / event.total) * 76;
@@ -1882,7 +1882,7 @@
             console.log('fetch req hit!');
             infiniteScrool_isLoading = true;
             infiniteScrool_spinnerDiv.style.display = 'block';
-            const response = await fetch(`/loadimages?page=${infiniteScrool_pageNumber}`);
+            const response = await fetch(`/api/loadimages?page=${infiniteScrool_pageNumber}`);
             const data = await response.json();
             infiniteScrool_isLoading = false;
             infiniteScrool_spinnerDiv.style.display = 'none';

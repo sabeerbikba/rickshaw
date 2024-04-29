@@ -93,7 +93,7 @@ async function delay() {
 
 console.time('post');
 console.log('post time start');
-app.post('/upload', upload, async (req, res) => {
+app.post('/api/upload', upload, async (req, res) => {
     console.log(`
     
     
@@ -190,7 +190,7 @@ console.timeEnd('post');
 
 
 console.time('getImages');
-app.get('/images', async (req, res) => {
+app.get('/api/images', async (req, res) => {
     console.log(`
     
 ((((([[[  GET || /images ]]])))))
@@ -257,7 +257,7 @@ console.timeEnd('getImages');
 
 
 console.time('getLoadImages');
-app.get('/loadimages', async (req, res) => {
+app.get('/api/loadimages', async (req, res) => {
     const { page } = req.query;
     console.log(`
     
