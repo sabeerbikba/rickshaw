@@ -56,11 +56,15 @@ app.use(express.static('public', {
     maxAge: 2592000
 }));
 const asyncExec = promisify(exec);
-const imgbbUrl = process.env.IMGBB_API3;
+const imgbbUrl = process.env.IMGBB_API2;
 const mongoUrl = process.env.MONGODB_URI1;
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = path.dirname(__filename);
-const upload = multer({ dest: 'uploads/' }).array('images', 5);
+// const upload = multer({ dest: 'uploads/' }).array('images', 5); // ################################
+// const upload = multer({ dest: 'uploads/' }).array('files[]', 5);
+const upload = multer({ dest: 'uploads/' }).array('images[]', 5);
+
+
 
 // const uploadDirectory = path.join(__dirname, 'uploads');
 // if (!fs.existsSync(uploadDirectory)) {
@@ -185,12 +189,12 @@ New POST req hit with ${req.files.length} images at ${Date()}`);
 console.timeEnd('post');
 
 
-console.time('get');
+console.time('getImages');
 app.get('/images', async (req, res) => {
     console.log(`
     
 ((((([[[  GET || /images ]]])))))
-New GET req hit at ${Date()}`);
+Req hit at ${Date()}`);
     let imageNames = req.query.img;
     if (!Array.isArray(imageNames)) {
         imageNames = [imageNames];
@@ -249,15 +253,16 @@ New GET req hit at ${Date()}`);
         res.end();
     }
 });
-console.timeEnd('get');
+console.timeEnd('getImages');
 
 
+console.time('getLoadImages');
 app.get('/loadimages', async (req, res) => {
+    const { page } = req.query;
     console.log(`
     
 ((((([[[  GET || /loadimages ]]])))))
-New GET req hit at ${Date()}`);
-    const { page } = req.query;
+Req hit pageNumber: ${page} at ${Date()}`);
     const perPage = 5;
     const skip = (page - 1) * perPage;
 
@@ -280,6 +285,7 @@ New GET req hit at ${Date()}`);
         res.end();
     }
 });
+console.timeEnd('getLoadImages');
 
 
 app.listen(port, () => {

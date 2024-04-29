@@ -1,32 +1,23 @@
-<!--**  Github: https://github.com/sabeerbikba/rickshaw  **-->
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="icon"
-        href="data:image/svg+xml,%3Csvg width='88' height='106' viewBox='0 0 88 106' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cg filter='url(%23filter0_d_127_2)'%3E%3Cpath fill-rule='evenodd' clip-rule='evenodd' d='M60.7036 57.7742C63.7873 54.0032 65.6333 49.2082 65.6333 43.9885C65.6333 31.8446 55.6418 22 43.3166 22C30.9915 22 21 31.8446 21 43.9885C21 49.4976 23.0563 54.5335 26.4538 58.3918L43.7 84L60.7105 57.7723L60.7036 57.7742Z' fill='white'/%3E%3Cellipse cx='43.3166' cy='43.0039' rx='9.18921' ry='8.53283' fill='%23C37E17'/%3E%3C/g%3E%3Cdefs%3E%3Cfilter id='filter0_d_127_2' x='0.9' y='0.9' width='86.8333' height='104.2' filterUnits='userSpaceOnUse' color-interpolation-filters='sRGB'%3E%3CfeFlood flood-opacity='0' result='BackgroundImageFix'/%3E%3CfeColorMatrix in='SourceAlpha' type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0' result='hardAlpha'/%3E%3CfeOffset dx='1'/%3E%3CfeGaussianBlur stdDeviation='10.55'/%3E%3CfeComposite in2='hardAlpha' operator='out'/%3E%3CfeColorMatrix type='matrix' values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.73 0'/%3E%3CfeBlend mode='normal' in2='BackgroundImageFix' result='effect1_dropShadow_127_2'/%3E%3CfeBlend mode='normal' in='SourceGraphic' in2='effect1_dropShadow_127_2' result='shape'/%3E%3C/filter%3E%3C/defs%3E%3C/svg%3E"
-        type="image/svg+xml">
-    <link rel="canonical" href="https://khaleel-rickshaw.vercel.app/gallery/">
-    <title>Honnavar Gallery - Khaleel's Rickshaw Service</title>
-    <meta name="description"
-        content="Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!">
-    <meta name="keywords"
-        content="Honnavar, rickshaw tours, gallery, Honnavar images, beach images, hill images, river images">
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://khaleel-rickshaw.vercel.app/gallery/">
-    <meta property="og:title" content="Honnavar Gallery - Khaleel's Rickshaw Service">
-    <meta property="og:description"
-        content="Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!">
-    <meta property="og:image" content="https://i.imgur.com/7XipwZo.jpg">
-    <meta property="og:image:alt" content="Rickshaw Card">
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://khaleel-rickshaw.vercel.app/gallery/">
-    <meta property="twitter:title" content="Honnavar Gallery - Khaleel's Rickshaw Service">
-    <meta property="twitter:description"
-        content="Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!">
-    <meta property="twitter:image" content="https://i.imgur.com/7XipwZo.jpg">
+    <title>Multiple Image Upload and Preview</title>
+    <!-- <style>
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 2px 5px;
+        }
+    </style> -->
     <style>
         * {
             margin: 0;
@@ -1430,762 +1421,641 @@
 </head>
 
 <body>
-    <header class="header">
-        <div class="nav-nav-nav">
-            <div class="nav flex">
-                <div class="nav-logo-div">
-                    <a class="text-dec-none" href="/">
-                        <svg width="100%" height="100%" viewBox="0 0 88 99" fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g id="Group 1" filter="url(#filter0_d_4_18)">
-                                <path id="Union" fill-rule="evenodd" clip-rule="evenodd"
-                                    d="M60.7036 50.7742C63.7873 47.0032 65.6333 42.2082 65.6333 36.9885C65.6333 24.8446 55.6418 15 43.3166 15C30.9915 15 21 24.8446 21 36.9885C21 42.4976 23.0563 47.5335 26.4538 51.3918L43.7 77L60.7105 50.7723L60.7036 50.7742Z"
-                                    fill="white" />
-                                <ellipse id="Ellipse 3" cx="43.3166" cy="36.0039" rx="9.18921" ry="8.53283"
-                                    fill="#C37E17" />
-                            </g>
-                            <defs>
-                                <filter id="filter0_d_4_18" x="0.9" y="-6.1" width="86.8333" height="104.2"
-                                    filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
-                                    <feFlood flood-opacity="0" result="BackgroundImageFix" />
-                                    <feColorMatrix in="SourceAlpha" type="matrix"
-                                        values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha" />
-                                    <feOffset dx="1" />
-                                    <feGaussianBlur stdDeviation="10.55" />
-                                    <feComposite in2="hardAlpha" operator="out" />
-                                    <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.73 0" />
-                                    <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_4_18" />
-                                    <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_4_18"
-                                        result="shape" />
-                                </filter>
-                            </defs>
-                        </svg>
-                    </a>
-                </div>
-                <div class="nav-nav-div">
-                    <nav class="nav-links">
-                        <ul class="nav-ul">
-                            <li class="nav-li">
-                                <a class="text-dec-none nav-a" href="../about/">About me</a>
-                            </li>
-                            <button class="nav-a upload-btn" id="upload-button">
-                                upload
-                            </button>
-                        </ul>
-                    </nav>
-                    <div>
-                        <svg width="100%" viewBox="0 0 862 9" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <g id="line">
-                                <path id="Vector 1" d="M1 4.5H862" stroke="black" stroke-width="3" />
-                                <ellipse id="Ellipse 4" cx="4" cy="4.5" rx="4" ry="4.5" fill="#FF0E0E" />
-                            </g>
-                        </svg>
+
+    <div class="image-gallery">
+        <button class="nav-a upload-btn" id="upload-button">
+            upload
+        </button>
+
+        <dialog id="upload-modal">
+            <div class="modal-overlay">
+                <div class="modal-content" id="uploadArea">
+                    <button class="close-btn" id="close-modal">X</button>
+                    <div class="upload-container">
+                        <div class="chose-images browse-btn-div">
+                            <span class="drag-text">Chose Images</span>
+                            <button class="browse-btn browse-btn-upload">Browse files</button>
+                        </div>
+                        <div class="plus-sign">+</div>
+                        <div class="image-preview" id="imagePreview"></div>
+                        <!-- TODO: use sngle selector -->
+                        <progress id="uploadProgress" value="0" max="100"></progress>
                     </div>
-                </div>
-            </div>
-        </div>
-    </header>
-    <main>
-        <div class="image-gallery">
-            <div class="image-item">
-                <img src="https://i.imgur.com/lj1YChB.jpg" alt="apsarkonda-falls-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/AELVLIx.jpeg" alt="mangrove-boardwalk-front" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/RcHMB4v.jpg" alt="eco-beach" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Eco Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/wLlFcOz.jpeg" alt="rickshaw-and-ecobeach-3" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/G4vcSYV.jpeg" alt="rickshaw-and-ecobeach-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/Sk0pt8f.jpg" alt="apsarkonda-falls" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/oYli6S9.jpeg" alt="Mangrove -walk-bridge" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Walk Bridge</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/CM3A2GU.jpg" alt="khaleel-rickshaw-1" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/PYJj2kc.jpg" alt="apsarkonda-hill-beach" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda Hill And Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/2dGwyFP.jpg" alt="apsarkonda-in-rainy-season" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda In Rainy Season</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/2BYPVup.jpeg" alt="Mangrove Honnavar" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Honnavar</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/CRjpr6X.jpg" alt="apsarkonda" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkonda</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/wMBpwZ6.jpeg" alt="rickshaw-and-ecobeach-1" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Rickshaw And Ecobeach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/IQUV13B.jpeg" alt="Boating-in-honnavar" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Boating In Honnavar</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/BEXx6V3.jpg" alt="eco-beach-2" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Eco Beach</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/PktW3cf.png" alt="apsarkoda-falls-3" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Apsarkoda Falls</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/NkuPoyi.jpeg" alt="ricksahw-seats" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Ricksahw Seats</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/MHQApPe.jpeg" alt="mangrove-boardwalk-front-2" class="gallery-img"
-                    loading="lazy" />
-                <div class="imagePreview-info-mobile">Mangrove Boardwalk Front</div>
-            </div>
-            <div class="image-item">
-                <img src="https://i.imgur.com/NtTKFde.jpg" alt="khaleel-rickshaw" class="gallery-img" loading="lazy" />
-                <div class="imagePreview-info-mobile">Khaleel Rickshaw</div>
-            </div>
-        </div>
-        <div id="message"></div>
-        <div id="loading-spinner"></div>
-    </main>
-    <dialog id="upload-modal">
-        <div class="modal-overlay">
-            <div class="modal-content" id="uploadArea">
-                <button class="close-btn" id="close-modal">X</button>
-                <div class="upload-container">
-                    <div class="chose-images browse-btn-div">
-                        <span class="drag-text">Chose Images</span>
-                        <button class="browse-btn browse-btn-upload">Browse files</button>
-                    </div>
-                    <div class="plus-sign">+</div>
-                    <div class="image-preview" id="imagePreview"></div>
-                    <!-- TODO: use sngle selector -->
-                    <progress id="uploadProgress" value="0" max="100"></progress>
-                </div>
-                <div class="btns-container">
-                    <div class="add-more browse-btn-div">
-                        <span class="drag-text">Add More Images</span>
-                        <button class="browse-btn browse-btn-upload">Browse files</button>
-                    </div>
-                    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                    <div class="btns-container">
+                        <div class="add-more browse-btn-div">
+                            <span class="drag-text">Add More Images</span>
+                            <button class="browse-btn browse-btn-upload">Browse files</button>
+                        </div>
+                        <!-- <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
                         <input type="file" id="fileInput" name="images" accept="image/*" multiple hidden>
                         <button id="upload-submit" class="browse-btn browse-server-upload" type="submit">Upload</button>
-                    </form>
-                    <button class="browse-btn browse-btn-upload browse-btn-hidden">Browse files</button>
+                    </form> -->
+                        <input type="file" id="fileInput" name="images[]" accept="image/*" multiple hidden />
+                        <button id="upload-submit" class="browse-btn browse-server-upload" type="submit">Upload</button>
+                        <button class="browse-btn browse-btn-upload browse-btn-hidden">Browse files</button>
+                    </div>
                 </div>
             </div>
-        </div>
-    </dialog>
-    <dialog id="imageModal">
-        <span class="imagePreview-close">&times;</span>
-        <img src="" alt="" class="imagePreview-modal-content">
-        <div class="imagePreview-info"></div>
-    </dialog>
-    <script>
-        // const uploadModal_uploadedImages = [];
-        const uploadModal_modalContent = document.getElementById('uploadArea');
-        const uploadModal_imagePreview = document.getElementById('imagePreview');
-        const uploadModal_plusSign = document.querySelector('.plus-sign');
-        const uploadModal_fileInput = document.getElementById('fileInput');
-        const uploadModal_choseImages = document.querySelector('.chose-images');
-        const uploadModal_addMore = document.querySelector('.add-more');
-        const uploadModal_uploadContainer = document.querySelector('.upload-container');
-        const uploadModal_browseBtns = document.querySelectorAll('.browse-btn');
-        const uploadModal_browseBtnDivs = document.querySelectorAll('.browse-btn-div');
-        const uploadModal_uploadModal = document.getElementById('upload-modal');
-        const uploadModal_CloseModal = document.getElementById('close-modal');
-        const uploadModal_CloseBtn = document.querySelector('.close-btn');
-        const uploadModal_uploadButton = document.getElementById('upload-button');
-        const uploadModal_browseBtnHidden = document.querySelector(".browse-btn-hidden");
-        const uploadModal_browseServerUpload = document.querySelector('.browse-server-upload');
-        const uploadModal_progressBar = document.getElementById('uploadProgress');
-        const uploadModal_uploadForm = document.getElementById('uploadForm');
-        const uploadModal_removeBtns = document.querySelectorAll('.remove-btn');
+        </dialog>
+        <div id="result"></div>
 
-        const imagePreview_modal = document.getElementById("imageModal");
-        const imagePreview_images = document.querySelectorAll(".gallery-img");
-        const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
-        const imagePreview_closeBtn = document.querySelector(".imagePreview-close");
-        const imagePreview_info = document.querySelector(".imagePreview-info");
-        const imagePreviewInfoMobile = document.querySelectorAll(".imagePreview-info-mobile");
-        const imagePreview_imageItem = document.querySelectorAll(".image-item");
-        const imagePreview_imageGallery = document.querySelector('.image-gallery');
+        <script>
+            const uploadModal_allFiles = [];
+            const uploadModal_fileMap = {};
+            const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+            const uploadModal_uploadedImages = [];
+            const uploadModal_fileInput = document.getElementById('fileInput');
+            const uploadModal_browseServerUpload = document.querySelector('.browse-server-upload');
+            const uploadModal_uploadButton = document.getElementById('upload-button');
+            const uploadModal_CloseModal = document.getElementById('close-modal');
+            const uploadModal_uploadModal = document.getElementById('upload-modal');
+            const uploadModal_imagePreview = document.getElementById('imagePreview');
+            const uploadModal_choseImages = document.querySelector('.chose-images');
+            const uploadModal_addMore = document.querySelector('.add-more');
+            const uploadModal_progressBar = document.getElementById('uploadProgress');
+            const uploadModal_modalContent = document.getElementById('uploadArea');
+            const uploadModal_CloseBtn = document.querySelector('.close-btn');
+            const uploadModal_plusSign = document.querySelector('.plus-sign');
+            const uploadModal_uploadContainer = document.querySelector('.upload-container');
+            const uploadModal_browseBtns = document.querySelectorAll('.browse-btn');
+            const uploadModal_removeBtns = document.querySelectorAll('.remove-btn');
 
-        let infiniteScrool_pageNumber = 1;
-        let infiniteScrool_allImagesShown = false;
-        let infiniteScrool_isLoading = false;
-        const infiniteScrool_messageElement = document.getElementById('message');
-        const infiniteScrool_spinnerDiv = document.getElementById('loading-spinner');
+            const imagePreview_modal = document.getElementById("imageModal");
+            const imagePreview_images = document.querySelectorAll(".gallery-img");
+            const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
+            const imagePreview_closeBtn = document.querySelector(".imagePreview-close");
+            const imagePreview_info = document.querySelector(".imagePreview-info");
+            const imagePreviewInfoMobile = document.querySelectorAll(".imagePreview-info-mobile");
+            const imagePreview_imageItem = document.querySelectorAll(".image-item");
+            const imagePreview_imageGallery = document.querySelector('.image-gallery');
 
-        // checkUploadButtonState();
-
-        if (isMobileDevice()) {
-            imagePreviewInfoMobile.forEach((image) => {
-                image.style.display = "block";
-            });
-            imagePreview_images.forEach((image) => {
-                image.style.borderRadius = "0";
-            });
-            imagePreview_imageItem.forEach((image) => {
-                image.style.border = "2px solid grey";
-                image.style.borderRadius = "5px";
-            });
-        } else {
-            imagePreviewInfoMobile.forEach((image) => {
-                image.style.display = "none";
-            });
-        }
-
-        if (!isMobileDevice()) {
-            imagePreview_images.forEach((image) => {
-                image.addEventListener('click', function () {
-                    imagePreview_modal.showModal();
-                    imagePreview_modalImg.src = this.src;
-                    imagePreview_modalImg.alt = this.alt;
-                    imagePreview_info.style.maxWidth = `${imagePreview_modalImg.clientWidth + 6}px`;
-                    imagePreview_info.textContent = this.alt.replace(/-/g, ' ').replace(/\d+/g, '');
-                    imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
-                });
+            uploadModal_uploadButton.addEventListener('click', () => {
+                uploadModal_uploadModal.showModal();
             });
 
-            imagePreview_closeBtn.addEventListener('click', () => {
-                imagePreview_modal.close();
-            });
-
-            imagePreview_modal.addEventListener('click', (event) => {
-                if (event.target === imagePreview_modal) {
-                    imagePreview_modal.close();
-                }
-            });
-        }
-
-        Array.from(document.querySelectorAll('.image-item')).reverse().forEach(item => {
-            imagePreview_imageGallery.appendChild(item);
-        });
-
-        uploadModal_uploadButton.addEventListener('click', () => {
-            uploadModal_uploadModal.showModal();
-        });
-
-        uploadModal_CloseModal.addEventListener('click', () => {
-            uploadModal_uploadModal.close();
-        });
-
-        document.addEventListener('keydown', (event) => {
-            if (event.key === "Escape") {
+            uploadModal_CloseModal.addEventListener('click', () => {
                 uploadModal_uploadModal.close();
-            }
-        });
-
-        uploadModal_browseBtns.forEach((btn) => {
-            btn.addEventListener('mouseover', () => {
-                uploadModal_browseBtnDivs.forEach((div) => {
-                    div.style.borderColor = 'rgba(0, 0, 0, 0.60)';
-                });
             });
 
-            btn.addEventListener('mouseout', () => {
-                uploadModal_browseBtnDivs.forEach((div) => {
-                    div.style.borderColor = 'black';
-                });
-            });
-        });
-
-        uploadModal_modalContent.addEventListener('dragover', (e) => {
-            e.preventDefault();
-            uploadModal_modalContent.classList.add('active');
-            uploadModal_modalContent.classList.add('fade-out');
-            uploadModal_plusSign.style.opacity = '1';
-            uploadModal_modalContent.style.border = "4px dashed black";
-            uploadModal_uploadContainer.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = 'rgba(218, 160, 65, 0.87)';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = 'rgba(218, 160, 65, 0.87)';
-            });
             document.addEventListener('click', function (event) {
-                if (event.target.classList.contains('remove-btn')) {
-                    event.target.style.color = 'rgba(218, 160, 65, 0.87)';
+                if (event.target.classList.contains('browse-btn-upload')) {
+                    uploadModal_fileInput.click();
                 }
             });
-            uploadModal_modalContent.style.animation = 'rotateBorder 4s ease infinite';
-        });
 
-        uploadModal_modalContent.addEventListener('dragleave', () => {
-            uploadModal_modalContent.classList.remove('active');
-            uploadModal_modalContent.classList.remove('fade-out');
-            uploadModal_plusSign.style.opacity = '0';
-            uploadModal_modalContent.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'block';
-            uploadModal_modalContent.style.animation = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = '';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = '';
-            });
-        });
-
-        uploadModal_modalContent.addEventListener('drop', (e) => {
-            e.preventDefault();
-            uploadModal_modalContent.classList.remove('active');
-            uploadModal_modalContent.classList.remove('fade-out');
-            uploadModal_plusSign.style.opacity = '0';
-            uploadModal_modalContent.style.border = "none";
-            uploadModal_CloseBtn.style.display = 'block';
-            uploadModal_modalContent.style.animation = 'none';
-            uploadModal_browseBtns.forEach(element => {
-                element.style.color = '';
-            });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
-            uploadModal_removeBtns.forEach(element => {
-                element.style.color = '';
-            });
-
-            const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const filesToAdd = Array.from(files).slice(0, 5);
-                const dataTransfer = new DataTransfer();
-                filesToAdd.forEach(file => {
-                    dataTransfer.items.add(file);
+            uploadModal_modalContent.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                uploadModal_modalContent.classList.add('active');
+                uploadModal_modalContent.classList.add('fade-out');
+                uploadModal_plusSign.style.opacity = '1';
+                uploadModal_modalContent.style.border = "4px dashed black";
+                uploadModal_uploadContainer.style.border = "none";
+                uploadModal_CloseBtn.style.display = 'none';
+                uploadModal_browseBtns.forEach(element => {
+                    element.style.color = 'rgba(218, 160, 65, 0.87)';
                 });
-                uploadModal_fileInput.files = dataTransfer.files;
-                handleFiles(filesToAdd);
-            }
-        });
+                uploadModal_removeBtns.forEach(element => {
+                    element.style.color = 'rgba(218, 160, 65, 0.87)';
+                });
+                document.addEventListener('click', function (event) {
+                    if (event.target.classList.contains('remove-btn')) {
+                        event.target.style.color = 'rgba(218, 160, 65, 0.87)';
+                    }
+                });
+                uploadModal_modalContent.style.animation = 'rotateBorder 4s ease infinite';
+            });
 
-        // TODO: if working need to remove 
-        document.addEventListener('click', function (event) {
-            if (event.target.classList.contains('browse-btn-upload')) {
-                uploadModal_fileInput.click();
-            }
-        });
+            uploadModal_modalContent.addEventListener('dragleave', () => {
+                uploadModal_modalContent.classList.remove('active');
+                uploadModal_modalContent.classList.remove('fade-out');
+                uploadModal_plusSign.style.opacity = '0';
+                uploadModal_modalContent.style.border = "none";
+                uploadModal_CloseBtn.style.display = 'block';
+                uploadModal_modalContent.style.animation = 'none';
+                uploadModal_browseBtns.forEach(element => {
+                    element.style.color = '';
+                });
+                uploadModal_removeBtns.forEach(element => {
+                    element.style.color = '';
+                });
+            });
 
-        async function loadUploadedImages(imageNames) {
-            try {
-                const response = await fetch(`/images?img=${imageNames.join('&img=')}`);
-                if (!response.ok) {
-                    console.error('Network response was not ok', response.statusText);
-                    return;
+
+            uploadModal_modalContent.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadModal_modalContent.classList.remove('active');
+                uploadModal_modalContent.classList.remove('fade-out');
+                uploadModal_plusSign.style.opacity = '0';
+                uploadModal_modalContent.style.border = "none";
+                uploadModal_CloseBtn.style.display = 'block';
+                uploadModal_modalContent.style.animation = 'none';
+                uploadModal_browseBtns.forEach(element => {
+                    element.style.color = '';
+                });
+                uploadModal_removeBtns.forEach(element => {
+                    element.style.color = '';
+                });
+
+                const files = e.dataTransfer.files;
+                addFiles(files);
+            });
+
+            uploadModal_fileInput.addEventListener('change', (event) => {
+                const files = event.target.files;
+                addFiles(files);
+                displayImages();
+            });
+
+            function addFiles(files) { // TODO: check where needed displayImages() function if not needed remove;
+                for (let i = 0; i < files.length; i++) {
+                    const file = files[i];
+                    if (uploadModal_allFiles.length >= 5) {
+                        alert("You can only select up to 5 images.");
+                        displayImages();
+                        return;
+                    }
+                    if (uploadModal_allFiles.some(existingFile => existingFile.name === file.name)) {
+                        alert(`Image ${file.name} is already selected.`);
+                        displayImages();
+                        return;
+                    }
+                    if (uploadModal_uploadedImages.includes(file.name)) {
+                        alert(`File ${file.name} is already uploaded.`);
+                        displayImages();
+                        return;
+                    }
+                    if (file.size > 1024 * 1024) {
+                        alert("File size exceeds 1 MB. Please select a smaller file.");
+                        displayImages();
+                        return;
+                    }
+                    const fileExtension = file.name.split('.').pop().toLowerCase();
+                    if (!supportedFormats.includes(fileExtension)) {
+                        alert(`Unsupported image format: "${fileExtension.toUpperCase()}".`);
+                        displayImages();
+                        return;
+                    }
+                    uploadModal_allFiles.push(file);
+                    uploadModal_fileMap[file.name] = file;
                 }
+            }
 
-                const { imagesOut } = await response.json();
-                console.log(imagesOut);
+            function displayImages() {
+                console.log(uploadModal_allFiles);
+                console.log(uploadModal_fileMap);
+                handleUploadButtonState();
+                handleImgAddingBtns();
+                uploadModal_imagePreview.innerHTML = "";
+                uploadModal_allFiles.forEach((file, index) => {
+                    if (!file.type.match('image')) return;
+                    const picReader = new FileReader();
+                    picReader.addEventListener("load", (event) => {
+                        const picFile = event.target;
+                        const div = document.createElement("div");
+                        div.classList.add('image-container');
+                        div.style.border = '1px solid red';
+                        div.dataset.fileName = file.name;
+                        div.innerHTML = `<img
+                src="${picFile.result}"
+                class="preview-image">
+            <div class="file-info">
+                <p><b>${file.name}</b></p>
+                <p>${formatBytes(uploadModal_fileMap[file.name].size)}</p>
+            </div>
+            <button onclick='removeImage(${index})' class="remove-btn">Remove</button>`;
+                        uploadModal_imagePreview.appendChild(div);
+                    });
+                    picReader.readAsDataURL(file);
+                });
+            }
 
-                console.log(imagesOut.length)
-                if (imagesOut && imagesOut.length > 0) {
-                    updateProgressBar('visible', 100);
-                    removeBtnsDisable(true);
-                    appendImages(imagesOut, '0 0 10px #b04a00');
-                    setTimeout(() => {
-                        uploadModal_uploadModal.close();
+            function removeImage(index) {
+                uploadModal_allFiles.splice(index, 1);
+                displayImages();
+            }
+
+            uploadModal_browseServerUpload.addEventListener('click', () => {
+                const formData = new FormData();
+                uploadModal_allFiles.forEach((file) => {
+                    formData.append('images[]', file);
+                });
+
+                uploadModal_progressBar.value = 0;
+
+                const xhr = new XMLHttpRequest();
+                xhr.open('POST', '/upload', true);
+                xhr.upload.onprogress = function (event) {
+                    if (event.lengthComputable) {
+                        const percentComplete = (event.loaded / event.total) * 76;
+                        uploadModal_progressBar.value = percentComplete;
+                    }
+                };
+
+                xhr.onload = function () {
+                    if (xhr.status === 200) {
+                        console.log('Image uploaded successfully');
+                        const imageFiles = uploadModal_allFiles;
+                        const imageNames = Array.from(imageFiles).map(file => file.name);
+                        console.log('timer start!');
+                        console.time();
+                        loadUploadedImages(imageNames);
+                        console.timeEnd();
+
+                        uploadModal_browseServerUpload.disabled = true;
+                    } else {
+                        console.error('Upload failed:', xhr.statusText);
+                        uploadModal_progressBar.style.backgroundColor = '#ff000073';
                         setTimeout(() => {
-                            updateProgressBar('hidden', 0);
-                            uploadModal_imagePreview.innerHTML = "";
-                            uploadModal_uploadContainer.style.border = "";
-                            uploadModal_choseImages.style.display = "block";
-                            uploadModal_addMore.style.display = "none";
+                            uploadModal_progressBar.style.backgroundColor = '';
+                            progressBarVisibility('hidden');
+                        }, 1000);
+                    }
+                };
+                xhr.send(formData);
+            });
+
+
+            async function loadUploadedImages(imageNames) {
+                try {
+                    const response = await fetch(`/images?img=${imageNames.join('&img=')}`);
+                    if (!response.ok) {
+                        console.error('Network response was not ok', response.statusText);
+                        return;
+                    }
+
+                    const { imagesOut } = await response.json();
+                    console.log(imagesOut);
+
+                    console.log(imagesOut.length)
+                    if (imagesOut && imagesOut.length > 0) {
+                        updateProgressBar('visible', 100);
+                        removeBtnsDisable(true);
+                        appendImages(imagesOut, '0 0 10px #b04a00');
+                        setTimeout(() => {
+                            uploadModal_uploadModal.close();
                             setTimeout(() => {
+                                updateProgressBar('hidden', 0);
+                                uploadModal_imagePreview.innerHTML = "";
+                                uploadModal_uploadContainer.style.border = "";
+                                uploadModal_choseImages.style.display = "block";
+                                uploadModal_addMore.style.display = "none";
+                                setTimeout(() => {
+                                    removeBtnsDisable(true);
+                                    uploadButtonDisable(true);
+                                }, 1500);
+                            }, 1000);
+                        }, 1500);
+                        clearInput();
+                        handleUploadButtonState();
+                        uploadButtonDisable(true);
+                    } else {
+                        uploadModal_progressBar.style.backgroundColor = '#ff000073';
+                        setTimeout(() => {
+                            alert('Failed to upload images. Please try again.');
+                            uploadModal_progressBar.style.backgroundColor = '';
+                            setTimeout(() => {
+                                updateProgressBar('hidden', 0);
                                 removeBtnsDisable(true);
                                 uploadButtonDisable(true);
-                            }, 1500);
-                        }, 1000);
-                    }, 1500);
-                    // imageNames.forEach(name => uploadModal_uploadedImages.push(name));
-                    clearInput();
-                    handleUploadButtonState();
-                    uploadButtonDisable(true);
-                } else {
-                    uploadModal_progressBar.style.backgroundColor = '#ff000073';
-                    setTimeout(() => {
-                        alert('Failed to upload images. Please try again.');
-                        uploadModal_progressBar.style.backgroundColor = '';
-                        setTimeout(() => {
-                            updateProgressBar('hidden', 0);
-                            removeBtnsDisable(true);
-                            uploadButtonDisable(true);
-                        }, 500);
-                    }, 3000);
+                            }, 500);
+                        }, 3000);
 
-                    console.log('server recived array is empty!');
+                        console.log('server recived array is empty!');
+                    }
+                } catch (error) {
+                    console.error('Fetch error:', error);
+                    removeBtnsDisable(true);
+                    uploadButtonDisable(true);
                 }
-            } catch (error) {
-                console.error('Fetch error:', error);
-                removeBtnsDisable(true);
+            }
+
+            function appendImages(images, boxShadow = '') {
+                images.forEach(image => {
+                    const imageItem = document.createElement('div');
+                    imageItem.classList.add('image-item');
+                    const img = document.createElement('img');
+                    img.src = image.srcUrl;
+                    img.alt = image.alt;
+                    img.classList.add('gallery-img');
+                    img.style.boxShadow = boxShadow;
+                    img.setAttribute('loading', 'lazy');
+                    const imagePreviewInfo = document.createElement('div');
+                    imagePreviewInfo.classList.add('imagePreview-info-mobile');
+                    imagePreviewInfo.textContent = image.alt;
+                    if (isMobileDevice() && image.alt) {
+                        imagePreviewInfo.style.display = 'block';
+                    } else {
+                        imagePreviewInfo.style.display = 'none';
+                    }
+                    imageItem.appendChild(img);
+                    imageItem.appendChild(imagePreviewInfo);
+                    imagePreview_imageGallery.appendChild(imageItem);
+
+                    if (!isMobileDevice()) {
+                        img.addEventListener('click', function () {
+                            imagePreview_modal.showModal();
+                            imagePreview_modalImg.src = this.src;
+                            imagePreview_modalImg.alt = this.alt;
+                            imagePreview_info.style.maxWidth = `${imagePreview_modalImg.clientWidth + 6}px`;
+                            imagePreview_info.textContent = this.alt.replace(/-/g, ' ').replace(/\d+/g, '');
+                            imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
+                        });
+                    }
+                });
+            }
+
+
+            function updateProgressBar(visibility, value) {
+                uploadModal_progressBar.style.visibility = visibility;
+                uploadModal_progressBar.value = value;
+            }
+
+
+            function removeBtnsDisable(boolean) {
+                const removeBtns = document.querySelectorAll('.remove-btn');
+                removeBtns.forEach(button => {
+                    button.disabled = boolean;
+                });
+            }
+
+
+            function clearInput() {
+                uploadModal_allFiles.length = 0;
+                Object.keys(uploadModal_fileMap).forEach(key => delete uploadModal_fileMap[key]);
                 uploadButtonDisable(true);
             }
-        }
 
-        uploadModal_uploadForm.addEventListener('submit', function (event) { // better to use function 
-            console.log('inside onsubmit eventlistner');
-            event.preventDefault();
-            uploadButtonDisable(true);
-            removeBtnsDisable(true);
-            progressBarVisibility('visible');
-            if (uploadModal_fileInput.files.length <= 0) {
-                console.log('inside condtion 0 images')
-                alert('No images selected! Try again by selecting images');
-                console.log('request failed!');
-                return;
+
+            function isMobileDevice() {
+                const userAgent = navigator.userAgent;
+                return (typeof window.orientation !== "undefined") ||
+                    (userAgent.indexOf('Mobile') !== -1) ||
+                    (userAgent.indexOf('touch') !== -1);
             }
 
-            const formData = new FormData(this);
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', this.action, true);
+            function uploadButtonDisable(boolean) {
+                uploadModal_browseServerUpload.disabled = boolean;
+            }
 
-            xhr.upload.addEventListener('progress', function (event) {
-                if (event.lengthComputable) {
-                    const progress = (event.loaded / event.total) * 76;
-                    updateProgressBar('visible', progress);
+            handleUploadButtonState();
+            function handleUploadButtonState(filesLength = uploadModal_allFiles.length) { // TODO: is really need value;
+                uploadModal_browseServerUpload.disabled = filesLength <= 0;
+            }
+
+            function handleImgAddingBtns() {
+                const imageLength = uploadModal_allFiles.length;
+                uploadModal_choseImages.style.display = imageLength ? 'none' : 'block';
+                uploadModal_addMore.style.display = imageLength ? 'block' : 'none';
+            }
+
+
+            function formatBytes(bytes, decimals = 2) {
+                if (bytes === 0) return '0 Bytes';
+                const k = 1024;
+                const dm = decimals < 0 ? 0 : decimals;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
+            }
+        </script>
+</body>
+
+</html>
+
+
+
+
+
+<!--
+    <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Multiple Image Upload and Preview</title>
+    <style>
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" id="fileInput" name="images[]" accept="image/*" multiple />
+    <button id="upload-submit" class="browse-btn browse-server-upload">Upload</button>
+    <div id="result"></div>
+    <progress id="uploadProgress" value="0" max="100" style="width: 100%;"></progress>
+
+    <script>
+        const uploadModal_allFiles = []; // Use const for variables that won't be reassigned
+        const supportedFormats = [
+            'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
+        ];
+        const uploadModal_uploadedImages = [];
+
+        document.getElementById('fileInput').addEventListener('change', (event) => {
+            const files = event.target.files; // FileList object
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (uploadModal_allFiles.length >= 5) {
+                    alert("You can only select up to 5 images.");
+                    displayImages();
+                    return;
                 }
+                if (uploadModal_uploadedImages.includes(file.name)) {
+                    alert(`File ${file.name} is already uploaded.`);
+                    displayImages();
+                    return;
+                }
+                if (file.size > 1024 * 1024) { // Check if file size is more than 1 MB
+                    alert("File size exceeds 1 MB. Please select a smaller file.");
+                    displayImages();
+                    return;
+                }
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!supportedFormats.includes(fileExtension)) {
+                    alert(`Unsupported image format: "${fileExtension.toUpperCase()}".`);
+                    displayImages();
+                    return;
+                }
+                uploadModal_allFiles.push(file);
+            }
+            displayImages();
+        });
+
+        function displayImages() {
+            const output = document.getElementById("result");
+            output.innerHTML = ""; // Clear previous images
+            uploadModal_allFiles.forEach((file, index) => {
+                if (!file.type.match('image')) return;
+                const picReader = new FileReader();
+                picReader.addEventListener("load", (event) => {
+                    const picFile = event.target;
+                    const div = document.createElement("div");
+                    div.innerHTML = `<img class='thumbnail' src='${picFile.result}' title='${picFile.name}'/>
+                                     <button class='remove-btn' onclick='removeImage(${index})'>Remove</button>`;
+                    output.appendChild(div);
+                });
+                picReader.readAsDataURL(file);
+            });
+        }
+
+        function removeImage(index) {
+            uploadModal_allFiles.splice(index, 1); // Remove the file from the array
+            displayImages(); // Refresh the display
+        }
+
+        document.querySelector('.browse-server-upload').addEventListener('click', () => {
+            const formData = new FormData();
+            uploadModal_allFiles.forEach((file) => {
+                formData.append('images[]', file);
             });
 
-            xhr.onload = function () {
-                if (xhr.status === 200) {
-                    console.log('Image uploaded successfully');
-                    const imageFiles = uploadModal_fileInput.files;
-                    const imageNames = Array.from(imageFiles).map(file => file.name);
-                    console.log('timer start!');
-                    console.time();
-                    loadUploadedImages(imageNames);
-                    console.timeEnd();
+            const uploadModal_progressBar = document.getElementById('uploadProgress');
+            uploadModal_progressBar.value = 0; // Reset progress bar
 
-                    uploadModal_browseServerUpload.disabled = true;
-                } else {
-                    console.error('Upload failed:', xhr.statusText);
-                    uploadModal_progressBar.style.backgroundColor = '#ff000073';
-                    setTimeout(() => {
-                        uploadModal_progressBar.style.backgroundColor = '';
-                        progressBarVisibility('hidden');
-                    }, 1000);
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 76;
+                    uploadModal_progressBar.value = percentComplete;
                 }
             };
 
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    console.log('Upload complete:', xhr.responseText);
+                } else {
+                    console.error('Upload failed:', xhr.statusText);
+                }
+            };
             xhr.send(formData);
         });
-
-        uploadModal_fileInput.addEventListener('change', function () {
-            const supportedFormats = [
-                'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
-            ];
-            const selectedFiles = Array.from(this.files);
-            const validFiles = selectedFiles.filter(file => file.size <= 1048576);
-
-            if (validFiles.length < selectedFiles.length) {
-                alert('One or more files exceed the 1MB size limit and have been removed.');
-            }
-
-            const dataTransfer = new DataTransfer();
-            let filesToUpload = [];
-
-            validFiles.forEach(file => {
-                // if (!uploadModal_uploadedImages.includes(file.name)) {
-                dataTransfer.items.add(file);
-                filesToUpload.push(file);
-                // } else {
-                //     alert(`File ${file.name} is already uploaded.`);
-                //     console.log(file);
-                // }
-            });
-
-            // validFiles.forEach(file => {
-            //     const fileExtension = file.name.split('.').pop().toLowerCase();
-            //     if (supportedFormats.includes(fileExtension)) {
-            //         dataTransfer.items.add(file);
-            //         filesToUpload.push(file);
-            //     } else {
-            //         alert(`File ${file.name} has an unsupported format and has been removed.`);
-            //     }
-            // });
-
-            this.files = dataTransfer.files;
-
-            const remainingFiles = Array.from(this.files).slice(0, 5);
-            if (selectedFiles.length > 5) {
-                const dataTransfer = new DataTransfer();
-                remainingFiles.forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                this.files = dataTransfer.files;
-                alert('You can only select up to 5 images.');
-            }
-
-            handleFiles(filesToUpload);
-            handleUploadButtonState();
-        });
-
-        function handleFiles(files) {
-            const maxAllowedImages = 5;
-            const currentUploadedImages = uploadModal_imagePreview.children.length;
-            const remainingSlots = maxAllowedImages - currentUploadedImages;
-
-            console.log(files.length);
-            console.log(files);
-            // handleUploadButtonState(files.length);
-
-            if (currentUploadedImages >= maxAllowedImages) {
-                alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
-                return;
-            }
-
-            const filesArray = Array.from(files);
-            const filesToAdd = filesArray.slice(0, remainingSlots);
-
-            let hasValidFile = false;
-            let isNewFileAdded = false;
-
-            for (const file of filesToAdd) {
-                if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
-                    alert(`Error: ${file.name} is not a supported file type.`);
-                    continue;
-                }
-
-                if (file.size > 1048576) {
-                    alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
-                    continue;
-                }
-
-                const existingFile = Array.from(uploadModal_imagePreview.children).find(child => child.dataset.fileName === file.name);
-                if (existingFile) {
-                    alert(`Error: ${file.name} is already added.`);
-                    continue;
-                }
-
-                hasValidFile = true;
-                isNewFileAdded = true;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const img = document.createElement('img');
-                    img.src = reader.result;
-                    img.classList.add('preview-image');
-
-                    const imageContainer = document.createElement('div');
-                    imageContainer.classList.add('image-container');
-                    imageContainer.style.border = '1px solid red';
-                    imageContainer.dataset.fileName = file.name;
-
-                    const fileInfo = document.createElement('div');
-                    fileInfo.classList.add('file-info');
-                    fileInfo.innerHTML = `
-                    <p><b>${file.name}</b></p>
-                    <p>Size: ${formatBytes(file.size)}</p>
-                    `;
-
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerText = 'Remove';
-                    removeBtn.classList.add('remove-btn');
-                    removeBtn.addEventListener('click', () => {
-                        const fileName = imageContainer.dataset.fileName;
-                        const indexToRemove = Array.from(uploadModal_fileInput.files).findIndex(file => file.name === fileName);
-                        if (indexToRemove !== -1) {
-                            const newFiles = Array.from(uploadModal_fileInput.files);
-                            newFiles.splice(indexToRemove, 1);
-                            const dataTransfer = new DataTransfer();
-                            newFiles.forEach(file => dataTransfer.items.add(file));
-                            uploadModal_fileInput.files = dataTransfer.files;
-                        }
-                        uploadModal_imagePreview.removeChild(imageContainer);
-                        if (uploadModal_imagePreview.children.length === 0) {
-                            uploadModal_uploadContainer.style.border = "";
-                            uploadModal_choseImages.style.display = "block";
-                            uploadModal_addMore.style.display = "none";
-                            uploadModal_browseBtnHidden.style.display = "none";
-                        }
-                        handleUploadButtonState();
-                        console.log(uploadModal_fileInput.files.length);
-                        console.log(uploadModal_fileInput.files);
-                    });
-
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(fileInfo);
-                    imageContainer.appendChild(removeBtn);
-                    uploadModal_imagePreview.appendChild(imageContainer);
-                    uploadModal_uploadContainer.style.border = "none";
-                    uploadModal_choseImages.style.display = "none";
-                    if (window.innerWidth < 359) {
-                        uploadModal_addMore.style.display = "none";
-                        uploadModal_browseBtnHidden.style.display = "block";
-                    } else {
-                        uploadModal_addMore.style.display = "block";
-                        uploadModal_browseBtnHidden.style.display = "none";
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-
-            if (!hasValidFile && isNewFileAdded) {
-                uploadModal_choseImages.style.display = "block";
-                uploadModal_addMore.style.display = "none";
-                uploadModal_browseBtnHidden.style.display = "none";
-            }
-        }
-
-        window.addEventListener('scroll', () => {
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
-                loadScrollImages();
-            }
-        });
-
-        async function fetchData() {
-            console.log('fetch req hit!');
-            infiniteScrool_isLoading = true;
-            infiniteScrool_spinnerDiv.style.display = 'block';
-            const response = await fetch(`/loadimages?page=${infiniteScrool_pageNumber}`);
-            const data = await response.json();
-            infiniteScrool_isLoading = false;
-            infiniteScrool_spinnerDiv.style.display = 'none';
-            console.log(data);
-            return data;
-        };
-
-        function appendImages(images, boxShadow = '') {
-            images.forEach(image => {
-                const imageItem = document.createElement('div');
-                imageItem.classList.add('image-item');
-                const img = document.createElement('img');
-                img.src = image.srcUrl;
-                img.alt = image.alt;
-                img.classList.add('gallery-img');
-                img.style.boxShadow = boxShadow;
-                img.setAttribute('loading', 'lazy');
-                const imagePreviewInfo = document.createElement('div');
-                imagePreviewInfo.classList.add('imagePreview-info-mobile');
-                imagePreviewInfo.textContent = image.alt;
-                if (isMobileDevice() && image.alt) {
-                    imagePreviewInfo.style.display = 'block';
-                } else {
-                    imagePreviewInfo.style.display = 'none';
-                }
-                imageItem.appendChild(img);
-                imageItem.appendChild(imagePreviewInfo);
-                imagePreview_imageGallery.appendChild(imageItem);
-
-                if (!isMobileDevice()) {
-                    img.addEventListener('click', function () {
-                        imagePreview_modal.showModal();
-                        imagePreview_modalImg.src = this.src;
-                        imagePreview_modalImg.alt = this.alt;
-                        imagePreview_info.style.maxWidth = `${imagePreview_modalImg.clientWidth + 6}px`;
-                        imagePreview_info.textContent = this.alt.replace(/-/g, ' ').replace(/\d+/g, '');
-                        imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
-                    });
-                }
-            });
-        };
-
-        function showMessage(message) {
-            infiniteScrool_messageElement.textContent = message;
-        };
-
-        async function loadScrollImages() {
-            if (infiniteScrool_allImagesShown || infiniteScrool_isLoading) return;
-
-            const data = await fetchData();
-            if (data.message) {
-                infiniteScrool_allImagesShown = true;
-                showMessage(data.message);
-            } else {
-                appendImages(data, 'rgb(174, 210, 0) 0px 0px 10px');
-                infiniteScrool_pageNumber++;
-            }
-        };
-
-        // handleUploadButtonState();
-        window.addEventListener('load', clearInput);
-        document.addEventListener('DOMContentLoaded', clearInput);
-
-        function isMobileDevice() {
-            const userAgent = navigator.userAgent;
-            return (typeof window.orientation !== "undefined") ||
-                (userAgent.indexOf('Mobile') !== -1) ||
-                (userAgent.indexOf('touch') !== -1);
-        }
-
-        function clearInput() {
-            uploadModal_uploadForm.reset();
-            uploadModal_fileInput.value = '';
-            uploadModal_fileInput.type = 'text';
-            uploadModal_fileInput.type = 'file';
-            uploadModal_fileInput.value = '';
-            uploadButtonDisable(true);
-        }
-
-        function removeBtnsDisable(boolean) {
-            const removeBtns = document.querySelectorAll('.remove-btn');
-            removeBtns.forEach(button => {
-                button.disabled = boolean;
-            });
-        }
-
-        function updateProgressBar(visibility, value) {
-            uploadModal_progressBar.style.visibility = visibility;
-            uploadModal_progressBar.value = value;
-        }
-
-        function progressBarVisibility(visibility) {
-            uploadModal_progressBar.style.visibility = visibility;
-        }
-
-        function handleUploadButtonState(filesLength = uploadModal_fileInput.files.length) {
-            uploadModal_browseServerUpload.disabled = filesLength <= 0;
-        }
-
-        function uploadButtonDisable(boolean) {
-            uploadModal_browseServerUpload.disabled = boolean;
-        }
-
-        function isSupportedVideoFormat(fileName) {
-            const supportedFormats = [
-                'jpg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
-            ];
-            const fileExtension = fileName.split('.').pop().toLowerCase();
-            return supportedFormats.includes(fileExtension);
-        }
-
-        function formatBytes(bytes, decimals = 2) {
-            if (bytes === 0) return '0 Bytes';
-            const k = 1024;
-            const dm = decimals < 0 ? 0 : decimals;
-            const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
-            const i = Math.floor(Math.log(bytes) / Math.log(k));
-            return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
-        }
     </script>
 </body>
 
 </html>
+-->
+
+
+
+<!-- <!DOCTYPE html>
+<html>
+
+<head>
+    <title>Multiple Image Upload and Preview</title>
+    <style>
+        .thumbnail {
+            width: 100px;
+            height: 100px;
+            margin: 5px;
+        }
+
+        .remove-btn {
+            background-color: red;
+            color: white;
+            border: none;
+            cursor: pointer;
+            padding: 2px 5px;
+        }
+    </style>
+</head>
+
+<body>
+    <input type="file" id="files" name="files[]" multiple />
+    <div id="result"></div>
+    <button id="uploadBtn">Upload</button>
+
+    <script>
+        const uploadModal_allFiles = []; // Use const for variables that won't be reassigned
+        const supportedFormats = [
+            'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
+        ];
+        const uploadModal_uploadedImages = [];
+
+        document.getElementById('files').addEventListener('change', (event) => {
+            const files = event.target.files; // FileList object
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (uploadModal_allFiles.length >= 5) {
+                    alert("You can only select up to 5 images.");
+                    displayImages();
+                    return;
+                }
+                if (uploadModal_uploadedImages.includes(file.name)) {
+                    alert(`File ${file.name} is already uploaded.`);
+                    displayImages();
+                    return;
+                }
+                if (file.size > 1024 * 1024) { // Check if file size is more than 1 MB
+                    alert("File size exceeds 1 MB. Please select a smaller file.");
+                    displayImages();
+                    return;
+                }
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!supportedFormats.includes(fileExtension)) {
+                    alert(`Unsupported image format: "${fileExtension.toUpperCase()}".`);
+                    displayImages();
+                    return;
+                }
+                uploadModal_allFiles.push(file);
+            }
+            displayImages();
+        });
+
+        function displayImages() {
+            const output = document.getElementById("result");
+
+            uploadModal_allFiles.forEach((file, index) => {
+                if (!file.type.match('image')) return;
+                const picReader = new FileReader();
+                picReader.addEventListener("load", (event) => {
+                    const picFile = event.target;
+                    const div = document.createElement("div");
+                    div.innerHTML = `<img class='thumbnail' src='${picFile.result}' title='${picFile.name}'/>
+                                     <button class='remove-btn' onclick='removeImage(${index})'>Remove</button>`;
+                    output.appendChild(div);
+                });
+                picReader.readAsDataURL(file);
+            });
+        }
+
+        function removeImage(index) {
+            uploadModal_allFiles.splice(index, 1); // Remove the file from the array
+            displayImages(); // Refresh the display
+        }
+
+        document.getElementById('uploadBtn').addEventListener('click', async () => {
+            const formData = new FormData();
+            uploadModal_allFiles.forEach((file) => {
+                formData.append('files[]', file);
+            });
+
+            try {
+                const response = await fetch('/upload', {
+                    method: 'POST',
+                    body: formData
+                });
+                const data = await response.text();
+                console.log(data);
+            } catch (error) {
+                console.error(error);
+            }
+        });
+    </script>
+</body>
+
+</html>
+ -->

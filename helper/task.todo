@@ -38,8 +38,15 @@ Upload failed: Internal Server Error upload:314:29
 * need to test giving image name in imgbb curl 
 * need to remove image reversing code 
 * create function for appending images 
-* VVVVVVVVVVV
-&*(*(^&^&*&*())) taskL  28/04 when images loading need to show loading screen **(&*(^&**(&*())))
+* need to chagne that spinning to rickshaw wheel to loading wheel 
+* after image uplaod it clear input right not also need to single chose images button 
+* image upload size need to chnage 
+* need to update file supported by imgbb 
+* to decrease size of file crate array of image and put those image crate 
+* newly uploaded images need to append to top 
+
+when uploading not buttons going to disable
+add progress bar in click
 
 ------------ BACK-END ------------------- 
 * new images need to append first then contitinue 

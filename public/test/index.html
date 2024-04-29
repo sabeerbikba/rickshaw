@@ -1598,10 +1598,12 @@
                         <span class="drag-text">Add More Images</span>
                         <button class="browse-btn browse-btn-upload">Browse files</button>
                     </div>
-                    <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
+                    <!-- <form id="uploadForm" action="/upload" method="POST" enctype="multipart/form-data">
                         <input type="file" id="fileInput" name="images" accept="image/*" multiple hidden>
                         <button id="upload-submit" class="browse-btn browse-server-upload" type="submit">Upload</button>
-                    </form>
+                    </form> -->
+                    <input type="file" id="fileInput" name="images[]" accept="image/*" multiple hidden />
+                    <button id="upload-submit" class="browse-btn browse-server-upload" type="submit">Upload</button>
                     <button class="browse-btn browse-btn-upload browse-btn-hidden">Browse files</button>
                 </div>
             </div>
@@ -1613,7 +1615,10 @@
         <div class="imagePreview-info"></div>
     </dialog>
     <script>
-        // const uploadModal_uploadedImages = [];
+        const uploadModal_allFiles = [];
+        const uploadModal_fileMap = {};
+        const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+        const uploadModal_uploadedImages = [];
         const uploadModal_modalContent = document.getElementById('uploadArea');
         const uploadModal_imagePreview = document.getElementById('imagePreview');
         const uploadModal_plusSign = document.querySelector('.plus-sign');
@@ -1690,9 +1695,10 @@
             });
         }
 
-        Array.from(document.querySelectorAll('.image-item')).reverse().forEach(item => {
-            imagePreview_imageGallery.appendChild(item);
-        });
+        // TODO: reverse
+        // Array.from(document.querySelectorAll('.image-item')).reverse().forEach(item => {
+        //     imagePreview_imageGallery.appendChild(item);
+        // }); 
 
         uploadModal_uploadButton.addEventListener('click', () => {
             uploadModal_uploadModal.showModal();
@@ -1761,6 +1767,35 @@
             });
         });
 
+        // uploadModal_modalContent.addEventListener('drop', (e) => {
+        //     e.preventDefault();
+        //     uploadModal_modalContent.classList.remove('active');
+        //     uploadModal_modalContent.classList.remove('fade-out');
+        //     uploadModal_plusSign.style.opacity = '0';
+        //     uploadModal_modalContent.style.border = "none";
+        //     uploadModal_CloseBtn.style.display = 'block';
+        //     uploadModal_modalContent.style.animation = 'none';
+        //     uploadModal_browseBtns.forEach(element => {
+        //         element.style.color = '';
+        //     });
+        //     // const removeBtns = document.querySelectorAll('.remove-btn');
+        //     uploadModal_removeBtns.forEach(element => {
+        //         element.style.color = '';
+        //     });
+
+        //     const files = e.dataTransfer.files;
+        //     if (files.length > 0) {
+        //         const filesToAdd = Array.from(files).slice(0, 5);
+        //         const dataTransfer = new DataTransfer();
+        //         filesToAdd.forEach(file => {
+        //             dataTransfer.items.add(file);
+        //         });
+        //         uploadModal_fileInput.files = dataTransfer.files;
+        //         handleFiles(filesToAdd);
+        //     }
+        // });
+
+
         uploadModal_modalContent.addEventListener('drop', (e) => {
             e.preventDefault();
             uploadModal_modalContent.classList.remove('active');
@@ -1772,29 +1807,74 @@
             uploadModal_browseBtns.forEach(element => {
                 element.style.color = '';
             });
-            // const removeBtns = document.querySelectorAll('.remove-btn');
             uploadModal_removeBtns.forEach(element => {
                 element.style.color = '';
             });
 
             const files = e.dataTransfer.files;
-            if (files.length > 0) {
-                const filesToAdd = Array.from(files).slice(0, 5);
-                const dataTransfer = new DataTransfer();
-                filesToAdd.forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                uploadModal_fileInput.files = dataTransfer.files;
-                handleFiles(filesToAdd);
-            }
+            addFiles(files);
         });
 
-        // TODO: if working need to remove 
         document.addEventListener('click', function (event) {
             if (event.target.classList.contains('browse-btn-upload')) {
                 uploadModal_fileInput.click();
             }
         });
+
+        // async function loadUploadedImages(imageNames) {
+        //     try {
+        //         const response = await fetch(`/images?img=${imageNames.join('&img=')}`);
+        //         if (!response.ok) {
+        //             console.error('Network response was not ok', response.statusText);
+        //             return;
+        //         }
+
+        //         const { imagesOut } = await response.json();
+        //         console.log(imagesOut);
+
+        //         console.log(imagesOut.length)
+        //         if (imagesOut && imagesOut.length > 0) {
+        //             updateProgressBar('visible', 100);
+        //             removeBtnsDisable(true);
+        //             appendImages(imagesOut, '0 0 10px #b04a00');
+        //             setTimeout(() => {
+        //                 uploadModal_uploadModal.close();
+        //                 setTimeout(() => {
+        //                     updateProgressBar('hidden', 0);
+        //                     uploadModal_imagePreview.innerHTML = "";
+        //                     uploadModal_uploadContainer.style.border = "";
+        //                     uploadModal_choseImages.style.display = "block";
+        //                     uploadModal_addMore.style.display = "none";
+        //                     setTimeout(() => {
+        //                         removeBtnsDisable(true);
+        //                         uploadButtonDisable(true);
+        //                     }, 1500);
+        //                 }, 1000);
+        //             }, 1500);
+        //             // imageNames.forEach(name => uploadModal_uploadedImages.push(name));
+        //             clearInput();
+        //             handleUploadButtonState();
+        //             uploadButtonDisable(true);
+        //         } else {
+        //             uploadModal_progressBar.style.backgroundColor = '#ff000073';
+        //             setTimeout(() => {
+        //                 alert('Failed to upload images. Please try again.');
+        //                 uploadModal_progressBar.style.backgroundColor = '';
+        //                 setTimeout(() => {
+        //                     updateProgressBar('hidden', 0);
+        //                     removeBtnsDisable(true);
+        //                     uploadButtonDisable(true);
+        //                 }, 500);
+        //             }, 3000);
+
+        //             console.log('server recived array is empty!');
+        //         }
+        //     } catch (error) {
+        //         console.error('Fetch error:', error);
+        //         removeBtnsDisable(true);
+        //         uploadButtonDisable(true);
+        //     }
+        // }
 
         async function loadUploadedImages(imageNames) {
             try {
@@ -1826,7 +1906,6 @@
                             }, 1500);
                         }, 1000);
                     }, 1500);
-                    // imageNames.forEach(name => uploadModal_uploadedImages.push(name));
                     clearInput();
                     handleUploadButtonState();
                     uploadButtonDisable(true);
@@ -1851,34 +1930,237 @@
             }
         }
 
-        uploadModal_uploadForm.addEventListener('submit', function (event) { // better to use function 
-            console.log('inside onsubmit eventlistner');
-            event.preventDefault();
-            uploadButtonDisable(true);
-            removeBtnsDisable(true);
-            progressBarVisibility('visible');
-            if (uploadModal_fileInput.files.length <= 0) {
-                console.log('inside condtion 0 images')
-                alert('No images selected! Try again by selecting images');
-                console.log('request failed!');
-                return;
-            }
+        // uploadModal_uploadForm.addEventListener('submit', function (event) { // better to use function 
+        //     console.log('inside onsubmit eventlistner');
+        //     event.preventDefault();
+        //     uploadButtonDisable(true);
+        //     removeBtnsDisable(true);
+        //     progressBarVisibility('visible');
+        //     if (uploadModal_fileInput.files.length <= 0) {
+        //         console.log('inside condtion 0 images')
+        //         alert('No images selected! Try again by selecting images');
+        //         console.log('request failed!');
+        //         return;
+        //     }
 
-            const formData = new FormData(this);
-            const xhr = new XMLHttpRequest();
-            xhr.open('POST', this.action, true);
+        //     const formData = new FormData(this);
+        //     const xhr = new XMLHttpRequest();
+        //     xhr.open('POST', this.action, true);
 
-            xhr.upload.addEventListener('progress', function (event) {
-                if (event.lengthComputable) {
-                    const progress = (event.loaded / event.total) * 76;
-                    updateProgressBar('visible', progress);
+        //     xhr.upload.addEventListener('progress', function (event) {
+        //         if (event.lengthComputable) {
+        //             const progress = (event.loaded / event.total) * 76;
+        //             updateProgressBar('visible', progress);
+        //         }
+        //     });
+
+        //     xhr.onload = function () {
+        //         if (xhr.status === 200) {
+        //             console.log('Image uploaded successfully');
+        //             const imageFiles = uploadModal_fileInput.files;
+        //             const imageNames = Array.from(imageFiles).map(file => file.name);
+        //             console.log('timer start!');
+        //             console.time();
+        //             loadUploadedImages(imageNames);
+        //             console.timeEnd();
+
+        //             uploadModal_browseServerUpload.disabled = true;
+        //         } else {
+        //             console.error('Upload failed:', xhr.statusText);
+        //             uploadModal_progressBar.style.backgroundColor = '#ff000073';
+        //             setTimeout(() => {
+        //                 uploadModal_progressBar.style.backgroundColor = '';
+        //                 progressBarVisibility('hidden');
+        //             }, 1000);
+        //         }
+        //     };
+
+        //     xhr.send(formData);
+        // });
+
+        // uploadModal_fileInput.addEventListener('change', function () {
+        //     const supportedFormats = [
+        //         'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
+        //     ];
+        //     const selectedFiles = Array.from(this.files);
+        //     const validFiles = selectedFiles.filter(file => file.size <= 1048576);
+
+        //     if (validFiles.length < selectedFiles.length) {
+        //         alert('One or more files exceed the 1MB size limit and have been removed.');
+        //     }
+
+        //     const dataTransfer = new DataTransfer();
+        //     let filesToUpload = [];
+
+        //     validFiles.forEach(file => {
+        //         // if (!uploadModal_uploadedImages.includes(file.name)) {
+        //         dataTransfer.items.add(file);
+        //         filesToUpload.push(file);
+        //         // } else {
+        //         //     alert(`File ${file.name} is already uploaded.`);
+        //         //     console.log(file);
+        //         // }
+        //     });
+
+        //     // validFiles.forEach(file => {
+        //     //     const fileExtension = file.name.split('.').pop().toLowerCase();
+        //     //     if (supportedFormats.includes(fileExtension)) {
+        //     //         dataTransfer.items.add(file);
+        //     //         filesToUpload.push(file);
+        //     //     } else {
+        //     //         alert(`File ${file.name} has an unsupported format and has been removed.`);
+        //     //     }
+        //     // });
+
+        //     this.files = dataTransfer.files;
+
+        //     const remainingFiles = Array.from(this.files).slice(0, 5);
+        //     if (selectedFiles.length > 5) {
+        //         const dataTransfer = new DataTransfer();
+        //         remainingFiles.forEach(file => {
+        //             dataTransfer.items.add(file);
+        //         });
+        //         this.files = dataTransfer.files;
+        //         alert('You can only select up to 5 images.');
+        //     }
+
+        //     handleFiles(filesToUpload);
+        //     handleUploadButtonState();
+        // });
+
+
+        uploadModal_fileInput.addEventListener('change', (event) => {
+            const files = event.target.files;
+            addFiles(files);
+            displayImages();
+        });
+
+
+
+        function appendImages(images, boxShadow = '') {
+            images.forEach(image => {
+                const imageItem = document.createElement('div');
+                imageItem.classList.add('image-item');
+                const img = document.createElement('img');
+                img.src = image.srcUrl;
+                img.alt = image.alt;
+                img.classList.add('gallery-img');
+                img.style.boxShadow = boxShadow;
+                img.setAttribute('loading', 'lazy');
+                const imagePreviewInfo = document.createElement('div');
+                imagePreviewInfo.classList.add('imagePreview-info-mobile');
+                imagePreviewInfo.textContent = image.alt;
+                if (isMobileDevice() && image.alt) {
+                    imagePreviewInfo.style.display = 'block';
+                } else {
+                    imagePreviewInfo.style.display = 'none';
+                }
+                imageItem.appendChild(img);
+                imageItem.appendChild(imagePreviewInfo);
+                imagePreview_imageGallery.appendChild(imageItem);
+
+                if (!isMobileDevice()) {
+                    img.addEventListener('click', function () {
+                        imagePreview_modal.showModal();
+                        imagePreview_modalImg.src = this.src;
+                        imagePreview_modalImg.alt = this.alt;
+                        imagePreview_info.style.maxWidth = `${imagePreview_modalImg.clientWidth + 6}px`;
+                        imagePreview_info.textContent = this.alt.replace(/-/g, ' ').replace(/\d+/g, '');
+                        imagePreview_modalImg.style.marginTop = ((window.innerHeight - imagePreview_modalImg.height) / 2) + 'px';
+                    });
                 }
             });
+        }
+
+        function addFiles(files) { // TODO: check where needed displayImages() function if not needed remove;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                if (uploadModal_allFiles.length >= 5) {
+                    displayImages();
+                    alert("You can only select up to 5 images.");
+                    return;
+                }
+                if (uploadModal_allFiles.some(existingFile => existingFile.name === file.name)) {
+                    displayImages();
+                    alert(`Image ${file.name} is already selected.`);
+                    return;
+                }
+                if (uploadModal_uploadedImages.includes(file.name)) {
+                    displayImages();
+                    alert(`File ${file.name} is already uploaded.`);
+                    return;
+                }
+                if (file.size > 1024 * 1024) {
+                    displayImages();
+                    alert("File size exceeds 1 MB. Please select a smaller file.");
+                    return;
+                }
+                const fileExtension = file.name.split('.').pop().toLowerCase();
+                if (!supportedFormats.includes(fileExtension)) {
+                    displayImages();
+                    alert(`Unsupported image format: "${fileExtension.toUpperCase()}".`);
+                    return;
+                }
+                uploadModal_allFiles.push(file);
+                uploadModal_fileMap[file.name] = file;
+            }
+        }
+
+        function displayImages() {
+            console.log(uploadModal_allFiles);
+            console.log(uploadModal_fileMap);
+            handleUploadButtonState();
+            handleImgAddingBtns();
+            uploadModal_imagePreview.innerHTML = "";
+            uploadModal_allFiles.forEach((file, index) => {
+                if (!file.type.match('image')) return;
+                const picReader = new FileReader();
+                picReader.addEventListener("load", (event) => {
+                    const picFile = event.target;
+                    const div = document.createElement("div");
+                    div.classList.add('image-container');
+                    div.style.border = '1px solid red';
+                    div.dataset.fileName = file.name;
+                    div.innerHTML = `<img
+                src="${picFile.result}"
+                class="preview-image">
+            <div class="file-info">
+                <p><b>${file.name}</b></p>
+                <p>${formatBytes(uploadModal_fileMap[file.name].size)}</p>
+            </div>
+            <button onclick='removeImage(${index})' class="remove-btn">Remove</button>`;
+                    uploadModal_imagePreview.appendChild(div);
+                });
+                picReader.readAsDataURL(file);
+            });
+        }
+
+        function removeImage(index) {
+            uploadModal_allFiles.splice(index, 1);
+            displayImages();
+        }
+
+        uploadModal_browseServerUpload.addEventListener('click', () => {
+            const formData = new FormData();
+            uploadModal_allFiles.forEach((file) => {
+                formData.append('images[]', file);
+            });
+
+            uploadModal_progressBar.value = 0;
+
+            const xhr = new XMLHttpRequest();
+            xhr.open('POST', '/upload', true);
+            xhr.upload.onprogress = function (event) {
+                if (event.lengthComputable) {
+                    const percentComplete = (event.loaded / event.total) * 76;
+                    uploadModal_progressBar.value = percentComplete;
+                }
+            };
 
             xhr.onload = function () {
                 if (xhr.status === 200) {
                     console.log('Image uploaded successfully');
-                    const imageFiles = uploadModal_fileInput.files;
+                    const imageFiles = uploadModal_allFiles;
                     const imageNames = Array.from(imageFiles).map(file => file.name);
                     console.log('timer start!');
                     console.time();
@@ -1895,165 +2177,114 @@
                     }, 1000);
                 }
             };
-
             xhr.send(formData);
         });
 
-        uploadModal_fileInput.addEventListener('change', function () {
-            const supportedFormats = [
-                'jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'
-            ];
-            const selectedFiles = Array.from(this.files);
-            const validFiles = selectedFiles.filter(file => file.size <= 1048576);
+        // function handleFiles(files) { // TODO: 
+        //     const maxAllowedImages = 5;
+        //     const currentUploadedImages = uploadModal_imagePreview.children.length;
+        //     const remainingSlots = maxAllowedImages - currentUploadedImages;
 
-            if (validFiles.length < selectedFiles.length) {
-                alert('One or more files exceed the 1MB size limit and have been removed.');
-            }
+        //     console.log(files.length);
+        //     console.log(files);
+        //     // handleUploadButtonState(files.length);
 
-            const dataTransfer = new DataTransfer();
-            let filesToUpload = [];
+        //     if (currentUploadedImages >= maxAllowedImages) {
+        //         alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
+        //         return;
+        //     }
 
-            validFiles.forEach(file => {
-                // if (!uploadModal_uploadedImages.includes(file.name)) {
-                dataTransfer.items.add(file);
-                filesToUpload.push(file);
-                // } else {
-                //     alert(`File ${file.name} is already uploaded.`);
-                //     console.log(file);
-                // }
-            });
+        //     const filesArray = Array.from(files);
+        //     const filesToAdd = filesArray.slice(0, remainingSlots);
 
-            // validFiles.forEach(file => {
-            //     const fileExtension = file.name.split('.').pop().toLowerCase();
-            //     if (supportedFormats.includes(fileExtension)) {
-            //         dataTransfer.items.add(file);
-            //         filesToUpload.push(file);
-            //     } else {
-            //         alert(`File ${file.name} has an unsupported format and has been removed.`);
-            //     }
-            // });
+        //     let hasValidFile = false;
+        //     let isNewFileAdded = false;
 
-            this.files = dataTransfer.files;
+        //     for (const file of filesToAdd) {
+        //         if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
+        //             alert(`Error: ${file.name} is not a supported file type.`);
+        //             continue;
+        //         }
 
-            const remainingFiles = Array.from(this.files).slice(0, 5);
-            if (selectedFiles.length > 5) {
-                const dataTransfer = new DataTransfer();
-                remainingFiles.forEach(file => {
-                    dataTransfer.items.add(file);
-                });
-                this.files = dataTransfer.files;
-                alert('You can only select up to 5 images.');
-            }
+        //         if (file.size > 1048576) {
+        //             alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
+        //             continue;
+        //         }
 
-            handleFiles(filesToUpload);
-            handleUploadButtonState();
-        });
+        //         const existingFile = Array.from(uploadModal_imagePreview.children).find(child => child.dataset.fileName === file.name);
+        //         if (existingFile) {
+        //             alert(`Error: ${file.name} is already added.`);
+        //             continue;
+        //         }
 
-        function handleFiles(files) {
-            const maxAllowedImages = 5;
-            const currentUploadedImages = uploadModal_imagePreview.children.length;
-            const remainingSlots = maxAllowedImages - currentUploadedImages;
+        //         hasValidFile = true;
+        //         isNewFileAdded = true;
+        //         const reader = new FileReader();
+        //         reader.onload = () => {
+        //             const img = document.createElement('img');
+        //             img.src = reader.result;
+        //             img.classList.add('preview-image');
 
-            console.log(files.length);
-            console.log(files);
-            // handleUploadButtonState(files.length);
+        //             const imageContainer = document.createElement('div');
+        //             imageContainer.classList.add('image-container');
+        //             imageContainer.style.border = '1px solid red';
+        //             imageContainer.dataset.fileName = file.name;
 
-            if (currentUploadedImages >= maxAllowedImages) {
-                alert(`You have already uploaded the maximum allowed images (${maxAllowedImages}).`);
-                return;
-            }
+        //             const fileInfo = document.createElement('div');
+        //             fileInfo.classList.add('file-info');
+        //             fileInfo.innerHTML = `
+        //             <p><b>${file.name}</b></p>
+        //             <p>Size: ${formatBytes(file.size)}</p>
+        //             `;
 
-            const filesArray = Array.from(files);
-            const filesToAdd = filesArray.slice(0, remainingSlots);
+        //             const removeBtn = document.createElement('button');
+        //             removeBtn.innerText = 'Remove';
+        //             removeBtn.classList.add('remove-btn');
+        //             removeBtn.addEventListener('click', () => {
+        //                 const fileName = imageContainer.dataset.fileName;
+        //                 const indexToRemove = Array.from(uploadModal_fileInput.files).findIndex(file => file.name === fileName);
+        //                 if (indexToRemove !== -1) {
+        //                     const newFiles = Array.from(uploadModal_fileInput.files);
+        //                     newFiles.splice(indexToRemove, 1);
+        //                     const dataTransfer = new DataTransfer();
+        //                     newFiles.forEach(file => dataTransfer.items.add(file));
+        //                     uploadModal_fileInput.files = dataTransfer.files;
+        //                 }
+        //                 uploadModal_imagePreview.removeChild(imageContainer);
+        //                 if (uploadModal_imagePreview.children.length === 0) {
+        //                     uploadModal_uploadContainer.style.border = "";
+        //                     uploadModal_choseImages.style.display = "block";
+        //                     uploadModal_addMore.style.display = "none";
+        //                     uploadModal_browseBtnHidden.style.display = "none";
+        //                 }
+        //                 handleUploadButtonState();
+        //                 console.log(uploadModal_fileInput.files.length);
+        //                 console.log(uploadModal_fileInput.files);
+        //             });
 
-            let hasValidFile = false;
-            let isNewFileAdded = false;
+        //             imageContainer.appendChild(img);
+        //             imageContainer.appendChild(fileInfo);
+        //             imageContainer.appendChild(removeBtn);
+        //             uploadModal_imagePreview.appendChild(imageContainer);
+        //             uploadModal_uploadContainer.style.border = "none";
+        //             uploadModal_choseImages.style.display = "none";
+        //             if (window.innerWidth < 359) {
+        //                 uploadModal_addMore.style.display = "none";
+        //                 uploadModal_browseBtnHidden.style.display = "block";
+        //             } else {
+        //                 uploadModal_addMore.style.display = "block";
+        //                 uploadModal_browseBtnHidden.style.display = "none";
+        //             }
+        //         };
+        //         reader.readAsDataURL(file);
+        //     }
 
-            for (const file of filesToAdd) {
-                if (!file.type.startsWith('image/') && !isSupportedVideoFormat(file.name)) {
-                    alert(`Error: ${file.name} is not a supported file type.`);
-                    continue;
-                }
-
-                if (file.size > 1048576) {
-                    alert(`Error: ${file.name} exceeds the file size limit (1MB).`);
-                    continue;
-                }
-
-                const existingFile = Array.from(uploadModal_imagePreview.children).find(child => child.dataset.fileName === file.name);
-                if (existingFile) {
-                    alert(`Error: ${file.name} is already added.`);
-                    continue;
-                }
-
-                hasValidFile = true;
-                isNewFileAdded = true;
-                const reader = new FileReader();
-                reader.onload = () => {
-                    const img = document.createElement('img');
-                    img.src = reader.result;
-                    img.classList.add('preview-image');
-
-                    const imageContainer = document.createElement('div');
-                    imageContainer.classList.add('image-container');
-                    imageContainer.style.border = '1px solid red';
-                    imageContainer.dataset.fileName = file.name;
-
-                    const fileInfo = document.createElement('div');
-                    fileInfo.classList.add('file-info');
-                    fileInfo.innerHTML = `
-                    <p><b>${file.name}</b></p>
-                    <p>Size: ${formatBytes(file.size)}</p>
-                    `;
-
-                    const removeBtn = document.createElement('button');
-                    removeBtn.innerText = 'Remove';
-                    removeBtn.classList.add('remove-btn');
-                    removeBtn.addEventListener('click', () => {
-                        const fileName = imageContainer.dataset.fileName;
-                        const indexToRemove = Array.from(uploadModal_fileInput.files).findIndex(file => file.name === fileName);
-                        if (indexToRemove !== -1) {
-                            const newFiles = Array.from(uploadModal_fileInput.files);
-                            newFiles.splice(indexToRemove, 1);
-                            const dataTransfer = new DataTransfer();
-                            newFiles.forEach(file => dataTransfer.items.add(file));
-                            uploadModal_fileInput.files = dataTransfer.files;
-                        }
-                        uploadModal_imagePreview.removeChild(imageContainer);
-                        if (uploadModal_imagePreview.children.length === 0) {
-                            uploadModal_uploadContainer.style.border = "";
-                            uploadModal_choseImages.style.display = "block";
-                            uploadModal_addMore.style.display = "none";
-                            uploadModal_browseBtnHidden.style.display = "none";
-                        }
-                        handleUploadButtonState();
-                        console.log(uploadModal_fileInput.files.length);
-                        console.log(uploadModal_fileInput.files);
-                    });
-
-                    imageContainer.appendChild(img);
-                    imageContainer.appendChild(fileInfo);
-                    imageContainer.appendChild(removeBtn);
-                    uploadModal_imagePreview.appendChild(imageContainer);
-                    uploadModal_uploadContainer.style.border = "none";
-                    uploadModal_choseImages.style.display = "none";
-                    if (window.innerWidth < 359) {
-                        uploadModal_addMore.style.display = "none";
-                        uploadModal_browseBtnHidden.style.display = "block";
-                    } else {
-                        uploadModal_addMore.style.display = "block";
-                        uploadModal_browseBtnHidden.style.display = "none";
-                    }
-                };
-                reader.readAsDataURL(file);
-            }
-
-            if (!hasValidFile && isNewFileAdded) {
-                uploadModal_choseImages.style.display = "block";
-                uploadModal_addMore.style.display = "none";
-                uploadModal_browseBtnHidden.style.display = "none";
-            }
-        }
+        //     if (!hasValidFile && isNewFileAdded) {
+        //         uploadModal_choseImages.style.display = "block";
+        //         uploadModal_addMore.style.display = "none";
+        //         uploadModal_browseBtnHidden.style.display = "none";
+        //     }
+        // }
 
         window.addEventListener('scroll', () => {
             if (window.innerHeight + window.scrollY >= document.body.offsetHeight) {
@@ -2136,12 +2367,18 @@
                 (userAgent.indexOf('touch') !== -1);
         }
 
+        // function clearInput() {
+        //     uploadModal_uploadForm.reset();
+        //     uploadModal_fileInput.value = '';
+        //     uploadModal_fileInput.type = 'text';
+        //     uploadModal_fileInput.type = 'file';
+        //     uploadModal_fileInput.value = '';
+        //     uploadButtonDisable(true);
+        // }
+
         function clearInput() {
-            uploadModal_uploadForm.reset();
-            uploadModal_fileInput.value = '';
-            uploadModal_fileInput.type = 'text';
-            uploadModal_fileInput.type = 'file';
-            uploadModal_fileInput.value = '';
+            uploadModal_allFiles.length = 0;
+            Object.keys(uploadModal_fileMap).forEach(key => delete uploadModal_fileMap[key]);
             uploadButtonDisable(true);
         }
 
@@ -2161,11 +2398,22 @@
             uploadModal_progressBar.style.visibility = visibility;
         }
 
-        function handleUploadButtonState(filesLength = uploadModal_fileInput.files.length) {
+        // function handleUploadButtonState(filesLength = uploadModal_fileInput.files.length) {
+        //     uploadModal_browseServerUpload.disabled = filesLength <= 0;
+        // }
+
+        handleUploadButtonState();
+        function handleUploadButtonState(filesLength = uploadModal_allFiles.length) { // TODO: is really need value;
             uploadModal_browseServerUpload.disabled = filesLength <= 0;
         }
 
-        function uploadButtonDisable(boolean) {
+        function handleImgAddingBtns() {
+            const imageLength = uploadModal_allFiles.length;
+            uploadModal_choseImages.style.display = imageLength ? 'none' : 'block';
+            uploadModal_addMore.style.display = imageLength ? 'block' : 'none';
+        }
+
+        function uploadButtonDisable(boolean) { // TODO: button to btn
             uploadModal_browseServerUpload.disabled = boolean;
         }
 
