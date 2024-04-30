@@ -49,31 +49,6 @@ import { exec } from 'child_process';
 import fs from 'fs';
 
 
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-    apiKey: "AIzaSyBrGZ8-xgE7Utnuzv0EMkd5iutW7eM-kZg",
-    authDomain: "rickshaw-70e28.firebaseapp.com",
-    projectId: "rickshaw-70e28",
-    storageBucket: "rickshaw-70e28.appspot.com",
-    messagingSenderId: "992250672618",
-    appId: "1:992250672618:web:bc64ff9154532fd91f2e93",
-    measurementId: "G-LF3BP9LMV9"
-};
-
-// Initialize Firebase
-const firebase = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-
-
-
-
 dotenv.config();
 const port = 3005;
 const app = express();
