@@ -288,7 +288,8 @@ Req hit pageNumber: ${page} at ${Date()}`);
 console.timeEnd('getLoadImages');
 
 
-app.listen(port, () => {
-    console.log(`Express server is running on http://localhost:${port}`);
-});
+// app.listen(port, () => {
+//     console.log(`Express server is running on http://localhost:${port}`);
+// });
 
+module.exports = app;
