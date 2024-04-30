@@ -1,6 +1,6 @@
 {
   "name": "rickshaw",
-  "version": "1.0.0",
+  "version": "1.61.0",
   "description": "",
   "main": "index.js",
   "type": "module",
@@ -14,29 +14,5 @@
   "devDependencies": {
     "express": "^4.19.1",
     "nodemon": "^3.1.0"
-  },
-  "dependencies": {
-    "axios": "^1.6.8",
-    "busboy": "^1.6.0",
-    "child_process": "^1.0.2",
-    "cors": "^2.8.5",
-    "dotenv": "^16.4.5",
-    "ejs": "^3.1.10",
-    "express-fileupload": "^1.5.0",
-    "firebase": "^10.11.1",
-    "form-data": "^4.0.0",
-    "formidable": "^3.5.1",
-    "fs": "0.0.1-security",
-    "gridfs-stream": "^1.1.1",
-    "http": "0.0.1-security",
-    "imgur": "^2.4.2",
-    "imgur-node-api": "^0.1.0",
-    "mongodb": "^6.5.0",
-    "mongoose": "^8.3.2",
-    "multer": "1.4.5-lts.1",
-    "node-fetch": "^3.3.2",
-    "path": "^0.12.7",
-    "socket.io": "^4.7.5",
-    "ws": "^8.16.0"
   }
 }
