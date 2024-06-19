@@ -1,8 +1,16 @@
 const ImagePreviewInfoMobile = document.querySelectorAll("#imagePreview-info-mobile");
 const ImageGallery = document.querySelectorAll("#gallery-img");
-const imagePreview_modal = document.querySelector("#imageModal"); console.log(imagePreview_modal);
 const imagePreview_modalImg = document.querySelector(".imagePreview-modal-content");
 const imagePreview_info = document.querySelector(".imagePreview-info");
+let imagePreview_modal;
+document.addEventListener("DOMContentLoaded", function () {
+   imagePreview_modal = document.getElementById("imageModal");
+});
+
+function getPathname(urlString) {
+   const url = new URL(urlString, window.location.origin);
+   return url.pathname;
+}
 
 function isMobileDevice() {
    const userAgent = navigator.userAgent;
@@ -11,7 +19,6 @@ function isMobileDevice() {
       (userAgent.indexOf('touch') !== -1);
 }
 
-console.log("isMobile: ", isMobileDevice());
 
 if (isMobileDevice()) {
    ImagePreviewInfoMobile.forEach(element => {

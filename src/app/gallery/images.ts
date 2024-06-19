@@ -5,7 +5,19 @@ export type ImageType = {
 
 const images: ImageType[] = [
    { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
-   { srcUrl: "https://i.imgur.com/AELVLIx.jpeg", alt: "mangrove-boardwalk-front" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+
+
+
+
+
+
+   // { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   // { srcUrl: "https://i.imgur.com/AELVLIx.jpeg", alt: "mangrove-boardwalk-front" },
    // { srcUrl: "https://i.imgur.com/RcHMB4v.jpg", alt: "eco-beach" },
    // { srcUrl: "https://i.imgur.com/wLlFcOz.jpeg", alt: "rickshaw-and-ecobeach-3" },
    // { srcUrl: "https://i.imgur.com/G4vcSYV.jpeg", alt: "rickshaw-and-ecobeach-2" },

@@ -1,17 +1,17 @@
 import "server-only";
-import { Fragment } from "react";
-import images, { ImageType } from "./images";
+import Link from "next/link";
+import Script from 'next/script';
 import Modal from "@/components/modal";
+import images, { ImageType } from "./images";
 import "./styles.css";
 
 export default function GalleryPage() {
    return (
       <>
-         <main className="main-gallery" style={{ paddingLeft: "5%", paddingRight: "5%" }}>
-            {/* this inline styles throw error find other solution */}
+         <main className="main-gallery">
             <div className="image-gallery">
                {images.map((img: ImageType, key: number) => (
-                  <Fragment key={key}>
+                  <Link key={key} href={`/gallery/${img.alt}`}>
                      <div className="image-item">
                         <img
                            src={img.srcUrl}
@@ -22,18 +22,18 @@ export default function GalleryPage() {
                         />
                      </div>
                      <div id="imagePreview-info-mobile">{img.alt}</div>
-                  </Fragment>
+                  </Link>
                ))}
             </div>
             <Modal />
             <div id="loading-spinner"></div>
-            <script src="/scripts/gallery-page.js"></script>
+            <Script strategy="afterInteractive" src="/scripts/gallery-page.js"></Script>
          </main>
-         <dialog id="imageModal">
+         {/* <dialog id="imageModal">
             <span className="imagePreview-close">&times;</span>
             <img src="" alt="" className="imagePreview-modal-content"/>
                <div className="imagePreview-info"></div>
-         </dialog>
+         </dialog> */}
       </>
    );
 }

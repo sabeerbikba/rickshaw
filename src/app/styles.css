@@ -1,51 +1,16 @@
-html,
-body,
 .main-home {
    height: 100%;
    width: 100%;
    overflow: hidden;
 }
 
-/* @font-face {
+@font-face {
    font-family: 'Questrial';
-   src: url('./assets/Questrial-Regular.ttf') format('truetype');
-} */
+   src: url('./Questrial-Regular.ttf') format('truetype');
+}
 
 .header {
    position: relative;
-   z-index: 30;
-}
-
-.nav-nav-nav {
-   background-color: #E5E2D6;
-   height: 100%;
-}
-
-.nav-logo-div {
-   width: 9%;
-}
-
-.nav-nav-div {
-   width: 91%;
-}
-
-.nav-a {
-   color: black;
-   display: inline-block;
-   padding-top: 13px;
-   padding-bottom: 13px;
-}
-
-.nav-ul {
-   list-style: none;
-   display: -webkit-box;
-   display: -webkit-flex;
-   display: -ms-flexbox;
-   display: flex;
-   -webkit-box-pack: end;
-   -webkit-justify-content: flex-end;
-   -ms-flex-pack: end;
-   justify-content: flex-end;
 }
 
 .main-image {
@@ -273,12 +238,6 @@ button {
    }
 }
 
-.nav {
-   width: 70%;
-   height: 100%;
-   margin: auto;
-}
-
 .road-svg {
    margin-bottom: -4.9px;
 }
@@ -313,15 +272,8 @@ button {
 }
 
 @media only screen and (max-width: 329px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
-   }
-
-   .header {
-      height: 44px;
    }
 
    .content {
@@ -382,34 +334,6 @@ button {
       padding-bottom: 55px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-links {
-      height: 46%;
-   }
-
-   .nav-ul {
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -458,10 +382,6 @@ button {
 }
 
 @media only screen and (min-width: 330px) and (max-width: 369px) {
-   .header {
-      height: 44px;
-   }
-
    .content {
       height: 170px;
    }
@@ -524,34 +444,6 @@ button {
       padding-bottom: 55px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-links {
-      height: 46%;
-   }
-
-   .nav-ul {
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -600,19 +492,12 @@ button {
 }
 
 @media only screen and (max-height: 445px) and (min-width: 330px) and (max-width: 369px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 370px) and (max-width: 419px) {
-   .header {
-      height: 44px;
-   }
-
    .content {
       height: 185px;
    }
@@ -675,34 +560,6 @@ button {
       padding-bottom: 55px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-links {
-      height: 52%;
-   }
-
-   .nav-ul {
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -751,19 +608,12 @@ button {
 }
 
 @media only screen and (max-height: 480px) and (min-width: 370px) and (max-width: 419px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 420px) and (max-width: 466px) {
-   .header {
-      height: 44px;
-   }
-
    .content {
       height: 190px;
    }
@@ -828,34 +678,6 @@ button {
       padding-bottom: 55px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-links {
-      height: 54%;
-   }
-
-   .nav-ul {
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -904,19 +726,12 @@ button {
 }
 
 @media only screen and (max-height: 515px) and (min-width: 420px) and (max-width: 466px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 467px) and (max-width: 566px) {
-   .header {
-      height: 48px;
-   }
-
    .content {
       height: 220px;
    }
@@ -982,31 +797,6 @@ button {
       padding-bottom: 55px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-ul {
-      height: 22px;
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1055,19 +845,12 @@ button {
 }
 
 @media only screen and (max-height: 550px) and (min-width: 467px) and (max-width: 566px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 567px) and (max-width: 666px) {
-   .header {
-      height: 50px;
-   }
-
    .content {
       height: 245px;
    }
@@ -1133,31 +916,6 @@ button {
       padding-bottom: 85px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-ul {
-      height: 22px;
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1206,19 +964,12 @@ button {
 }
 
 @media only screen and (max-height: 555px) and (min-width: 567px) and (max-width: 666px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 667px) and (max-width: 766px) {
-   .header {
-      height: 52px;
-   }
-
    .content {
       height: 255px;
       min-height: 240px;
@@ -1285,31 +1036,6 @@ button {
       padding-bottom: 85px;
    }
 
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-ul {
-      height: 22px;
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: .9rem;
-   }
-
-   .nav-logo-div {
-      width: 12%;
-   }
-
-   .nav-nav-div {
-      width: 88%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1358,9 +1084,6 @@ button {
 }
 
 @media only screen and (max-height: 685px) and (min-width: 667px) and (max-width: 766px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
@@ -1432,35 +1155,6 @@ button {
       padding-bottom: 85px;
    }
 
-   .header {
-      height: 54px;
-   }
-
-   .nav {
-      width: 80%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-ul {
-      height: 30px;
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: 1rem;
-   }
-
-   .nav-logo-div {
-      width: 8%;
-   }
-
-   .nav-nav-div {
-      width: 92%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1510,10 +1204,6 @@ button {
 
 
 @media only screen and (min-width: 867px) and (max-width: 1024px) {
-   .header {
-      height: 57px;
-   }
-
    .content {
       height: 410px;
       min-height: 270px;
@@ -1579,31 +1269,6 @@ button {
       padding-bottom: 85px;
    }
 
-   .nav {
-      width: 80%;
-   }
-
-   .nav-li {
-      margin-right: 9px;
-   }
-
-   .nav-ul {
-      height: 30px;
-      margin-right: 9px;
-   }
-
-   .nav-a {
-      font-size: 1rem;
-   }
-
-   .nav-logo-div {
-      width: 8%;
-   }
-
-   .nav-nav-div {
-      width: 92%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1652,7 +1317,6 @@ button {
 }
 
 @media only screen and (min-width: 1025px) and (max-width: 1150px) {
-
    .bar {
       height: 115px;
       -webkit-border-radius: 0 0 22px 22px;
@@ -1711,36 +1375,6 @@ button {
       margin-top: 14px;
    }
 
-   .header {
-      height: 67px;
-   }
-
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 21px;
-   }
-
-   .nav-ul {
-      height: 37px;
-      margin-right: 22px;
-   }
-
-   .nav-a {
-      padding-top: 17px;
-      font-size: 1.08rem;
-   }
-
-   .nav-logo-div {
-      width: 5%;
-   }
-
-   .nav-nav-div {
-      width: 95%;
-   }
-
    @-webkit-keyframes light {
       0% {
          background-color: rgba(250, 255, 115, 0);
@@ -1789,9 +1423,6 @@ button {
 }
 
 @media only screen and (max-height: 780px) and (min-width: 1025px) and (max-width: 1150px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
@@ -1840,63 +1471,15 @@ button {
       border-radius: 8px;
       background-color: #C9A10D;
    }
-
-   .header {
-      height: 78px;
-   }
-
-   .nav {
-      width: 78%;
-   }
-
-   .nav-li {
-      margin-right: 21px;
-   }
-
-   .nav-ul {
-      height: 43px;
-      margin-right: 22px;
-   }
-
-   .nav-a {
-      padding-top: 22px;
-      font-size: 1.1rem;
-   }
-
-   .bar {
-      height: 80px;
-      -webkit-border-radius: 0 0 25px 25px;
-      border-radius: 0 0 25px 25px;
-   }
-
-   .bar-bar {
-      height: 55px;
-   }
-
-   .nav-logo-div {
-      width: 5%;
-   }
-
-   .nav-nav-div {
-      width: 95%;
-   }
 }
 
 @media only screen and (max-height: 900px) and (min-width: 1151px) and (max-width: 1350px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 1351px) {
-
-   .content {
-      height: 455px;
-   }
-
    .content-content {
       width: 50%;
       margin-top: 15px;
@@ -1959,54 +1542,16 @@ button {
    .light-right {
       width: 25%;
    }
-
-   .header {
-      height: 82px;
-   }
-
-   .nav {
-      width: 87%;
-   }
-
-   .nav-li {
-      margin-right: 21px;
-   }
-
-   .nav-links {
-      height: 60%;
-   }
-
-   .nav-ul {
-      margin-right: 20px;
-   }
-
-   .nav-a {
-      font-size: 1.2rem;
-   }
-
-   .nav-logo-div {
-      width: 5%;
-   }
-
-   .nav-nav-div {
-      width: 95%;
-   }
 }
 
 @media only screen and (max-height: 1000px) and (min-width: 1351px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (min-width: 767px) and (max-width: 1025px) and (max-height: 930px) {
-
-   html,
-   body,
-   main {
+   .main-home {
       overflow: hidden;
    }
 
@@ -2029,9 +1574,6 @@ button {
 }
 
 @media only screen and (min-width: 1025px) and (min-height: 670px) {
-
-   html,
-   body,
    .main-home {
       overflow: hidden;
    }
@@ -2055,18 +1597,12 @@ button {
 }
 
 @media only screen and (max-height: 785px) and (min-width: 767px) and (max-width: 866px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
    }
 }
 
 @media only screen and (max-height: 680px) and (min-width: 867px) and (max-width: 1024px) {
-
-   html,
-   body,
    .main-home {
       overflow: visible;
       min-width: 100px;
