@@ -1,6 +1,10 @@
-"use server";
+"use client";
 
-export default async function Light({ position }: { position: string }) {
+interface LightProps {
+   position: 'left' | 'right';
+}
+
+export const Light: React.FC<LightProps> = ({ position }) => {
    return (
       <div className={`light-${position}`}>
          <svg
@@ -596,3 +600,5 @@ export default async function Light({ position }: { position: string }) {
       </div>
    )
 }
+
+export default Light;

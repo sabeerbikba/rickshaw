@@ -1,8 +1,10 @@
+import "server-only";
 import type { Metadata } from "next";
 import Link from "next/link";
 import NavLink from "@/components/navlink";
 import Logo from "@/components/logo";
 import Line from "@/components/line";
+import Class from "@/components/class";
 import "./globals.css";
 
 export const metadata: Metadata = { // need to check commented is working or not 
@@ -48,9 +50,9 @@ export const metadata: Metadata = { // need to check commented is working or not
 };
 
 const navItems = [
-   { urls: ['/', '/gallery'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
-   { urls: ['/', '/about-me'], href: '/gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
-   { urls: ['/gallery'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
+   { urls: ['/', '/gallery', '/gallery/*'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
+   { urls: ['/', '/about-me'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
+   { urls: ['/gallery', '/gallery/*'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
 ];
 
 export default function RootLayout({
@@ -63,7 +65,7 @@ export default function RootLayout({
    return (
       <html lang="en">
          <body>
-            <header className="header">
+            <header>
                <div className="nav-nav-nav">
                   <div className="nav flex">
                      <div className="nav-logo-div">
@@ -93,6 +95,7 @@ export default function RootLayout({
                </div>
             </header>
             {children}
+            <Class />
          </body>
       </html>
    );

@@ -35,3 +35,4 @@ next-env.d.ts
 
 # locale 
 before-commit-checks.md
+public/tmp

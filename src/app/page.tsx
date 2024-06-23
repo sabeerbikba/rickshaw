@@ -1,10 +1,8 @@
 import "server-only";
 import Script from 'next/script';
-import "./styles.css"
-import Light from "@/components/light";
 import Road from "@/components/road";
-
-// TODO: some time show interval somethig error need to fix: when navigating to this page to other page
+import "./styles.css"
+import Main from "@/components/main"
 
 export default function HomePage() {
    return (
@@ -13,7 +11,8 @@ export default function HomePage() {
             <div className="hero-img-div flex-center">
                <img
                   className="hero-img"
-                  src="https://i.imgur.com/GWpSpVl.jpeg"
+                  // src="https://i.imgur.com/GWpSpVl.jpeg"
+                  src="./tmp/GWpSpVl.jpg" // TODO: need to remove this image
                   alt="sunshine-ocean"
                />
             </div>
@@ -36,28 +35,16 @@ export default function HomePage() {
             </div>
          </div>
          <div className="content">
-            <Light position="left" />
-            <div className="content-content">
-               <h1>Explore Honnavar Like a Local</h1>
-               <p>
-                  Embark on a unique journey through the heart of Honnavar with our
-                  authentic rickshaw tours.
-               </p>
-               <div className="flex-center">
-                  <div className="btn-div" id="break">
-                     <button id="btn">Book Your Tour Today!</button>
-                  </div>
-               </div>
-            </div>
-            <Light position="right" />
+            <Main />
          </div>
          <div className="bar">
             <div className="bar-bar"></div>
          </div>
          <Road />
-         {["/scripts/hammer.js", "/scripts/home-page.js"].map(src => (
-            <Script strategy="afterInteractive" src={src}></Script>
-         ))}
+         {/* {["/scripts/hammer.js", "/scripts/home-page.js"].map((src, key) => (
+            <Script strategy="afterInteractive" src={src} key={key}></Script>
+         ))} */}
+         <Script strategy="afterInteractive" src="/scripts/home-page.js"></Script>
       </main>
    );
 }

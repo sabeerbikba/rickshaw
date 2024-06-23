@@ -10,6 +10,15 @@ const images: ImageType[] = [
    { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
    { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
    { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
+   { srcUrl: "https://i.imgur.com/lj1YChB.jpg", alt: "apsarkonda-falls-2" },
 
 
 

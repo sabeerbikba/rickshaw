@@ -31,7 +31,7 @@ export default function PhotoPage({
          </div>
       );
    } catch {
-      console.log('if');
+      // console.log('if');
       return <h1>no image to show </h1>
    }
 }

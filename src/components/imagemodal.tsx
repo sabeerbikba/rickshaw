@@ -1,8 +1,12 @@
 "use client";
-import { useCallback, useRef, useEffect, MouseEventHandler } from "react";
+import { useCallback, useRef, useEffect, MouseEventHandler, FC, ReactNode } from "react";
 import { useRouter } from "next/navigation";
 
-export default function ImageModal({ children }: { children: React.ReactNode }) {
+interface ImageModalProps {
+   children: ReactNode
+}
+
+const ImageModal: FC<ImageModalProps> = ({ children }) => {
    const overlay = useRef(null);
    const wrapper = useRef(null);
    const router = useRouter();
@@ -40,3 +44,5 @@ export default function ImageModal({ children }: { children: React.ReactNode }) 
       </div>
    );
 }
+
+export default ImageModal;

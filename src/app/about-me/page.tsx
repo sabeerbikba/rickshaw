@@ -17,14 +17,15 @@ export default function AboutMePage() {
          <div className="img-div flex-center">
             <img
                className="img"
-               src="https://i.imgur.com/HlVHlz8.jpeg"
+               // src="https://i.imgur.com/HlVHlz8.jpeg"
+               src="./tmp/HlVHlz8.jpeg" // TODO: need to remove this image
                alt="rickshaw-and-ecobeach"
             />
          </div>
          <div className="p-div flex-center">
             <div>
                {paragraphs.map((para, key) => (
-                  <p key={key}>{para}</p>
+                  <p className="p-about-me" key={key}>{para}</p>
                ))}
                <p>
                   <a href="/?tourClicked=true">Book your tour today</a> and let's write
