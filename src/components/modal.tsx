@@ -1,7 +1,7 @@
 'use client';
 import "client-only";
 import React, { useState, useEffect, useRef } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 // TODO: need to avoid reupload image 
@@ -115,12 +115,12 @@ export default function Modal() {
                   <div className="image-preview" id="imagePreview">
                      {selectedImages.map((image, index) => (
                         <div className="image-container" key={index}>
-                           <Image src={image.src} alt={`Preview ${index}`} className="preview-image" />
+                           <img src={image.src} alt={`Preview ${index}`} className="preview-image" />
                            <div className="file-info">
                               <p><b>{image.file.name}</b></p>
                               <p>{formatBytes(image.file.size)}</p>
-                              <button className="remove-btn" onClick={() => removeImage(index)}>Remove</button>
                            </div>
+                           <button className="remove-btn" onClick={() => removeImage(index)}>Remove</button>
                         </div>
                      ))}
                   </div>

@@ -18,7 +18,8 @@ const Class = () => {
          document.body.classList.add(BODY_CLASS);
          document.body.style.color = BODY_COLOR;
          if (header) {
-            header.classList.add("header");
+            header.classList.add("header-relative");
+            header.classList.remove('header-fixed');
             console.log("if");
          }
          // else {
@@ -30,7 +31,8 @@ const Class = () => {
          document.body.style.color = "";
          if (header) {
             console.log("else");
-            header.style.position = "relative";
+            header.classList.add('header-fixed');
+            header.classList.remove("header-relative");
          }
          // else {
          //    console.log('header not exist!!');
@@ -43,7 +45,7 @@ const Class = () => {
          document.body.style.color = "";
          // if (header) {
          //    console.log("return");
-         //    // header.classList.add("header-sabeer");
+         //    header.classList.remove("header");
          //    // header.style.position = "relative";
          // }
          // else {

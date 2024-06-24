@@ -1,5 +1,5 @@
 import "server-only";
-import Image from "next/image";
+// import Image from "next/image";
 import images, { ImageType } from "../images";
 // import images, { Image } from "../wonder"
 
@@ -16,9 +16,9 @@ export default function PhotoPage({
                <div>
                   <h1 className="text-center text-3xl font-bold my-4">{photo.alt}</h1>
                </div>
-               <Image
-                  height={"200"}
-                  width={"200"}
+               <img
+                  // height={"200"}
+                  // width={"200"}
                   alt={photo.alt}
                   src={photo.srcUrl}
                   className="w-full object-cover aspect-square "
@@ -31,7 +31,6 @@ export default function PhotoPage({
          </div>
       );
    } catch {
-      // console.log('if');
       return <h1>no image to show </h1>
    }
 }

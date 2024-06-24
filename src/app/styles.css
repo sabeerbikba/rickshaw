@@ -11,19 +11,6 @@
    src: url('./Questrial-Regular.ttf') format('truetype');
 }
 
-/* .header {
-   position: relative;
-} */
-
-.header-relative {
-   position: relative;
-}
-
-.header-fixed {
-   position: fixed;
-   z-index: 30;
-}
-
 .main-image {
    position: relative;
    background: rgb(215, 151, 48);

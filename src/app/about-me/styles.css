@@ -52,7 +52,7 @@ body,
 }
 
 .p-div div {
-   margin-top: 20px;
+   margin: 20px 0;
 }
 
 .p-div>div>.p-about-me {
@@ -62,7 +62,8 @@ body,
 .p-div div p a {
    color: black;
    text-decoration: none;
-   border: 1px solid #ab8800;
+   border: 1px solid transparent;
+   border-bottom: 1px solid #ab8800;
    padding: 0 5px;
 }
 

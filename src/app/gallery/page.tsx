@@ -1,10 +1,10 @@
 import "server-only";
 import Link from "next/link";
-import Script from 'next/script';
+// import Script from 'next/script';
 import Modal from "@/components/modal";
+import ImageBanners from "@/components/imagesbanners";
 import images, { ImageType } from "./images";
 import "./styles.css";
-import ImageBanners from "@/components/imagesbanners";
 
 export default function GalleryPage() {
    return (
@@ -24,10 +24,15 @@ export default function GalleryPage() {
                   </Link>
                ))}
             </div>
-            <Modal />
             <div id="loading-spinner"></div>
-            <ImageBanners />
          </main>
+         <dialog id="imageModal" open={false}>
+            <span className="imagePreview-close">&times;</span>
+            <img src="./tmp/GWpSpVl.jpg" alt="" className="imagePreview-modal-content" />
+            <div className="imagePreview-info"></div>
+         </dialog>
+         <Modal />
+         <ImageBanners />
       </>
    );
 }

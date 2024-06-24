@@ -65,7 +65,7 @@ export default function RootLayout({
    return (
       <html lang="en">
          <body>
-            <header>
+            <header className="header">
                <div className="nav-nav-nav">
                   <div className="nav flex">
                      <div className="nav-logo-div">
@@ -76,6 +76,7 @@ export default function RootLayout({
                      <div className="nav-nav-div">
                         <nav className="nav-links">
                            <ul className="nav-ul">
+                              {/* TODO: it genrating empty li fix it */}
                               {navItems.map((item, index) => (
                                  <li className="nav-li" key={index}>
                                     <NavLink urls={item.urls}>
