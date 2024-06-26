@@ -20,7 +20,11 @@ const NavLink: FC<NavLinkProps> = ({ urls, children }) => {
    const pathname = usePathname();
    return (
       <>
-         {urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && children}
+         {urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && (
+            <li className="nav-li">
+               {children}
+            </li>
+         )}
       </>
    );
 }
