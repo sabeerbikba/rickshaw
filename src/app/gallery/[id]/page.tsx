@@ -1,7 +1,10 @@
 import "server-only";
 // import Image from "next/image";
 import images, { ImageType } from "../images";
-// import images, { Image } from "../wonder"
+import UploadModal from "@/components/uploadmodal";
+import transformText from "@/utils/transformtext";
+import "./styles.css";
+import "../styles.css";
 
 export default function PhotoPage({
    params: { id },
@@ -11,27 +14,34 @@ export default function PhotoPage({
    try {
       const photo: ImageType = images.find((p) => p.alt === id)!;
       return (
-         <div className="container mx-auto my-10">
-            <div className="w-1/2 mx-auto">
-               <div>
-                  <h1 className="text-center text-3xl font-bold my-4">{photo.alt}</h1>
+         <>
+            <main className="main-gallery">
+               <div className="tab-img-preview">
+                  <img
+                     alt={photo.alt}
+                     src={photo.srcUrl}
+                  />
+                  <br />
+                  <br />
+                  <div>
+                     <h1>{transformText(photo.alt)}</h1>
+                  </div>
                </div>
-               <img
-                  // height={"200"}
-                  // width={"200"}
-                  alt={photo.alt}
-                  src={photo.srcUrl}
-                  className="w-full object-cover aspect-square "
-               />
-
-               <div className="bg-white py-4">
-                  <h3>{photo.alt}</h3>
-               </div>
-            </div>
-         </div>
+            </main>
+            <UploadModal />
+         </>
       );
    } catch {
-      return <h1>no image to show </h1>
+      return (
+         <>
+            <main className="main-gallery">
+               <div className="tab-img-preview">
+                  <h1 className="error">Image not Found</h1>
+               </div>
+            </main>
+            <UploadModal />
+         </>
+      );
    }
 }
 

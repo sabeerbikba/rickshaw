@@ -1,7 +1,7 @@
 import "server-only";
 import Link from "next/link";
 // import Script from 'next/script';
-import Modal from "@/components/modal";
+import UploadModal from "@/components/uploadmodal";
 import ImageBanners from "@/components/imagesbanners";
 import images, { ImageType } from "./images";
 import "./styles.css";
@@ -26,12 +26,7 @@ export default function GalleryPage() {
             </div>
             <div id="loading-spinner"></div>
          </main>
-         <dialog id="imageModal" open={false}>
-            <span className="imagePreview-close">&times;</span>
-            <img src="./tmp/GWpSpVl.jpg" alt="" className="imagePreview-modal-content" />
-            <div className="imagePreview-info"></div>
-         </dialog>
-         <Modal />
+         <UploadModal />
          <ImageBanners />
       </>
    );

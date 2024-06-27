@@ -10,19 +10,23 @@
       "runn": "rimraf .next && cls && next dev --turbo"
    },
    "dependencies": {
+      "child_process": "^1.0.2",
       "client-only": "^0.0.1",
+      "dotenv": "^16.4.5",
+      "mongodb": "^6.7.0",
       "next": "14.2.4",
-      "react": "^18",
-      "react-dom": "^18",
+      "react": "^18.3.1",
+      "react-dom": "^18.3.1",
       "rimraf": "^5.0.7",
-      "server-only": "^0.0.1"
+      "server-only": "^0.0.1",
+      "util": "^0.12.5"
    },
    "devDependencies": {
-      "@types/node": "^20",
-      "@types/react": "^18",
-      "@types/react-dom": "^18",
-      "eslint": "^8",
+      "@types/node": "^20.14.9",
+      "@types/react": "^18.3.3",
+      "@types/react-dom": "^18.3.0",
+      "eslint": "^8.57.0",
       "eslint-config-next": "14.2.4",
-      "typescript": "^5"
+      "typescript": "^5.5.2"
    }
 }

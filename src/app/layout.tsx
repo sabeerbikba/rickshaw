@@ -1,7 +1,7 @@
 import "server-only";
 import type { Viewport } from 'next'
 import Link from "next/link";
-import NavLink from "@/components/navlink";
+import NavLinks from "@/components/navlink";
 import Logo from "@/components/logo";
 import Line from "@/components/line";
 import Class from "@/components/class";
@@ -27,7 +27,7 @@ export const viewport: Viewport = {
 
 const navItems = [
    { urls: ['/', '/gallery', '/gallery/*'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
-   { urls: ['/', '/about-me'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
+   { urls: ['/', '/about-me', '/gallery/*'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
    { urls: ['/gallery', '/gallery/*'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
 ];
 
@@ -52,15 +52,7 @@ export default function RootLayout({
                      <div className="nav-nav-div">
                         <nav className="nav-links">
                            <ul className="nav-ul">
-                              {navItems.map((item, index) => (
-                                 <NavLink urls={item.urls} key={index}>
-                                    {item.component || (
-                                       <Link className={item.className} id={item.id} href={item.href}>
-                                          {item.label}
-                                       </Link>
-                                    )}
-                                 </NavLink>
-                              ))}
+                              <NavLinks />
                            </ul>
                         </nav>
                         <Line />

@@ -1,12 +1,12 @@
 'use client';
 import "client-only";
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, FC } from 'react';
 // import Image from 'next/image';
 
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 // TODO: need to avoid reupload image 
 
-export default function Modal() {
+const UploadModal: FC = () => {
    const [isOpen, setIsOpen] = useState(false);
    const [selectedImages, setSelectedImages] = useState<{ src: string, file: File }[]>([]);
    const fileInputRef = useRef<HTMLInputElement>(null);
@@ -143,3 +143,5 @@ export default function Modal() {
       </dialog>
    );
 }
+
+export default UploadModal;

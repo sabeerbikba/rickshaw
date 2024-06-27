@@ -421,6 +421,8 @@ body {
 }
 
 /* imagePreview-modal */
+/* TODO: need to add media-quries for #imageModal inside elements */
+
 #imageModal {
    user-select: none;
    z-index: 999999;
@@ -443,25 +445,53 @@ body {
    font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
    margin: auto;
    height: 100%;
-   margin-top: var(--image-preview-padding-top);
    display: flex;
    flex-direction: column;
    justify-content: center;
    align-items: center;
+   flex-direction: row;
    border: 3px solid grey;
    border-radius: 10px;
    max-width: 80%;
-   max-height: 80%;
+   max-height: 70px;
    background-color: #9b9786;
+   position: relative;
 }
 
-.image-preview-error-loading > div {
+.image-preview-error-loading>button {
+   height: 30px;
+   width: 50px;
+   position: absolute;
+   color: #4c0000;
+   right: 16px;
+   top: 10px;
+   background: none;
+   border: none;
+   font-size: 1.5rem;
+   cursor: pointer;
+}
+
+.image-preview-error-loading p:first-of-type { 
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.image-preview-error-loading>button:hover {
+   border: 2px solid darkred;
+   border-radius: 30%;
+   border-left: 0;
+   border-right: 0;
+}
+
+.image-preview-error-loading>.error {
    /* error msg */
    color: rgb(229, 0, 0);
+   background-color: transparent;
    text-shadow: 0 0 10px rgb(211, 211, 211);
 }
 
-.image-preview-error-loading > div > span {
+.image-preview-error-loading>div>span {
    text-shadow: 0 0 10px rgb(255, 255, 119);
 }
 

@@ -1,10 +1,14 @@
 "use client";
-import { ReactNode, FC } from "react";
+import { FC, ReactNode } from "react";
 import { usePathname } from "next/navigation";
 
-interface NavLinkProps {
+interface NavItem {
    urls: string[];
-   children: ReactNode;
+   href?: string;
+   className?: string;
+   id?: string;
+   label?: string;
+   component?: ReactNode;
 }
 
 const matchesUrl = (pathname: string, urlPattern: string) => {
@@ -16,17 +20,38 @@ const matchesUrl = (pathname: string, urlPattern: string) => {
    return false;
 }
 
-const NavLink: FC<NavLinkProps> = ({ urls, children }) => {
+const generateRelativePath = (pathname: string, targetPath: string) => {
+   const depth = pathname.split('/').length - 1;
+   const relativePrefix = './' + '../'.repeat(Math.max(0, depth - 1));
+   return relativePrefix + targetPath.slice(2);
+}
+
+const NavLinks: FC = () => {
    const pathname = usePathname();
+
+   const navItems: NavItem[] = [
+      { urls: ['/', '/gallery', '/gallery/*'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
+      { urls: ['/', '/about-me', '/gallery/*'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
+      { urls: ['/gallery', '/gallery/*'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
+   ];
+
    return (
-      <>
-         {urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && (
-            <li className="nav-li">
-               {children}
-            </li>
+      <ul className="nav-ul">
+         {navItems.map((item, index) =>
+            item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && (
+               <li className="nav-li" key={index}>
+                  {item.href ? (
+                     <a href={generateRelativePath(pathname, item.href)} className={item.className} id={item.id}>
+                        {item.label}
+                     </a>
+                  ) : (
+                     item.component
+                  )}
+               </li>
+            )
          )}
-      </>
+      </ul>
    );
 }
 
-export default NavLink;
+export default NavLinks;
