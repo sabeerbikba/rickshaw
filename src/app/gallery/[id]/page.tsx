@@ -2,7 +2,7 @@ import "server-only";
 // import Image from "next/image";
 import images, { ImageType } from "../images";
 import UploadModal from "@/components/uploadmodal";
-import transformText from "@/utils/transformtext";
+import { transformText } from "@/utils/functions";
 import "./styles.css";
 import "../styles.css";
 

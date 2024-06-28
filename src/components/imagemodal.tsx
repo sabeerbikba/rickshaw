@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useRef, useEffect, MouseEvent, useState, FC } from "react";
 import { useRouter } from "next/navigation";
-import transformText from "@/utils/transformtext";
+import { transformText } from "@/utils/functions";
 
 type ImageModalProps = {
    src: string;
@@ -16,6 +16,7 @@ type ImageModalProps = {
 // TODO: need to give better namming 
 // TODO: need to use useReducer
 // TODO: is loading sceen is there that scroll to top then show i don't want this behavior
+// TODO: image preview text need to add media quries for it 
 
 
 const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
@@ -24,6 +25,7 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
    const wrapper = useRef<HTMLDivElement>(null);
    const myRef = useRef<HTMLImageElement>(null);
    const imgPreviewLoadingErrorRef = useRef<HTMLDivElement>(null);
+   // const scrollPosition = useRef(0);
 
    const [dialogOpen, setDialogOpen] = useState<boolean>(true); // default true
    // console.log(dialogOpen); // here
@@ -33,10 +35,10 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
    const [imageLoadingFrame, setImageLoadingFrame] = useState<number>(0);
    const [imageLoadingFrame2, setImageLoadingFrame2] = useState<number>(0);
    const frames: string[] = ['🌑', '🌘', '🌗', '🌖', '🌕', '🌔', '🌓', '🌒'];
-   const frames2: string[] = ['...Image Loading', '..Image Loading.', '.Image Loading..', 'Image Loading...', '.Image Loading..', '..Image Loading.'];
+   const frames2 = ['Image Loading.', 'Image Loading..', 'Image Loading...', 'Image Loading..', 'Image Loading.']
    // MORE FRAMES OPTIONS:
    // const frames2 = ['Image Loading.', 'Image Loading..', 'Image Loading...'];
-   // const frames2 = ['Image Loading.', 'Image Loading..', 'Image Loading...', 'Image Loading..', 'Image Loading.']
+   // const frames2: string[] = ['...Image Loading', '..Image Loading.', '.Image Loading..', 'Image Loading...', '.Image Loading..', '..Image Loading.'];
 
    const onDismiss = useCallback(() => {
       router.back();
@@ -100,6 +102,7 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
    }, [onKeyDown]);
 
    useEffect(() => {
+      // TODO: here not used values in css need to remove
       const imagePreviewModalContent = document.querySelector<HTMLDivElement>(".imagePreview-modal-content");
       const imagePreviewInfo = document.querySelector<HTMLDivElement>(".imagePreview-info");
 
@@ -110,10 +113,11 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
             const imageMinusHeight = innerHeight - imagePreviewModalContentHeight;
             const calc = (innerHeight / 100) * 80;
 
-            if (imagePreviewInfo) {
-               imagePreviewInfo.style.width = `${width}px`;
-            }
+            // if (imagePreviewInfo) {
+            //    imagePreviewInfo.style.width = `${width}px`;
+            // }
 
+            // console.log('--image-modal-max-height', `${calc}px`);
             document.documentElement.style.setProperty('--image-modal-max-height', `${calc}px`);
             document.documentElement.style.setProperty('--image-preview-padding-top', `${(imageMinusHeight / 2)}px`);
             if (isLoaded) {
@@ -158,7 +162,7 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
                   {!isLoaded && !isError &&
                      <div>
                         <p>{frames[imageLoadingFrame]}</p>
-                        <p style={{ display: "block" }}>{frames2[imageLoadingFrame2]}</p>
+                        <p>{frames2[imageLoadingFrame2]}</p>
                      </div>
                   }
                   <button onClick={onDismiss}>&times;</button>
@@ -181,6 +185,14 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }) => {
 };
 
 export default ImageModal;
+
+
+
+
+
+
+
+
 
 
 

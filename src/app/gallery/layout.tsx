@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+// TODO: if better to use styles here use it 
 
 export const metadata: Metadata = { // need to check commented is working or not 
    title: "Honnavar Gallery - Khaleel's Rickshaw Service",

@@ -5,6 +5,7 @@ import UploadModal from "@/components/uploadmodal";
 import ImageBanners from "@/components/imagesbanners";
 import images, { ImageType } from "./images";
 import "./styles.css";
+import GalleryScroll from "@/components/galleryscroll";
 
 export default function GalleryPage() {
    return (
@@ -20,14 +21,16 @@ export default function GalleryPage() {
                         loading="lazy"
                         style={{ boxShadow: "1px solid red" }}
                      />
-                     <div id="imagePreview-info-mobile">{img.alt}</div>
+                     {/* <div id="imagePreview-info-mobile">{img.alt}</div> */}
                   </Link>
                ))}
             </div>
             <div id="loading-spinner"></div>
          </main>
          <UploadModal />
-         <ImageBanners />
+         <GalleryScroll />
+         {/* removed because of  */}
+         {/* <ImageBanners /> */}
       </>
    );
 }
