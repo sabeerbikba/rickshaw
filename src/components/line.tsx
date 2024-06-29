@@ -1,6 +1,6 @@
-"use server";
+import "server-only";
 
-export default async function Line() {
+export default function Line(): JSX.Element {
    return (
       <div>
          <svg

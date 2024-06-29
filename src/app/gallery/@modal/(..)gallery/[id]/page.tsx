@@ -6,7 +6,7 @@ export default function PhotoModal({
    params: { id },
 }: {
    params: { id: string };
-}) {
+}): JSX.Element {
    const photo: ImageType = images.find((p) => p.alt === id)!;
 
    return (

@@ -5,11 +5,14 @@ import React, { useState, useEffect, useRef, FC } from 'react';
 
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 // TODO: need to avoid reupload image 
+// TODO: when press ESC button need to close upload-modal
+// addmore button not rendering condition working properly need to fix console.log(selectedImages);
+      
 
-const UploadModal: FC = () => {
+const UploadModal: FC = (): JSX.Element => {
+   const fileInputRef = useRef<HTMLInputElement>(null);
    const [isOpen, setIsOpen] = useState(false);
    const [selectedImages, setSelectedImages] = useState<{ src: string, file: File }[]>([]);
-   const fileInputRef = useRef<HTMLInputElement>(null);
 
    useEffect(() => {
       const openModalButton = document.getElementById('upload-button');
@@ -105,29 +108,30 @@ const UploadModal: FC = () => {
             <div className="modal-content" id="uploadArea">
                <button className="close-btn" id="close-modal">X</button>
                <div className="upload-container">
-                  {selectedImages.length === 0 && (
+                  <div className="plus-sign">+</div>
+                  {selectedImages.length === 0 ? (
                      <div className="chose-images browse-btn-div">
                         <span className="drag-text">Choose Images{' '}</span>
                         <button onClick={fileInputClicked} className="browse-btn browse-btn-upload">Browse files</button>
                      </div>
-                  )}
-                  <div className="plus-sign">+</div>
-                  <div className="image-preview" id="imagePreview">
-                     {selectedImages.map((image, index) => (
-                        <div className="image-container" key={index}>
-                           <img src={image.src} alt={`Preview ${index}`} className="preview-image" />
-                           <div className="file-info">
-                              <p><b>{image.file.name}</b></p>
-                              <p>{formatBytes(image.file.size)}</p>
+                  ) : (
+                     <div className="image-preview" id="imagePreview">
+                        {selectedImages.map((image, index) => (
+                           <div className="image-container" key={index}>
+                              <img src={image.src} alt={`Preview ${index}`} className="preview-image" />
+                              <div className="file-info">
+                                 <p><b>{image.file.name}</b></p>
+                                 <p>{formatBytes(image.file.size)}</p>
+                              </div>
+                              <button className="remove-btn" onClick={() => removeImage(index)}>Remove</button>
                            </div>
-                           <button className="remove-btn" onClick={() => removeImage(index)}>Remove</button>
-                        </div>
-                     ))}
-                  </div>
+                        ))}
+                     </div>
+                  )}
                   <progress id="uploadProgress" value="10" max="100"></progress>
                </div>
                <div className="btns-container">
-                  {selectedImages.length > 0 && (
+                  {selectedImages.length !== 0 && (
                      <div className="add-more browse-btn-div">
                         <span className="drag-text">Add More Images{" "}</span>
                         <button onClick={fileInputClicked} className="browse-btn browse-btn-upload">Browse files</button>

@@ -1,6 +1,8 @@
-"use server";
+// "use server";
+import "server-only";
 
-export default async function Logo() {
+// export default async function Logo() {
+export default function Logo(): JSX.Element {
    return (
       <svg
          width="100%"

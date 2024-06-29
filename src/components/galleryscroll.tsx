@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 import { matchesUrl } from "@/utils/functions";
 
-const GalleryScroll = () => {
+const GalleryScroll = (): JSX.Element => {
    const pathname = usePathname();
 
    useEffect(() => {

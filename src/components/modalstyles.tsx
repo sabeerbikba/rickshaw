@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, FC } from "react";
 
-const ModalStyles: FC = () => {
+const ModalStyles: FC = (): JSX.Element => {
    useEffect(() => {
       const preview = document.querySelector(".preview") as HTMLElement;
       const imagePreviewModalContent = document.querySelector(".imagePreview-modal-content") as HTMLElement;

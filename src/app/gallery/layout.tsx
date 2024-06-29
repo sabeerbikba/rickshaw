@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
-// TODO: if better to use styles here use it 
+import "./styles.css";
 
-export const metadata: Metadata = { // need to check commented is working or not 
+export const metadata: Metadata = {
    title: "Honnavar Gallery - Khaleel's Rickshaw Service",
    description: "Explore Honnavar through captivating images of its azure beaches, majestic hills, and meandering rivers. Discover the beauty of Honnavar with Khaleel's Rickshaw Service. Book your tour today!",
    keywords: ["Honnavar", "rickshaw tours", "gallery", "Honnavar images", "beach images", "hill images", "river images"],
@@ -48,7 +48,7 @@ export default function Layout({
    children: React.ReactNode;
    modal: React.ReactNode;
 
-}>) {
+}>): JSX.Element {
    return (
       <>
          {children}

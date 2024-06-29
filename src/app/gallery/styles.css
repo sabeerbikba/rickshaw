@@ -1,8 +1,5 @@
 :root {
    --image-modal-max-height: 80vh;
-   /* Default value */
-   --image-preview-padding-top: 0px;
-   --image-preview-info-width: auto;
 }
 
 body {
@@ -11,11 +8,7 @@ body {
    background-attachment: fixed;
 }
 
-/* modal */
-
-.modal {
-   display: none;
-}
+/* upload modal */
 
 .modal-overlay {
    background-color: rgba(0, 0, 0, 0.2);
@@ -156,11 +149,9 @@ body {
    background-color: #51ff008f;
 }
 
-.error {
-   background-color: #ff000073;
-}
 
 .image-preview {
+   /* overflow: visible; */
    display: -webkit-box;
    display: -webkit-flex;
    display: -ms-flexbox;
@@ -255,6 +246,7 @@ body {
 }
 
 .upload-container {
+   /* overflow: hidden; */
    position: relative;
    width: 100%;
    height: -webkit-calc(100% - 55px);
@@ -280,7 +272,6 @@ body {
    -ms-flex-pack: center;
    justify-content: center;
    background-color: #daa0414d;
-   overflow: scroll;
 }
 
 .btns-container {
@@ -297,10 +288,6 @@ body {
    justify-content: space-evenly;
    width: -webkit-calc(100% - 40px);
    width: calc(100% - 40px);
-}
-
-.add-more {
-   display: none;
 }
 
 .browse-btn-div {
@@ -421,10 +408,10 @@ body {
 }
 
 /* imagePreview-modal */
-/* TODO: need to add media-quries for #imageModal inside elements */
 
 #imageModal {
    user-select: none;
+   text-align: center;
    z-index: 999999;
    left: 0;
    top: 0;
@@ -485,7 +472,6 @@ body {
 }
 
 .image-preview-error-loading>.error {
-   /* error msg */
    color: rgb(229, 0, 0);
    background-color: transparent;
    text-shadow: 0 0 10px rgb(211, 211, 211);
@@ -496,7 +482,6 @@ body {
 }
 
 .imagePreview-modal-content {
-   /* max-height: calc(var(--image-modal-max-height) * 1.4); */
    max-height: var(--image-modal-max-height);
    width: auto;
    margin: auto;
@@ -505,8 +490,6 @@ body {
    border-bottom: 0;
    background-color: #9b9786;
    border-radius: 5px 5px 0 0;
-   /* max-width: 80%; */
-   /* max-height: 80%; */
    box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
    -webkit-box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
    -moz-box-shadow: 0px 0px 120px 40px rgba(67, 53, 0, 0.8);
@@ -523,7 +506,6 @@ body {
 }
 
 .preview {
-   /* padding-top: var(--image-preview-padding-top); */
    height: 100%;
    width: 100%;
    display: flex;
@@ -532,7 +514,6 @@ body {
 }
 
 .imagePreview-info {
-   /* width: var(--image-preview-info-width); */
    background-color: #cacacac9;
    border: 3px solid gray;
    border-top: 0;
@@ -542,18 +523,36 @@ body {
    margin-right: auto;
    height: 40px;
    font-size: 1.34rem;
-   /* mix-blend-mode: hard-light; */
-   /* position: relative; */
-   /* top: -40px; */
-   /* text-shadow: 0 0 7px #fff; */
    font-weight: bold;
-   /* border-radius: 50%; */
    border-radius: 0 0 5px 5px;
    box-shadow: 0 0 50px 30px #8c8c8c57;
    display: flex;
    justify-content: center;
    align-items: center;
    text-transform: capitalize;
+}
+
+@media only screen and (width <=399px) {
+   .image-preview-error-loading {
+      height: 43px;
+   }
+
+   .image-preview-error-loading>div {
+      font-size: 0.80em;
+   }
+
+   .image-preview-error-loading>.error {
+      font-size: 0.50em;
+   }
+
+   .image-preview-error-loading>button {
+      height: 24px;
+      width: 24px;
+   }
+
+   .imagePreview-info {
+      font-size: 0.958em;
+   }
 }
 
 @media only screen and (width >=400px) and (width <=599px) {
@@ -566,16 +565,22 @@ body {
    }
 
    .image-preview-error-loading>.error {
-      font-size: 0.72em;
+      font-size: 0.53em;
    }
 
    .image-preview-error-loading>button {
       height: 26px;
-      width: 41px;
+      width: 29px;
    }
 
    .imagePreview-info {
       font-size: 0.978em;
+   }
+}
+
+@media only screen and (width >=500px) and (width <=599px) {
+   .image-preview-error-loading>.error { 
+      font-size: 0.65em;
    }
 }
 
@@ -603,7 +608,7 @@ body {
 }
 
 
-@media only screen and (width >=600px) and (width <=800px) {
+@media only screen and (width <=800px) {
    .image-preview-error-loading {
       position: static;
       justify-content: space-around;
@@ -614,10 +619,13 @@ body {
    }
 }
 
-
 @media only screen and (width <=1100px) {
    .imagePreview-modal-content {
       max-width: 80%;
+   }
+
+   .image-preview-error-loading>.error {
+      text-align-last: center;
    }
 
    .imagePreview-info {

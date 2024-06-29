@@ -18,7 +18,7 @@ const generateRelativePath = (pathname: string, targetPath: string) => {
    return relativePrefix + targetPath.slice(2);
 }
 
-const NavLinks: FC = () => {
+const NavLinks: FC = (): JSX.Element => {
    const pathname = usePathname();
 
    const navItems: NavItem[] = [

@@ -4,7 +4,7 @@ interface LightProps {
    position: 'left' | 'right';
 }
 
-export const Light: React.FC<LightProps> = ({ position }) => {
+export const Light: React.FC<LightProps> = ({ position }): JSX.Element => {
    return (
       <div className={`light-${position}`}>
          <svg

@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 // import Head from 'next/head'
 import "./styles.css";
 
-export const metadata: Metadata = { // need to check commented is working or not 
+export const metadata: Metadata = {
    title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
    description: "Welcome to Honnavar! Explore the azure beaches, majestic hills, and meandering rivers with Khaleel, your trusted local guide and rickshaw driver. Join us for an extraordinary journey through the heart of this coastal paradise. Book your tour today!",
    keywords: ["Honnavar", "rickshaw tours", "local guide", "Khaleel", "Honnavar adventure", "beach tours", "hill tours", "river tours"],
@@ -70,7 +70,7 @@ export default function AboutMePage() {
             </div>
             <div className="p-div flex-center">
                <div>
-                  {paragraphs.map((para, key) => (
+                  {paragraphs.map((para, key): JSX.Element => (
                      <p className="p-about-me" key={key}>{para}</p>
                   ))}
                   <p>

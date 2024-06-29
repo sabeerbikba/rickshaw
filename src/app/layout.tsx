@@ -7,19 +7,6 @@ import Line from "@/components/line";
 import Class from "@/components/class";
 import "./globals.css";
 
-/** TODO: fix error: 
- * 
-```bash
-⨯ ReferenceError: window is not defined
-   at getUrlParameter (C:\sabeerbikba\code\branches\rickshaw\.next\server\chunks\ssr\src_625a59._.js:1314:36)
-   at Home (C:\sabeerbikba\code\branches\rickshaw\.next\server\chunks\ssr\src_625a59._.js:1426:51)
-digest: "1514501281"
-```
- *  
- * 
- * 
- */
-
 export const viewport: Viewport = {
    width: 'device-width',
    initialScale: 1.0,
@@ -35,7 +22,7 @@ export default function RootLayout({
    children,
 }: Readonly<{
    children: React.ReactNode;
-}>) {
+}>): JSX.Element {
 
 
    return (

@@ -2,6 +2,8 @@
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
 
+// TODO: need to convert this component into typescript (.TSX) component
+
 const HTML_CLASS = 'html';
 const BODY_CLASS = 'body';
 const BODY_COLOR = "#575757";

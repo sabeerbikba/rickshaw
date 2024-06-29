@@ -4,13 +4,12 @@ import images, { ImageType } from "../images";
 import UploadModal from "@/components/uploadmodal";
 import { transformText } from "@/utils/functions";
 import "./styles.css";
-import "../styles.css";
 
 export default function PhotoPage({
    params: { id },
 }: {
    params: { id: string };
-}) {
+}): JSX.Element {
    try {
       const photo: ImageType = images.find((p) => p.alt === id)!;
       return (

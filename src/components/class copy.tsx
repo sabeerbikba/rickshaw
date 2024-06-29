@@ -7,7 +7,7 @@ const BODY_CLASS = 'body';
 const BODY_COLOR = "#575757";
 const HEADER_CLASS = "header";
 
-const Class: FC = () => {
+const Class: FC = (): JSX.Element => {
    const pathname: string = usePathname();
 
    useEffect(() => {

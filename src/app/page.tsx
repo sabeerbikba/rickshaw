@@ -3,9 +3,9 @@ import type { Metadata } from "next";
 import Script from 'next/script';
 import Road from "@/components/road";
 import Main from "@/components/main"
-import "./styles.css"
+import "./styles.css";
 
-export const metadata: Metadata = { // need to check commented is working or not 
+export const metadata: Metadata = {
    title: "Explore Honnavar Like a Local - Rickshaw Tours",
    description: "Explore Honnavar like a local with our authentic rickshaw tours. Book your tour today and experience the heart of Honnavar in a unique way.",
    keywords: ["Honnavar", "rickshaw tours", "local experience", "tourism, explore Honnavar", "Honnavar city tours"],
@@ -45,7 +45,7 @@ export const metadata: Metadata = { // need to check commented is working or not
    }
 };
 
-export default function HomePage() {
+export default function HomePage(): JSX.Element {
    return (
       <main className="main-home">
          <div className="main-image">
@@ -82,9 +82,6 @@ export default function HomePage() {
             <div className="bar-bar"></div>
          </div>
          <Road />
-         {/* {["/scripts/hammer.js", "/scripts/home-page.js"].map((src, key) => (
-            <Script strategy="afterInteractive" src={src} key={key}></Script>
-         ))} */}
          <Script strategy="afterInteractive" src="/scripts/home-page.js"></Script>
       </main>
    );

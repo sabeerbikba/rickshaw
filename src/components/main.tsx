@@ -2,7 +2,7 @@
 import { useEffect, FC } from "react"
 import Light from "./light"
 
-const Home: FC = () => {
+const Home: FC = (): JSX.Element => {
    const phoneNumber = '918970517155';
 
    function isMobileDevice(): boolean {
@@ -15,10 +15,13 @@ const Home: FC = () => {
    }
 
    function getUrlParameter(name: string): string {
-      name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
-      const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
-      const results = regex.exec(window.location.search);
-      return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      if (typeof window !== 'undefined') {
+         name = name.replace(/[\[]/, '\\[').replace(/[\]]/, '\\]');
+         const regex = new RegExp(`[\\?&]${name}=([^&#]*)`);
+         const results = regex.exec(window.location.search);
+         return results === null ? '' : decodeURIComponent(results[1].replace(/\+/g, ' '));
+      }
+      return '';
    }
 
    const handleBtnClick = () => {

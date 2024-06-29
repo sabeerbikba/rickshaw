@@ -1,6 +1,8 @@
-"use server";
+// "use server";
+import "server-only";
 
-export default async function Road() {
+// export default async function Road() {
+export default function Road(): JSX.Element {
    return (
       <div className="road">
          <svg
