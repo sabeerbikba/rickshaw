@@ -1,6 +1,5 @@
 import "server-only";
 import type { Metadata } from "next";
-// import Head from 'next/head'
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -56,9 +55,6 @@ const paragraphs = [
 export default function AboutMePage() {
    return (
       <>
-         {/* <Head>
-            <meta property="twitter:url" content="https://khaleel-rickshaw.vercel.app/about-me" />
-         </Head> */}
          <main className="main-about-me">
             <div className="img-div flex-center">
                <img
@@ -74,7 +70,7 @@ export default function AboutMePage() {
                      <p className="p-about-me" key={key}>{para}</p>
                   ))}
                   <p>
-                     <a href="/?tourClicked=true">Book your tour today</a> and let's write
+                     <a href="/?tourClicked=true">Book your tour today</a> and let&apos;s write
                      the next chapter of your Honnavar adventure, one rickshaw ride at a
                      time.
                   </p>

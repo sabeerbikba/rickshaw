@@ -1,17 +1,18 @@
 'use client';
 import "client-only";
 import React, { useState, useEffect, useRef, FC } from 'react';
-// import Image from 'next/image';
+import { formatBytes } from "@/utils/functions";
+
+
 
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
-// TODO: need to avoid reupload image 
-// TODO: when press ESC button need to close upload-modal
-// addmore button not rendering condition working properly need to fix console.log(selectedImages);
-      
+// // TODO: need to avoid reupload image not working properly need to save in localStorageState
+// // TODO: when press ESC button need to close upload-modal
 
 const UploadModal: FC = (): JSX.Element => {
-   const fileInputRef = useRef<HTMLInputElement>(null);
    const [isOpen, setIsOpen] = useState(false);
+   const modalRef = useRef<HTMLDivElement>(null);
+   const fileInputRef = useRef<HTMLInputElement>(null);
    const [selectedImages, setSelectedImages] = useState<{ src: string, file: File }[]>([]);
 
    useEffect(() => {
@@ -24,9 +25,26 @@ const UploadModal: FC = (): JSX.Element => {
       openModalButton?.addEventListener('click', openModal);
       closeModalButton?.addEventListener('click', closeModal);
 
+      const handleKeyPress = (event: KeyboardEvent) => {
+         if (event.key === 'Escape') {
+            closeModal();
+         }
+      };
+
+      const handleClickOutside = (event: MouseEvent) => {
+         if (modalRef.current && !modalRef.current.contains(event.target as Node)) {
+            closeModal();
+         }
+      };
+
+      document.addEventListener('keydown', handleKeyPress);
+      document.addEventListener('mousedown', handleClickOutside);
+
       return () => {
          openModalButton?.removeEventListener('click', openModal);
          closeModalButton?.removeEventListener('click', closeModal);
+         document.removeEventListener('keydown', handleKeyPress);
+         document.removeEventListener('mousedown', handleClickOutside);
       };
    }, []);
 
@@ -65,13 +83,13 @@ const UploadModal: FC = (): JSX.Element => {
       setSelectedImages(newImages);
    };
 
-   const formatBytes = (bytes: number) => {
-      if (bytes === 0) return '0 Bytes';
-      const k = 1024;
-      const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
-      const i = Math.floor(Math.log(bytes) / Math.log(k));
-      return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
-   };
+   // const formatBytes = (bytes: number) => {
+   //    if (bytes === 0) return '0 Bytes';
+   //    const k = 1024;
+   //    const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB'];
+   //    const i = Math.floor(Math.log(bytes) / Math.log(k));
+   //    return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+   // };
 
    const handleUpload = async () => {
       const formData = new FormData();
@@ -105,7 +123,7 @@ const UploadModal: FC = (): JSX.Element => {
    return (
       <dialog id="upload-modal" open={isOpen}>
          <div className="modal-overlay">
-            <div className="modal-content" id="uploadArea">
+            <div className="modal-content" id="uploadArea" ref={modalRef}>
                <button className="close-btn" id="close-modal">X</button>
                <div className="upload-container">
                   <div className="plus-sign">+</div>
@@ -139,6 +157,7 @@ const UploadModal: FC = (): JSX.Element => {
                   )}
                   <div>
                      <input type="file" id="fileInput" name="images" accept="image/*" multiple hidden ref={fileInputRef} onChange={handleFileInputChange} />
+                     {/* TODO: if images length is 0 need to disable button */}
                      <button id="upload-submit" className="browse-btn browse-server-upload" type="button" onClick={handleUpload}>Upload</button>
                   </div>
                </div>

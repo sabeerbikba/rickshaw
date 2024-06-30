@@ -1,7 +1,7 @@
 {
-   "name": "my-app",
-   "version": "0.1.0",
-   "private": true,
+   "name": "rickshaw",
+   "version": "3.0.0",
+   "private": false,
    "scripts": {
       "dev": "next dev",
       "build": "next build",
