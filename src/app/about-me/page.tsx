@@ -52,7 +52,7 @@ const paragraphs = [
    "So, why settle for the ordinary when you can embark on an extraordinary journey with Khaleel's Rickshaw Service? Let's traverse the landscapes of Honnavar together, creating memories that will linger in your heart long after the journey ends.",
 ];
 
-export default function AboutMePage() {
+export default function AboutMePage(): JSX.Element {
    return (
       <>
          <main className="main-about-me">

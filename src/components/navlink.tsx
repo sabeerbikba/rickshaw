@@ -29,7 +29,7 @@ const NavLinks: FC = (): JSX.Element => {
 
    return (
       <ul className="nav-ul">
-         {navItems.map((item, index) =>
+         {navItems.map((item, index): JSX.Element | ReactNode  =>
             item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && (
                <li className="nav-li" key={index}>
                   {item.href ? (

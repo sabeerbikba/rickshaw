@@ -134,7 +134,7 @@ const UploadModal: FC = (): JSX.Element => {
                      </div>
                   ) : (
                      <div className="image-preview" id="imagePreview">
-                        {selectedImages.map((image, index) => (
+                        {selectedImages.map((image, index): JSX.Element => (
                            <div className="image-container" key={index}>
                               <img src={image.src} alt={`Preview ${index}`} className="preview-image" />
                               <div className="file-info">

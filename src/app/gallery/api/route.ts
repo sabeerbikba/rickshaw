@@ -1,4 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
+import { NextApiRequest, NextApiResponse } from "next";
 import dotenv from "dotenv";
 import { MongoClient, Db, Collection } from 'mongodb';
 import { exec } from "child_process";
@@ -6,8 +7,11 @@ import { promisify } from "util";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, resolve } from "path";
 import { formatBytes } from "@/utils/functions";
+import { ImageType } from "../images";
 
-// TODO: need to error logging system to front-end and back-end 
+// TODO: need to error logging system to front-end
+// TODO: even upload failed show upload success in front-end  need to fix it 
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 dotenv.config();
 const asyncExec = promisify(exec);
@@ -18,9 +22,9 @@ let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 
 const connectDB = async (
-   database: string,
    collection: string,
-   dbUri: string,
+   database: string = "rickshaw",
+   dbUri: string = mongoUri as string,
 ): Promise<Collection<any>> => {
    if (!dbUri) {
       throw new Error('Please provide a valid MongoDB URI.');
@@ -48,6 +52,16 @@ const connectDB = async (
    }
 }
 
+const logError = async (error: Error): Promise<void> => {
+   const collection = await connectDB("backend_errorlogs");
+
+   await collection.insertOne({
+      error: error.message,
+      stack: error.stack,
+      timestamp: new Date(),
+   });
+}
+
 const headersToObject = (headers: Headers) => {
    const headersObj: { [key: string]: string } = {};
    headers.forEach((value, key) => {
@@ -72,9 +86,7 @@ export async function POST(req: NextRequest) {
    const uploadedFilePaths = [];
 
    try {
-
-      if (!mongoUri) throw new Error("MongoDB URI is not defined.");
-      const collection = await connectDB("rickshaw", "images", mongoUri);
+      const collection = await connectDB("images");
       if (!collection) throw new Error("Collection is not available");
 
       for (const file of files) {
@@ -89,7 +101,7 @@ export async function POST(req: NextRequest) {
          const { stdout, stderr } = await asyncExec(command);
 
          if (stderr) {
-            console.error(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
+            console.warn(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
          }
 
          const response = JSON.parse(stdout);
@@ -102,7 +114,7 @@ export async function POST(req: NextRequest) {
                id: collectionCount + 1,
                imgName: file.name,
                srcUrl: response.data.url,
-               alt: "",
+               alt: "not-specified", // TODO: always need to be unique key 
                imgSize: {
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
@@ -149,18 +161,20 @@ export async function POST(req: NextRequest) {
                   },
                },
             });
-            console.log('Insert result:', result);
+            console.log('Document inserted successfully, Insert result:', result);
          } catch (insertError) {
+            await logError(insertError as Error).catch(logError => {
+               console.error('Failed to log error:', logError);
+            });
             console.error('Error inserting document:', insertError);
          }
-         console.log('Document inserted successfully');
       }
       return NextResponse.json({ success: true });
    } catch (err) {
-      // if (!mongoUri) throw new Error("MongoDB URI is not defined.");
-      // const collection = await connectDB("rickshaw", "errors", mongoUri);
+      await logError(err as Error).catch(logError => {
+         console.error('Failed to log error:', logError);
+      });
       console.error('Error saving image:', err);
-      // TODO: if error found log error
       return NextResponse.json({ success: false }, { status: 500 });
    } finally {
       for (const filePath of uploadedFilePaths) {
@@ -168,24 +182,82 @@ export async function POST(req: NextRequest) {
             await unlink(filePath);
             console.log(`Successfully deleted ${filePath}`);
          } catch (err) {
+            await logError(err as Error).catch(logError => {
+               console.error('Failed to log error:', logError);
+            });
             console.error(`Error deleting ${filePath}:`, err);
          }
       }
    }
 }
 
+// export async function GET(req: NextRequest) {
+//    const perPage = 5;
+//    const url = new URL(req.url);
+//    const page = (parseInt(url.searchParams.get('page') as string) || 1) - 1;
+//    const skip = page * perPage;
+//    console.log("requested page: ", page);
 
-export async function GET() {
+//    try {
+//       const collection = await connectDB("images");
+//       const images: ImageType[] = await collection
+//          .find({}, { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } })
+//          .skip(skip).limit(perPage).toArray();
+
+//       if (images.length === 0) return NextResponse.json(
+//          { allImagesLoaded: true });
+
+//       await delay(3000);
+//       return NextResponse.json(images);
+//    } catch (error) {
+//       console.error(error);
+//       return NextResponse.json({ success: false }, { status: 500 });
+//    }
+// }
+
+
+export async function GET(req: NextRequest) {
+   const url = new URL(req.url);
+   const id = url.searchParams.get('id');
+   const collection = await connectDB("images");
+   console.log(id);   
+
    try {
-      if (!mongoUri) throw new Error("MongoDB URI is not defined.");
-      const collection = await connectDB("rickshaw", "images", mongoUri);
-      const result = await collection?.insertOne({ get: "success" });
-      return Response.json(result);
+      if (id) {
+         const image = await collection.findOne(
+            // { alt: id },
+            { imageName: id },
+            { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } }
+         );
+         if (!image) {
+            return NextResponse.json(
+               { success: false, message: "Image not found" },
+               { status: 404 }
+            );
+         }
+         return NextResponse.json(image);
+      } else {
+         const perPage = 5;
+         const page = parseInt(url.searchParams.get('page') ?? '1', 10) - 1;
+         const skip = page * perPage;
+         console.log("requested page: ", page);
+
+         const images: ImageType[] = await collection
+            .find({}, { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } })
+            .skip(skip)
+            .limit(perPage)
+            .toArray();
+
+         if (images.length === 0) {
+            return NextResponse.json({ allImagesLoaded: true });
+         }
+
+         await delay(1000); // TODO: need to remove
+         return NextResponse.json(images);
+      }
    } catch (error) {
-      return Response.json({
-         id: 1,
-         error: "not found " + error
-      });
+      console.error(error);
+      return NextResponse.json({ success: false }, { status: 500 });
    }
 }
 

@@ -7,7 +7,7 @@
       "build": "next build",
       "start": "next start",
       "lint": "next lint",
-      "runn": "rimraf .next && cls && next dev --turbo"
+      "runn": "rimraf .next && cls && next dev"
    },
    "dependencies": {
       "child_process": "^1.0.2",

@@ -4,6 +4,7 @@ import Link from "next/link";
 import UploadModal from "@/components/uploadmodal";
 import images, { ImageType } from "./images";
 import GalleryScroll from "@/components/galleryscroll";
+import InfiniteScroll from "@/components/infinitescroll";
 
 export default function GalleryPage() {
    return (
@@ -21,6 +22,8 @@ export default function GalleryPage() {
                      />
                   </Link>
                ))}
+               <InfiniteScroll initialImages={images} />
+               {/* TODO: infinite scroll for images  */}
             </div>
             <div id="loading-spinner"></div>
          </main>

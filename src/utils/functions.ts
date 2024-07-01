@@ -1,6 +1,7 @@
 // This file contains re-used functions.
 
 const transformText = (text: string): string => {
+   if (text === undefined) "Not Defined yet!!"; // TODO: need to check this function is used and then better to use this text or not 
    return text.replace(/-\d+$/, '').split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');
