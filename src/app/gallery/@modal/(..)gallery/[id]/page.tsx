@@ -4,10 +4,10 @@ import { headers } from 'next/headers';
 import ImageModal from "@/components/imagemodal";
 import images, { ImageType } from "../../../images";
 
-// TODO: if errorr happens need to log into databse
+// TODO: if error happens need to log into databse
 // TODO: need to think about id is which is better: alt or imgName
 
-function getBaseUrl() {
+function getBaseUrl() { // TODO: check it's working as expected in server
    const headersList = headers();
    const host = headersList.get('host');
    const protocol = headersList.get('x-forwarded-proto') || 'http';
@@ -27,11 +27,16 @@ export default async function PhotoModal({
       const baseUrl = getBaseUrl();
 
       const url = `${baseUrl}/gallery/api?id=${id}`;
-      console.log("url: ");      
-      console.log(url);      
+      console.log("url: ");
+      console.log(url);
       const response = await fetch(url)
       photo = await response.json();
    }
 
-   return <ImageModal src={photo.srcUrl} alt={photo.alt} />;
+   return <ImageModal
+      src={photo.srcUrl}
+      alt={photo.alt}
+      // alt={!photo.alt ? photo.imageName : photo.alt}
+      // alt={photo.alt ?? photo.id?.toString() ?? 'default alt text'}
+   />;
 }

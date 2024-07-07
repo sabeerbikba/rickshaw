@@ -11,6 +11,7 @@ import { ImageType } from "../images";
 
 // TODO: need to error logging system to front-end
 // TODO: even upload failed show upload success in front-end  need to fix it 
+// TODO: after upload img need to add in top and focus first img if possible 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
 dotenv.config();
@@ -58,7 +59,7 @@ const logError = async (error: Error): Promise<void> => {
    await collection.insertOne({
       error: error.message,
       stack: error.stack,
-      timestamp: new Date(),
+      timestamp: new Date().toString(),
    });
 }
 
@@ -70,11 +71,23 @@ const headersToObject = (headers: Headers) => {
    return headersObj;
 };
 
+function removeExtension(imageName: string): string {
+   return imageName.replace(/\.[^/.]+$/, "");
+}
+
 export async function POST(req: NextRequest) {
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
    const data = await req.formData();
    const files: File[] = data.getAll('images') as unknown as File[];
+   const editedImgNames: FormDataEntryValue[] = data.getAll('editedImgNames');
+
+   console.log('data: ');
+   console.log(data);
+   // console.log('files: ');
+   // console.log(files);
+   // console.log('editedImgNames: ');
+   // console.log(editedImgNames);
 
    if (!files || files.length <= 0) {
       return NextResponse.json({ success: false });
@@ -89,11 +102,26 @@ export async function POST(req: NextRequest) {
       const collection = await connectDB("images");
       if (!collection) throw new Error("Collection is not available");
 
-      for (const file of files) {
+      // for (const file of files) {
+      for (let i = 0; i < files.length; i++) {
+         // const file = files[i];
+
+         // const bytes = await file.arrayBuffer();
+         // const buffer = Buffer.from(bytes);
+
+         // const filePath = join(uploadDir, file.name);
+         // await writeFile(filePath, buffer);
+         // uploadedFilePaths.push(filePath);
+
+         const file = files[i];
+         const originalName = editedImgNames[i] as string;
+         const extension = file.name.split('.').pop();
+         const newFileName = `${originalName}.${extension}`;
+
          const bytes = await file.arrayBuffer();
          const buffer = Buffer.from(bytes);
 
-         const filePath = join(uploadDir, file.name);
+         const filePath = join(uploadDir, newFileName);
          await writeFile(filePath, buffer);
          uploadedFilePaths.push(filePath);
 
@@ -101,20 +129,21 @@ export async function POST(req: NextRequest) {
          const { stdout, stderr } = await asyncExec(command);
 
          if (stderr) {
-            console.warn(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
+            // console.warn(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
          }
 
          const response = JSON.parse(stdout);
-         console.log(response);
+         // console.log(response);
          const collectionCount = await collection.countDocuments() || 0;
 
          console.log('Inserting document into MongoDB');
          try {
             const result = await collection.insertOne({
                id: collectionCount + 1,
-               imgName: file.name,
+               orignalImgName: file.name,
+               editedImgName: editedImgNames[i], // TODO: need to add logic
                srcUrl: response.data.url,
-               alt: "not-specified", // TODO: always need to be unique key 
+               alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
                imgSize: {
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
@@ -191,42 +220,18 @@ export async function POST(req: NextRequest) {
    }
 }
 
-// export async function GET(req: NextRequest) {
-//    const perPage = 5;
-//    const url = new URL(req.url);
-//    const page = (parseInt(url.searchParams.get('page') as string) || 1) - 1;
-//    const skip = page * perPage;
-//    console.log("requested page: ", page);
-
-//    try {
-//       const collection = await connectDB("images");
-//       const images: ImageType[] = await collection
-//          .find({}, { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } })
-//          .skip(skip).limit(perPage).toArray();
-
-//       if (images.length === 0) return NextResponse.json(
-//          { allImagesLoaded: true });
-
-//       await delay(3000);
-//       return NextResponse.json(images);
-//    } catch (error) {
-//       console.error(error);
-//       return NextResponse.json({ success: false }, { status: 500 });
-//    }
-// }
-
 
 export async function GET(req: NextRequest) {
    const url = new URL(req.url);
    const id = url.searchParams.get('id');
    const collection = await connectDB("images");
-   console.log(id);   
+   console.log(id);
 
    try {
       if (id) {
          const image = await collection.findOne(
-            // { alt: id },
-            { imageName: id },
+            { alt: id },
+            // { imageName: id },
             { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } }
          );
          if (!image) {

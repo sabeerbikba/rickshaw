@@ -6,6 +6,8 @@ import images, { ImageType } from "./images";
 import GalleryScroll from "@/components/galleryscroll";
 import InfiniteScroll from "@/components/infinitescroll";
 
+// TODO: when page load need to scroll to top
+
 export default function GalleryPage() {
    return (
       <>
