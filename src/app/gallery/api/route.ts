@@ -1,24 +1,22 @@
 import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
-// import dotenv from "dotenv";
 import { MongoClient, Db, Collection } from 'mongodb';
-// import { exec } from "child_process";
-// import { promisify } from "util";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, resolve } from "path";
-import fs from "fs";
 import { formatBytes } from "@/utils/functions";
 import { ImageType } from "../images";
 
-// TODO: For now uplad fetch funtion not working shows 400 error
 
 // TODO: need to error logging system to front-end
+// TODO: after image uplaod successful close the uplaod modal and if possible focus on upladed first or last image
 // TODO: even upload failed show upload success in front-end  need to fix it 
 // TODO: after upload img need to add in top and focus first img if possible 
+//
+//
+// exce curl code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-// dotenv.config();
-// const asyncExec = promisify(exec);
 const imgbbUrl = process.env.IMGBB_API;
 const mongoUri = process.env.MONGODB_URI;
 
@@ -78,6 +76,16 @@ function removeExtension(imageName: string): string {
    return imageName.replace(/\.[^/.]+$/, "");
 }
 
+function getFileName(fileName) {
+    return fileName.substring(0, fileName.indexOf('.'));
+}
+
+
+function getFileExtension(fileName) {
+    return fileName.substring(fileName.lastIndexOf('.'));
+}
+
+
 export async function POST(req: NextRequest) {
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
@@ -85,12 +93,6 @@ export async function POST(req: NextRequest) {
    const files: File[] = data.getAll('images') as unknown as File[];
    const editedImgNames: FormDataEntryValue[] = data.getAll('editedImgNames');
 
-   console.log('data: ');
-   console.log(data);
-   // console.log('files: ');
-   // console.log(files);
-   // console.log('editedImgNames: ');
-   // console.log(editedImgNames);
 
    if (!files || files.length <= 0) {
       return NextResponse.json({ success: false });
@@ -117,45 +119,45 @@ export async function POST(req: NextRequest) {
          // uploadedFilePaths.push(filePath);
 
          const file = files[i];
-	 console.log(file);
          const originalName = editedImgNames[i] as string;
-         const extension = file.name.split('.').pop();
-         const newFileName = `${originalName}.${extension}`;
 
+         const extension = file.name.split('.').pop();
+         const newFileName = `${getFileName(editedImgNames[i])}${getFileExtension(file.name)}`;
+
+	// is this code need
          const bytes = await file.arrayBuffer();
          const buffer = Buffer.from(bytes);
 
          const filePath = join(uploadDir, newFileName);
-         await writeFile(filePath, buffer);
-         uploadedFilePaths.push(filePath);
+         const savedFile = await writeFile(filePath, buffer);
+	 // 
+	 //
+	 const isFileRenamed: boolean = file.name !== newFileName;
+	 console.log("isFileRenamed ", isFileRenamed);
+	
+         uploadedFilePaths.push(filePath); // move this line bottom if needed
 
-         // const command = `curl -X POST https://api.imgbb.com/1/upload -F "key=${imgbbUrl}" -F "image=@${filePath}"`;
-         // const { stdout, stderr } = await asyncExec(command);
-
-	 try {
 
 	 const formData = new FormData();
 	 formData.append("key", imgbbUrl);
-	 formData.append("image", filePath);
-	 // formData.append("image", fs.createReadStream(filePath));
-	 // better name : uploadFetchRequest
-	 const uploadRequest = await fetch("https://api.imgbb.com/1/upload", {
+	 // formData.append("image", new Blob([buffer], { type: file.type }), newFileName);
+
+	 const blob = new Blob([buffer], { type: file.type });
+	formData.append("image", blob, newFileName);
+	 const uploadFetchResponse = await fetch("https://api.imgbb.com/1/upload", {
 		method: 'POST',
 		body: formData,
 		// headers: formData.getHeaders(),
 	 });
 
-         // if (stderr) {
-            // console.warn(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
-         // }
 
-	 if (!uploadRequest.ok) console.log("something going wrong, Error: " + uploadRequest.status);
-	 } catch (error) {
-		console.log("image upload error: " + error.message);
-	 }
+	 if (!uploadFetchResponse.ok) {
+		 console.log("something going wrong, Error: " + uploadFetchResponse.status + " " + uploadFetchResponse.statusText);
+	 } 
+	 const responseData = await uploadFetchResponse.json();
+		 console.log(responseData);
+	
 
-         // const response = JSON.parse(stdout);
-         // console.log(response);
          const collectionCount = await collection.countDocuments() || 0;
 
          console.log('Inserting document into MongoDB');
@@ -164,15 +166,15 @@ export async function POST(req: NextRequest) {
                id: collectionCount + 1,
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
-               // srcUrl: response.data.url,
+        	srcUrl: responseData.data.url,
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
                imgSize: {
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
                },
                uploaderDevie: req.headers.get('user-agent'),
-               // extension: response.data.image.extension,
-               // mimeType: response.data.image.mime,
+               extension: responseData.data.image.extension,
+               mimeType: responseData.data.image.mime,
                uploadTime: new Date().toString(),
                uploadUrl: req.headers.get('referer'), // TODO: agter server test need to check is this valu really needed 
                ipAddr: { // TODO: need to check which one is uploader ip and use on of it
@@ -180,9 +182,9 @@ export async function POST(req: NextRequest) {
                   origin: req.headers.get('origin'),
                },
                allResponse: {
-                  exceCmd: {
-                     // stdout: response,
-                     // stderr,
+                  fetch: {
+                     responseData,
+		// uploadFetchResponse: uploadFetchResponse // TODO; it showing object in database i think need to save indidual vales suppretely we can't convert .json() because allready converted
                   },
                   headers: {
                      method: req.method,
