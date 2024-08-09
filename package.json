@@ -4,29 +4,29 @@
    "private": false,
    "scripts": {
       "dev": "next dev",
+      "clean:dev": "rimraf .next && node -e 'require(\"clear\")();' && next dev",
       "build": "next build",
       "start": "next start",
-      "lint": "next lint",
-      "runn": "rimraf .next && cls && next dev"
+      "lint": "next lint"
    },
    "dependencies": {
       "child_process": "^1.0.2",
-      "client-only": "^0.0.1",
-      "dotenv": "^16.4.5",
       "mongodb": "^6.7.0",
       "next": "14.2.4",
       "react": "^18.3.1",
       "react-dom": "^18.3.1",
-      "rimraf": "^5.0.7",
-      "server-only": "^0.0.1",
       "util": "^0.12.5"
    },
    "devDependencies": {
       "@types/node": "^20.14.9",
       "@types/react": "^18.3.3",
       "@types/react-dom": "^18.3.0",
+      "clear": "^0.1.0",
+      "client-only": "^0.0.1",
       "eslint": "^8.57.0",
       "eslint-config-next": "14.2.4",
+      "rimraf": "^5.0.7",
+      "server-only": "^0.0.1",
       "typescript": "^5.5.2"
    }
 }

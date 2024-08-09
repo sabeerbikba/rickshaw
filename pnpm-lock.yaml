@@ -11,12 +11,6 @@ importers:
       child_process:
         specifier: ^1.0.2
         version: 1.0.2
-      client-only:
-        specifier: ^0.0.1
-        version: 0.0.1
-      dotenv:
-        specifier: ^16.4.5
-        version: 16.4.5
       mongodb:
         specifier: ^6.7.0
         version: 6.7.0
@@ -29,12 +23,6 @@ importers:
       react-dom:
         specifier: ^18.3.1
         version: 18.3.1(react@18.3.1)
-      rimraf:
-        specifier: ^5.0.7
-        version: 5.0.7
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
       util:
         specifier: ^0.12.5
         version: 0.12.5
@@ -48,12 +36,24 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.0
+      clear:
+        specifier: ^0.1.0
+        version: 0.1.0
+      client-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
       eslint-config-next:
         specifier: 14.2.4
         version: 14.2.4(eslint@8.57.0)(typescript@5.5.2)
+      rimraf:
+        specifier: ^5.0.7
+        version: 5.0.7
+      server-only:
+        specifier: ^0.0.1
+        version: 0.0.1
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -365,6 +365,9 @@ packages:
   child_process@1.0.2:
     resolution: {integrity: sha512-Wmza/JzL0SiWz7kl6MhIKT5ceIlnFPJX+lwUGj7Clhy5MMldsSoJR0+uvRzOS5Kv45Mq7t1PoE8TsOA9bzvb6g==}
 
+  clear@0.1.0:
+    resolution: {integrity: sha512-qMjRnoL+JDPJHeLePZJuao6+8orzHMGP04A8CdwCNsKhRbOnKRjefxONR7bwILT3MHecxKBjHkKL/tkZ8r4Uzw==}
+
   client-only@0.0.1:
     resolution: {integrity: sha512-IV3Ou0jSMzZrd3pZ48nLkT9DA7Ag1pnPzaiQhpW7c3RbcqqzvzzVu+L8gfqMp/8IM2MQtSiqaCxrrcfu8I8rMA==}
 
@@ -443,10 +446,6 @@ packages:
   doctrine@3.0.0:
     resolution: {integrity: sha512-yS+Q5i3hBf7GBkd4KG8a7eBNNWNGLTaEwwYWUijIYM7zrlYDM0BFXHjjPWlWZ1Rg7UaddZeIDmi9jF3HmqiQ2w==}
     engines: {node: '>=6.0.0'}
-
-  dotenv@16.4.5:
-    resolution: {integrity: sha512-ZmdL2rui+eB2YwhsWzjInR8LldtZHGDoQ1ugH85ppHKwpUHL7j7rN0Ti9NCnGiQbhaZ11FpR+7ao1dNsmduNUg==}
-    engines: {node: '>=12'}
 
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
@@ -1765,6 +1764,8 @@ snapshots:
 
   child_process@1.0.2: {}
 
+  clear@0.1.0: {}
+
   client-only@0.0.1: {}
 
   color-convert@2.0.1:
@@ -1857,8 +1858,6 @@ snapshots:
   doctrine@3.0.0:
     dependencies:
       esutils: 2.0.3
-
-  dotenv@16.4.5: {}
 
   eastasianwidth@0.2.0: {}
 
