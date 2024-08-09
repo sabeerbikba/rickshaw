@@ -1,21 +1,24 @@
 import { NextRequest, NextResponse } from "next/server";
 import { NextApiRequest, NextApiResponse } from "next";
-import dotenv from "dotenv";
+// import dotenv from "dotenv";
 import { MongoClient, Db, Collection } from 'mongodb';
-import { exec } from "child_process";
-import { promisify } from "util";
+// import { exec } from "child_process";
+// import { promisify } from "util";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, resolve } from "path";
+import fs from "fs";
 import { formatBytes } from "@/utils/functions";
 import { ImageType } from "../images";
+
+// TODO: For now uplad fetch funtion not working shows 400 error
 
 // TODO: need to error logging system to front-end
 // TODO: even upload failed show upload success in front-end  need to fix it 
 // TODO: after upload img need to add in top and focus first img if possible 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
 
-dotenv.config();
-const asyncExec = promisify(exec);
+// dotenv.config();
+// const asyncExec = promisify(exec);
 const imgbbUrl = process.env.IMGBB_API;
 const mongoUri = process.env.MONGODB_URI;
 
@@ -114,6 +117,7 @@ export async function POST(req: NextRequest) {
          // uploadedFilePaths.push(filePath);
 
          const file = files[i];
+	 console.log(file);
          const originalName = editedImgNames[i] as string;
          const extension = file.name.split('.').pop();
          const newFileName = `${originalName}.${extension}`;
@@ -125,14 +129,32 @@ export async function POST(req: NextRequest) {
          await writeFile(filePath, buffer);
          uploadedFilePaths.push(filePath);
 
-         const command = `curl -X POST https://api.imgbb.com/1/upload -F "key=${imgbbUrl}" -F "image=@${filePath}"`;
-         const { stdout, stderr } = await asyncExec(command);
+         // const command = `curl -X POST https://api.imgbb.com/1/upload -F "key=${imgbbUrl}" -F "image=@${filePath}"`;
+         // const { stdout, stderr } = await asyncExec(command);
 
-         if (stderr) {
+	 try {
+
+	 const formData = new FormData();
+	 formData.append("key", imgbbUrl);
+	 formData.append("image", filePath);
+	 // formData.append("image", fs.createReadStream(filePath));
+	 // better name : uploadFetchRequest
+	 const uploadRequest = await fetch("https://api.imgbb.com/1/upload", {
+		method: 'POST',
+		body: formData,
+		// headers: formData.getHeaders(),
+	 });
+
+         // if (stderr) {
             // console.warn(`Error executing cURL command: ${stderr}`); // TODO: in vercel it considered as error because of console.errro() give need to decide what to do with it 
-         }
+         // }
 
-         const response = JSON.parse(stdout);
+	 if (!uploadRequest.ok) console.log("something going wrong, Error: " + uploadRequest.status);
+	 } catch (error) {
+		console.log("image upload error: " + error.message);
+	 }
+
+         // const response = JSON.parse(stdout);
          // console.log(response);
          const collectionCount = await collection.countDocuments() || 0;
 
@@ -142,15 +164,15 @@ export async function POST(req: NextRequest) {
                id: collectionCount + 1,
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
-               srcUrl: response.data.url,
+               // srcUrl: response.data.url,
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
                imgSize: {
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
                },
                uploaderDevie: req.headers.get('user-agent'),
-               extension: response.data.image.extension,
-               mimeType: response.data.image.mime,
+               // extension: response.data.image.extension,
+               // mimeType: response.data.image.mime,
                uploadTime: new Date().toString(),
                uploadUrl: req.headers.get('referer'), // TODO: agter server test need to check is this valu really needed 
                ipAddr: { // TODO: need to check which one is uploader ip and use on of it
@@ -159,8 +181,8 @@ export async function POST(req: NextRequest) {
                },
                allResponse: {
                   exceCmd: {
-                     stdout: response,
-                     stderr,
+                     // stdout: response,
+                     // stderr,
                   },
                   headers: {
                      method: req.method,
