@@ -1,10 +1,10 @@
 import "server-only";
 import Link from "next/link";
 // import Script from 'next/script';
-import UploadModal from "@/components/uploadmodal";
 import images, { ImageType } from "./images";
-import GalleryScroll from "@/components/galleryscroll";
-import InfiniteScroll from "@/components/infinitescroll";
+import UploadModal from "@/components/gallery/uploadmodal";
+import GalleryScroll from "@/components/gallery/galleryscroll";
+import InfiniteScroll from "@/components/gallery/infinitescroll";
 
 // TODO: when page load need to scroll to top
 

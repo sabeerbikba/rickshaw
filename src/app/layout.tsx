@@ -1,10 +1,10 @@
 import "server-only";
 import type { Viewport } from 'next'
 import Link from "next/link";
-import NavLinks from "@/components/navlink";
-import Logo from "@/components/logo";
-import Line from "@/components/line";
-import Class from "@/components/class";
+import NavLinks from "@/components/home/navlink";
+import Logo from "@/components/home/logo";
+import Line from "@/components/home/line";
+import Class from "@/components/home/class";
 import "./globals.css";
 
 export const viewport: Viewport = {

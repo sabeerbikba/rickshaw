@@ -32,7 +32,7 @@
       "**/*.ts",
       "**/*.tsx",
       ".next/types/**/*.ts"
-, "src/components/class.tsx", "src/app/test/page.jsx", "src/components/imagemodal.tsx"   ],
+, "src/components/home/class.tsx", "src/app/test/page.jsx", "src/components/gallery/imagemodal.tsx"   ],
    "exclude": [
       "node_modules"
    ]

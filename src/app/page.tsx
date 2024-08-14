@@ -1,8 +1,8 @@
 import "server-only";
 import type { Metadata } from "next";
 import Script from 'next/script';
-import Road from "@/components/road";
-import Main from "@/components/main"
+import Road from "@/components/home/road";
+import Main from "@/components/home/main"
 import "./styles.css";
 
 export const metadata: Metadata = {

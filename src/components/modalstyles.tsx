@@ -1,4 +1,5 @@
 "use client";
+// Not used anywhere if not used removed
 import { useEffect, FC } from "react";
 
 const ModalStyles: FC = (): JSX.Element => {

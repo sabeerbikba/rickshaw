@@ -1,7 +1,7 @@
 // import Image from "next/image";
 "use server";
 import { headers } from 'next/headers';
-import ImageModal from "@/components/imagemodal";
+import ImageModal from "@/components/gallery/imagemodal";
 import images, { ImageType } from "../../../images";
 
 // TODO: if error happens need to log into databse
