@@ -9,7 +9,7 @@ const EMAIL1_PASS = process.env.EMAIL1_PASS;
 const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
 
 const sendEmail = async (
-   link: string,
+   text: string,
    recipient: string | object
 ) => {
 
@@ -25,7 +25,7 @@ const sendEmail = async (
       from: EMAIL1,
       to: recipient,
       subject: 'Login Link',
-      text: `Click here to login: ${link}`,
+      text // Need to use html insted of text 
    });
 };
 
@@ -35,17 +35,26 @@ export async function POST(req: NextRequest, _res: NextResponse) {
    const collection = await connectDB('loginTokens');
    const recipients = [EMAIL1, EMAIL2];
 
-   const deviceInfo = req.headers.get('user-agent');
+   const deviceInfo = {
+      userAgent: req.headers.get('user-agent'),
+      secChUaPlatform: req.headers.get('sec-ch-ua-platform'),
+      secChUa: req.headers.get('sec-ch-ua'),
+      acceptEncoding: req.headers.get('accept-encoding'),
+      acceptLanguage: req.headers.get('accept-language'),
+      // Need to test using in server by using conosle.log(); what information we can collect 
+   };
 
    await collection.insertOne({
       token,
       deviceInfo,
-      expires: new Date(Date.now() + 45 * 60 * 1000), // Expires in 45 minutes
+      expires: new Date(Date.now() + 5 * 60 * 60 * 1000), // Expires in 5 hours
       createdAt: new Date(),
+      authenticated: false,
    });
 
-
-   await sendEmail(link, recipients);
+   // Instead of text need to send html :29
+   const message: string = `Click here to login: ${link} and json is ${JSON.stringify(deviceInfo)}`;
+   await sendEmail(message, recipients);
 
    return NextResponse.json({ message: 'Login link sent' });
 }
