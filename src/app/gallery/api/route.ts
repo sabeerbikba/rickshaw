@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
-import { NextApiRequest, NextApiResponse } from "next";
-import { MongoClient, Db, Collection } from 'mongodb';
 import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, resolve } from "path";
 import { formatBytes } from "@/utils/functions";
+import connectDB from "@/utils/connectdb";
 import { ImageType } from "../images";
 
 
@@ -11,48 +10,9 @@ import { ImageType } from "../images";
 // TODO: after image uplaod successful close the uplaod modal and if possible focus on upladed first or last image
 // TODO: even upload failed show upload success in front-end  need to fix it 
 // TODO: after upload img need to add in top and focus first img if possible 
-//
-//
-// exce curl code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
 
-const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms));
-
-const imgbbUrl = process.env.IMGBB_API;
-const mongoUri = process.env.MONGODB_URI;
-
-let cachedClient: MongoClient | null = null;
-let cachedDb: Db | null = null;
-
-const connectDB = async (
-   collection: string,
-   database: string = "rickshaw",
-   dbUri: string = mongoUri as string,
-): Promise<Collection<any>> => {
-   if (!dbUri) {
-      throw new Error('Please provide a valid MongoDB URI.');
-   }
-
-   if (cachedClient && cachedDb) {
-      console.log("Database already connected, reusing client");
-      const db = cachedDb.collection(collection);
-      return db;
-   }
-
-   try {
-      const client = new MongoClient(dbUri);
-
-      await client.connect();
-      cachedClient = client;
-      cachedDb = client.db(database);
-
-      console.log("Database connected successfully");
-      const db = cachedDb.collection(collection);
-      return db;
-   } catch (error) {
-      console.error("Database connection error:", error);
-      throw new Error("Failed to connect to the database");
-   }
-}
+const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); // tmp 4 test
+const IMGBB_API = process.env.IMGBB_API as string;
 
 const logError = async (error: Error): Promise<void> => {
    const collection = await connectDB("backend_errorlogs");
@@ -73,26 +33,24 @@ const headersToObject = (headers: Headers) => {
 };
 
 function removeExtension(imageName: string): string {
+   // replace this function when testing with getFileName() function 
    return imageName.replace(/\.[^/.]+$/, "");
 }
 
-function getFileName(fileName) {
-    return fileName.substring(0, fileName.indexOf('.'));
+function getFileName(fileName: string): string {
+   return fileName.substring(0, fileName.indexOf('.'));
 }
 
-
-function getFileExtension(fileName) {
-    return fileName.substring(fileName.lastIndexOf('.'));
+function getFileExtension(fileName: string): string {
+   return fileName.substring(fileName.lastIndexOf('.'));
 }
-
 
 export async function POST(req: NextRequest) {
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
-   const data = await req.formData();
-   const files: File[] = data.getAll('images') as unknown as File[];
-   const editedImgNames: FormDataEntryValue[] = data.getAll('editedImgNames');
-
+   const body = await req.formData();
+   const files: File[] = body.getAll('images') as unknown as File[];
+   const editedImgNames: FormDataEntryValue[] = body.getAll('editedImgNames');
 
    if (!files || files.length <= 0) {
       return NextResponse.json({ success: false });
@@ -122,41 +80,44 @@ export async function POST(req: NextRequest) {
          const originalName = editedImgNames[i] as string;
 
          const extension = file.name.split('.').pop();
-         const newFileName = `${getFileName(editedImgNames[i])}${getFileExtension(file.name)}`;
+         const newFileName = `${getFileName(editedImgNames[i] as string)}${getFileExtension(file.name)}`;
 
-	// is this code need
+         // is this code need
          const bytes = await file.arrayBuffer();
          const buffer = Buffer.from(bytes);
 
          const filePath = join(uploadDir, newFileName);
          const savedFile = await writeFile(filePath, buffer);
-	 // 
-	 //
-	 const isFileRenamed: boolean = file.name !== newFileName;
-	 console.log("isFileRenamed ", isFileRenamed);
-	
+         // 
+         //
+         const isFileRenamed: boolean = file.name !== newFileName;
+         console.log("isFileRenamed ", isFileRenamed);
+
          uploadedFilePaths.push(filePath); // move this line bottom if needed
 
 
-	 const formData = new FormData();
-	 formData.append("key", imgbbUrl);
-	 // formData.append("image", new Blob([buffer], { type: file.type }), newFileName);
+         const fetchBody = new FormData();
+         fetchBody.append("key", IMGBB_API);
+         // fetchBody.append("image", new Blob([buffer], { type: file.type }), newFileName);
 
-	 const blob = new Blob([buffer], { type: file.type });
-	formData.append("image", blob, newFileName);
-	 const uploadFetchResponse = await fetch("https://api.imgbb.com/1/upload", {
-		method: 'POST',
-		body: formData,
-		// headers: formData.getHeaders(),
-	 });
+         const blob = new Blob([buffer], { type: file.type });
+         fetchBody.append("image", blob, newFileName);
+
+         // exce, curl code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
+         // Response example: https://api.imgbb.com/
+         const uploadFetchResponse = await fetch("https://api.imgbb.com/1/upload", {
+            method: 'POST',
+            body: fetchBody,
+            // headers: fetchBody.getHeaders(),
+         });
 
 
-	 if (!uploadFetchResponse.ok) {
-		 console.log("something going wrong, Error: " + uploadFetchResponse.status + " " + uploadFetchResponse.statusText);
-	 } 
-	 const responseData = await uploadFetchResponse.json();
-		 console.log(responseData);
-	
+         if (!uploadFetchResponse.ok) {
+            console.error("something going wrong, Error: " + uploadFetchResponse.status + " " + uploadFetchResponse.statusText);
+         }
+         const responseData = await uploadFetchResponse.json();
+         console.log(responseData);
+
 
          const collectionCount = await collection.countDocuments() || 0;
 
@@ -166,7 +127,7 @@ export async function POST(req: NextRequest) {
                id: collectionCount + 1,
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
-        	srcUrl: responseData.data.url,
+               srcUrl: responseData.data.url,
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
                imgSize: {
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
@@ -184,7 +145,7 @@ export async function POST(req: NextRequest) {
                allResponse: {
                   fetch: {
                      responseData,
-		// uploadFetchResponse: uploadFetchResponse // TODO; it showing object in database i think need to save indidual vales suppretely we can't convert .json() because allready converted
+                     // uploadFetchResponse: uploadFetchResponse // TODO; it showing object in database i think need to save indidual vales suppretely we can't convert .json() because allready converted
                   },
                   headers: {
                      method: req.method,
