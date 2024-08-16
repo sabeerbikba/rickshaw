@@ -3,10 +3,11 @@ import nodemailer from 'nodemailer';
 import { v4 as uuidv4 } from 'uuid';
 import connectDB from '@/utils/connectdb';
 
-const EMAIL1 = process.env.EMAIL1;
-const EMAIL2 = process.env.EMAIL2;
-const EMAIL1_PASS = process.env.EMAIL1_PASS;
-const NEXT_PUBLIC_URL = process.env.NEXT_PUBLIC_URL;
+type env = string | undefined;
+const EMAIL1: env = process.env.EMAIL1;
+const EMAIL2: env = process.env.EMAIL2;
+const EMAIL1_PASS: env = process.env.EMAIL1_PASS;
+const NEXT_PUBLIC_URL: env = process.env.NEXT_PUBLIC_URL;
 
 const sendEmail = async (
    text: string,
@@ -54,7 +55,9 @@ export async function POST(req: NextRequest, _res: NextResponse) {
 
    // Instead of text need to send html :29
    const message: string = `Click here to login: ${link} and json is ${JSON.stringify(deviceInfo)}`;
-   await sendEmail(message, recipients);
+   const sendGmail = await sendEmail(message, recipients);
+   console.log(sendGmail);
+   
 
    return NextResponse.json({ message: 'Login link sent' });
 }

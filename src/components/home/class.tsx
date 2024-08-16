@@ -90,7 +90,6 @@ const Class: React.FC = (): JSX.Element => {
          document.body.classList.remove(BODY_CLASS);
          document.body.style.color = "";
          if (header) {
-            console.log("else");
             header.classList.add('header-fixed');
             header.classList.remove("header-relative");
          }

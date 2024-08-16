@@ -15,7 +15,7 @@ export default function FakeLoginPage() {
             method: "POST"
          });
 
-         console.log(fetchResponse);
+         // console.log(fetchResponse);
          setLoading(false);
       }
    }

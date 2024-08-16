@@ -39,11 +39,10 @@ export default async function PhotoPage({
                   <p>[token]</p>
                   <p>[token]</p>
                   <div> invalid or expired token</div>
+                  {/* after 5 seconds redirect to /login */}
                   <DelayedRedirect seconds={5}/>
                </>
             );
-
-
          } else {
             // storeCookie.set("token", token, {
             //    httpOnly: true,
@@ -71,8 +70,6 @@ export default async function PhotoPage({
                </>
             );
          }
-
-
       } catch (error: any) {
          console.error("error fetching token:", error);
          return (
@@ -87,9 +84,7 @@ export default async function PhotoPage({
                {/* need to removed this error in production */}
                <div>Error: {error.message}</div>
             </>
-
          );
-
       }
    }
 

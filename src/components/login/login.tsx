@@ -19,32 +19,83 @@ export default function LoginPage() {
       console.log(tokenFromUrl);
    }, []);
 
+   // const handleClick = async () => {
+   //    {/* if both inputs is empty button need to disable same logic apply for handleClick */ }
+   //    setLoading(true);
+   //    setisPasswordVisible(false);
+
+   //    const formData = new FormData();
+   //    formData.append("secret1", secret1);
+   //    formData.append("secret2", secret2);
+   //    formData.append('date', new Date().toISOString());
+
+   //    if (secret1 && secret2) {
+   //       const fetchResponse = await fetch(`/login/${token}/api`, {
+   //          method: "POST",
+   //          body: formData
+   //       });
+
+   //       const fetchResponseJson = await fetchResponse.json();
+   //       console.log(fetchResponseJson.message)
+   //       if (fetchResponseJson.message === 'Login successfull') {
+   //          // router.push('/dashboard');
+   //       } else {
+   //          // show error message on screen with good looking ui 
+   //          alert(fetchResponseJson.message);
+   //       }
+   //    }
+   //    setLoading(false);
+   // }
+
+
    const handleClick = async () => {
-         {/* if both inputs is empty button need to disable same logic apply for handleClick */}
+
+      // check this function can hanlde empty response and error so on 
       setLoading(true);
       setisPasswordVisible(false);
 
       const formData = new FormData();
       formData.append("secret1", secret1);
       formData.append("secret2", secret2);
+      formData.append('date', new Date().toISOString());
 
       if (secret1 && secret2) {
-         const fetchResponse = await fetch(`/login/${token}/api`, {
-            method: "POST",
-            body: formData
-         });
+         try {
+            const fetchResponse = await fetch(`/login/${token}/api`, {
+               method: "POST",
+               body: formData
+            });
 
-         const fetchResponseJson = await fetchResponse.json();
-         console.log(fetchResponseJson.message)
-         if (fetchResponseJson.message === 'Login successfull') {
-         router.push('/dashboard');
-         } else {
-            // show error message on screen with good looking ui 
-            alert(fetchResponseJson.message);
+            // Check if response is ok
+            if (!fetchResponse.ok) {
+               throw new Error('Network response was not ok');
+            }
+
+            // Try to parse JSON response
+            let fetchResponseJson;
+            try {
+               fetchResponseJson = await fetchResponse.json();
+            } catch (jsonError) {
+               console.error('Failed to parse JSON:', jsonError);
+               alert('Invalid response format');
+               return;
+            }
+
+            console.log(fetchResponseJson.message);
+            if (fetchResponseJson.message === 'Login successfull') {
+               router.push('/dashboard');
+            } else {
+               // show error message on screen with good looking ui
+               alert(fetchResponseJson.message);
+            }
+         } catch (error) {
+            console.error('Fetch error:', error);
+            alert('An error occurred');
          }
       }
-         setLoading(false);
+      setLoading(false);
    }
+
 
    return (
       <div>
