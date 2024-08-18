@@ -1,4 +1,4 @@
-// This file contains re-used functions.
+// TODO: give better name for this file      
 
 const transformText = (text: string): string => {
    // if (typeof text === 'number') return text.toString();

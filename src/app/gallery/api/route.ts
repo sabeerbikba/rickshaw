@@ -103,7 +103,7 @@ export async function POST(req: NextRequest) {
          const blob = new Blob([buffer], { type: file.type });
          fetchBody.append("image", blob, newFileName);
 
-         // exce, curl code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
+         // exce, curl old code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
          // Response example: https://api.imgbb.com/
          const uploadFetchResponse = await fetch("https://api.imgbb.com/1/upload", {
             method: 'POST',
