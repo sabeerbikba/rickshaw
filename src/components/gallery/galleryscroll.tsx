@@ -11,7 +11,6 @@ const GalleryScroll = (): JSX.Element => {
          console.log('inside true');
          document.body.style.overflow = "hidden";
       } else {
-         console.log('inside false');
          document.body.style.overflow = "";
       }
 

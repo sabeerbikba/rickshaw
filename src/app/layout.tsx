@@ -7,6 +7,8 @@ import Line from "@/components/home/line";
 import Class from "@/components/home/class";
 import "./globals.css";
 
+// TODO: problem with navigation bar links not clicking properly 
+
 export const viewport: Viewport = {
    width: 'device-width',
    initialScale: 1.0,

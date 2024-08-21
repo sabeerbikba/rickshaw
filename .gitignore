@@ -6,6 +6,8 @@
 
 # testing
 /coverage
+/src/app/test*
+/src/app/api/test*
 
 # next.js
 /.next/

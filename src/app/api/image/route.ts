@@ -3,13 +3,14 @@ import { writeFile, mkdir, unlink } from "fs/promises";
 import { join, resolve } from "path";
 import { formatBytes } from "@/utils/functions";
 import connectDB from "@/utils/connectdb";
-import { ImageType } from "../images";
-
+import { headersToObject } from "@/utils/apiutils";
+import type { ImageType } from "@/data/images";
 
 // TODO: need to error logging system to front-end
 // TODO: after image uplaod successful close the uplaod modal and if possible focus on upladed first or last image
 // TODO: even upload failed show upload success in front-end  need to fix it 
 // TODO: after upload img need to add in top and focus first img if possible 
+// TODO: if something error in database show error in page 
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); // tmp 4 test
 const IMGBB_API = process.env.IMGBB_API as string;
@@ -23,14 +24,6 @@ const logError = async (error: Error): Promise<void> => {
       timestamp: new Date().toString(),
    });
 }
-
-const headersToObject = (headers: Headers) => {
-   const headersObj: { [key: string]: string } = {};
-   headers.forEach((value, key) => {
-      headersObj[key] = value;
-   });
-   return headersObj;
-};
 
 function removeExtension(imageName: string): string {
    // replace this function when testing with getFileName() function 
@@ -96,11 +89,13 @@ export async function POST(req: NextRequest) {
          uploadedFilePaths.push(filePath); // move this line bottom if needed
 
 
+         // TODO: test renaming works or not 
          const fetchBody = new FormData();
          fetchBody.append("key", IMGBB_API);
          // fetchBody.append("image", new Blob([buffer], { type: file.type }), newFileName);
 
          const blob = new Blob([buffer], { type: file.type });
+         // fileName can be changed by using fetchBody('name', newFileName);
          fetchBody.append("image", blob, newFileName);
 
          // exce, curl old code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
@@ -123,6 +118,7 @@ export async function POST(req: NextRequest) {
 
          console.log('Inserting document into MongoDB');
          try {
+            // TODO: also need to add data.url, data.display-url and thumbnail.url from imgbb API response
             const result = await collection.insertOne({
                id: collectionCount + 1,
                orignalImgName: file.name,

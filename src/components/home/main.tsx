@@ -5,14 +5,14 @@ import Light from "./light"
 const Home: FC = (): JSX.Element => {
    const phoneNumber = '918970517155';
 
-   function isMobileDevice(): boolean {
-      const userAgent = navigator.userAgent;
-      return (
-         typeof window.orientation !== 'undefined' ||
-         userAgent.indexOf('Mobile') !== -1 ||
-         userAgent.indexOf('touch') !== -1
-      );
-   }
+   // function isMobileDevice(): boolean {
+   //    const userAgent = navigator.userAgent;
+   //    return (
+   //       typeof window.orientation !== 'undefined' ||
+   //       userAgent.indexOf('Mobile') !== -1 ||
+   //       userAgent.indexOf('touch') !== -1
+   //    );
+   // }
 
    function getUrlParameter(name: string): string {
       if (typeof window !== 'undefined') {
@@ -24,12 +24,21 @@ const Home: FC = (): JSX.Element => {
       return '';
    }
 
-   const handleBtnClick = () => {
-      if (isMobileDevice()) {
+   const getInTouch = () => {
+      // if (isMobileDevice()) {
          window.open(`tel:+${phoneNumber}`, '_self');
-      } else {
+      // } else {
          window.open(`https://wa.me/${phoneNumber}/?text=${encodeURIComponent('I would like to call you')}`, '_blank');
-      }
+      // }
+      // TODO: show modal of contact details 
+   }
+
+   // TODO: fuction not crated in /api/click route 
+   const logClick = () => fetch("/api/click", {method: 'POST'});
+
+   const handleBtnClick = () => {
+      getInTouch();
+      logClick();
    };
 
    useEffect(() => {

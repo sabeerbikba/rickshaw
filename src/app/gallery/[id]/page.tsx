@@ -1,7 +1,7 @@
 import "server-only";
 // import Image from "next/image";
-import images, { ImageType } from "../images";
-import UploadModal from "@/components/uploadmodal";
+import images, { ImageType } from "../../../data/images";
+import UploadModal from "@/components/gallery/uploadmodal";
 import { transformText } from "@/utils/functions";
 import "./styles.css";
 
@@ -18,8 +18,9 @@ export default function PhotoPage({
                <div className="tab-img-preview">
                   <img
                      alt={photo.alt}
-                     src={photo.srcUrl}
+                     src={photo.src}
                   />
+                  {/* TODO: remove this br elements. instead use better styles*/}
                   <br />
                   <br />
                   <div>

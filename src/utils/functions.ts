@@ -1,4 +1,5 @@
-// TODO: give better name for this file      
+// TODO: give better name for this file
+// TODO: is this file really needed
 
 const transformText = (text: string): string => {
    // if (typeof text === 'number') return text.toString();

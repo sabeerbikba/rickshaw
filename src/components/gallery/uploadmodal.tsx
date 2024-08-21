@@ -89,7 +89,7 @@
 //       });
 
 //       try {
-//          const response = await fetch('/gallery/api', {
+//          const response = await fetch('/api/image', {
 //             method: 'POST',
 //             body: formData,
 //          });
@@ -260,7 +260,7 @@
 //       // console.log(formData);
 
 //       try {
-//          const response = await fetch('/gallery/api', {
+//          const response = await fetch('/api/image', {
 //             method: 'POST',
 //             body: formData,
 //          });
@@ -454,7 +454,7 @@ const UploadModal: FC = (): JSX.Element => {
       });
 
       try {
-         const response = await fetch('/gallery/api', {
+         const response = await fetch('/api/image', {
             method: 'POST',
             body: formData,
          });

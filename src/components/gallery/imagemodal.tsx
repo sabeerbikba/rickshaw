@@ -53,6 +53,7 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
    const tempImgRef = useRef<HTMLImageElement>(null);
    const imgPreviewLoadingErrorRef = useRef<HTMLDivElement>(null);
    const [state, dispatch] = useReducer(reducer, initialState);
+   // TODO: de structure the state {} = state;
 
    const UPDATE_VALUE = (field: StateField, value: StateValue): void => {
       dispatch({ type: 'UPDATE_VALUE', field, value })
@@ -134,6 +135,16 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
       };
    }, []);
 
+   // test
+   // test
+   // test
+   // test
+   console.log('state.isError', state.isError);
+   // test
+   // test
+   // test
+   // test
+
    return (
       <dialog id="imageModal" open={state.dialogOpen}>
          {state.isError || !state.isLoaded ? (
@@ -157,7 +168,7 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
                <div className="preview" ref={overlay} onClick={onClick}>
                   <div className="imagePreview-wrapper" ref={wrapper}>
                      <img src={src} alt={alt} className="imagePreview-modal-content" />
-                     <div className="imagePreview-info">{transformText(alt)}</div>
+                     <div className="imagePreview-info">{transformText(alt || '')}</div>
                   </div>
                </div>
             </>

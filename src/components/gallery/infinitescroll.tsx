@@ -17,7 +17,7 @@
 //    const fetchImages = async () => {
 //       try {
 //          setImagesLoading(true);
-//          const response = await fetch(`/gallery/api?page=${page + 1}`);
+//          const response = await fetch(`/api/image?page=${page + 1}`);
 //          const data = await response.json();
 
 //          if (Array.isArray(data)) {
@@ -77,17 +77,14 @@
 
 
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, FC } from "react";
 import Link from "next/link";
-import images, { ImageType } from "@/app/gallery/images";
+import type { ImageType } from "@/data/images";
+import ImageWithFallback from "./imagewithfallback";
 
-type InfiniteScrollProps = {
-   initialImages: ImageType[];
-   allImagesLoaded?: boolean;
-};
 
-const InfiniteScroll = ({ initialImages }: InfiniteScrollProps) => {
-   const [images, setImages] = useState<ImageType[]>(initialImages);
+const InfiniteScroll: FC = () => {
+   const [images, setImages] = useState<ImageType[]>([]);
    const [page, setPage] = useState<number>(0);
    const [imagesLoading, setImagesLoading] = useState<boolean>(false);
    const [allImagesLoaded, setAllImagesLoaded] = useState<boolean>(false);
@@ -95,7 +92,7 @@ const InfiniteScroll = ({ initialImages }: InfiniteScrollProps) => {
    const fetchImages = async () => {
       try {
          setImagesLoading(true);
-         const response = await fetch(`/gallery/api?page=${page + 1}`);
+         const response = await fetch(`/api/image?page=${page + 1}`);
          const data = await response.json();
 
          if (Array.isArray(data)) {
@@ -136,13 +133,9 @@ const InfiniteScroll = ({ initialImages }: InfiniteScrollProps) => {
       <>
          {images.map((img: ImageType, key: number): JSX.Element => (
             <Link className="image-item" key={key} href={`/gallery/${img.alt}`}>
-               <img
-                  src={img.srcUrl}
-                  alt={img.alt}
-                  id="gallery-img"
-                  loading="lazy"
-                  style={{ boxShadow: "1px solid red" }}
-               />
+               {/* TODO: give fallbackFixed error like image */}
+               {/* for now set tmp images to preview */}
+               <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1="/tmp/test.png"/>
             </Link>
          ))}
          {imagesLoading && <div className="text-red">IMAGES loading</div>}
