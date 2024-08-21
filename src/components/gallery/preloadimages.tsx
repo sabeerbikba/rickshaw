@@ -1,75 +1,42 @@
-// "use client";
-// import { FC } from "react";
-// import Link from 'next/link';
-// import images, { ImageType } from '@/data/images';
-// import ImageWithFallback from './imagewithfallback';
-
-// // TODO: PROBLEM: when calling intercepter it loads imagur image even if imgbb image shown 
-
-// const PreloadImages: FC = () => {
-//    return (
-//       <div className="image-gallery">
-//          {images.map((img: ImageType, key: number) => (
-//             <Link className="image-item" key={key} href={`/gallery/${img.alt}`}>
-//                <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1={img.fallbackSrc1} fallbackSrc2={img.fallbackSrc2}/>
-//             </Link>
-//          ))}
-//       </div>
-//    );
-// };
-
-// const renderWithLink: Fc = () => {
-
-// }
-
-// export default PreloadImages;
-
-
-
-
-
 "use client";
+import 'client-only';
 import { FC, createContext, useState, useContext, useEffect } from "react";
 import Link from 'next/link';
-import images, { ImageType } from '@/data/images';
+import images from '@/data/images';
+import type { ImageType } from '@/data/images';
 import ImageWithFallback from './imagewithfallback';
 
-// TODO: PROBLEM: when calling intercepter it loads imagur image even if imgbb image shown 
-
 type MyContextTypes = {
-   currentSrc: string;
-   setCurrentSrc: (currentSrc: string) => void;
    fallbackImgNumber: number;
    setFallbackImgNumber: (fallbackImgNumber: number) => void;
+   finalErrorImg: string;
 }
+
+const MyContext = createContext<MyContextTypes | undefined>(undefined);
+const FINAL_ERROR_IMG: string = '/tmp/test.png';
 
 const PreloadImages: FC = () => {
    return (
       <div className="image-gallery">
          {images.map((img: ImageType, key: number) => (
-            // <Link className="image-item" key={key} href={`/gallery/${img.alt}`}>
-            //    <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1={img.fallbackSrc1} fallbackSrc2={img.fallbackSrc2} />
-            // </Link>
             <RenderImageWithLink img={img} key={key} />
          ))}
+
+         {/*   When image loaded error occures. error-image instantly render.
+                        Because of error-img already loaded                   */}
+         <img src={FINAL_ERROR_IMG} alt="error-image" hidden />
       </div>
    );
 };
 
-const MyContext = createContext<MyContextTypes | undefined>(undefined);
-
-const RenderImageWithLink: FC = ({ img }) => {
-
-   // TODO: interception only allowed when image is fully loaded
-   const [currentSrc, setCurrentSrc] = useState<string>(img.src); // TODO: is realy need to use in context
+const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
    const [fallbackImgNumber, setFallbackImgNumber] = useState<number>(0);
-   // TODO:  PROBLEM: if fallbackImgNumber is == 3 runns loop for every 50ms 
-
-   useEffect(() => {
-      console.log('changing fallbackImgNumber: current: ', fallbackImgNumber);
-   }, [fallbackImgNumber]);
-
-   const { src, fallbackSrc1, fallbackSrc2, alt } = img;
+   const { src, fallbackSrc1, fallbackSrc2, alt }: ImageType = img; // TODO: types needed or not
+   const finalErrorImg: string = FINAL_ERROR_IMG;
+   
+   // TODO: interception only allowed when image is fully loaded
+   // TODO: lastFallback image always needed even image properly loaded to load by checking network request is free
+   // TODO: remove or correct the cursor styles 
 
    /**
       fallbackImagNumber info
@@ -82,7 +49,6 @@ const RenderImageWithLink: FC = ({ img }) => {
 
 
    // TODO: check this url is working fine
-   // const linkHref: string = `/gallery/${fallbackImgNumber === 0 ? alt : fallbackImgNumber === 1 ? 'fallback1-' + alt : fallbackImgNumber === 2 ? 'fallback2-' + alt}`;
    const linkHref: string = (() => {
       switch (fallbackImgNumber) {
          case 0:
@@ -92,31 +58,31 @@ const RenderImageWithLink: FC = ({ img }) => {
          case 2:
             return `/gallery/fallback2-${alt}`;
          default:
-            return `/gallery/${alt}`; // or handle the default case as needed
+            return `/gallery/${alt}`;
       }
    })();
 
    console.log('linkHref', linkHref);
 
    if (fallbackImgNumber === 3) {
-      // if final image is loaded image intercepting and preview will not shown 
+      // if final image is loaded image intercepting and preview will not shown //
       return (
-         <MyContext.Provider value={{ currentSrc, setCurrentSrc, fallbackImgNumber, setFallbackImgNumber }} >
-            <a className="image-item" href={linkHref}>
+         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }} >
+            <span className="image-item" style={{ cursor: 'var(--custom-cursor-default)' }}>
                <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
-            </a>
+            </span>
          </MyContext.Provider>
       )
    } else {
       return (
-         <MyContext.Provider value={{ currentSrc, setCurrentSrc, fallbackImgNumber, setFallbackImgNumber }} >
-            <Link className="image-item" href={linkHref}>
+         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }}>
+            <Link className="image-item" href={linkHref} style={{ cursor: 'var(--custom-cursor-pointer)' }}>
                <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
             </Link>
          </MyContext.Provider>
       )
    }
-}
+};
 
 const useMyContext = () => {
    const context = useContext(MyContext);

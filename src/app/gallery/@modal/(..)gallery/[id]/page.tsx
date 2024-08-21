@@ -2,7 +2,8 @@
 "use server";
 import { headers } from 'next/headers';
 import ImageModal from "@/components/gallery/imagemodal";
-import images, { ImageType } from "@/data/images";
+import images from '@/data/images';
+import type { ImageType } from '@/data/images';
 
 // TODO: if error happens need to log into databse
 // TODO: need to think about id is which is better: alt or imgName

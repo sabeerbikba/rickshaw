@@ -1,6 +1,7 @@
 import "server-only";
 // import Image from "next/image";
-import images, { ImageType } from "../../../data/images";
+import images from '@/data/images';
+import type { ImageType } from '@/data/images';
 import UploadModal from "@/components/gallery/uploadmodal";
 import { transformText } from "@/utils/functions";
 import "./styles.css";

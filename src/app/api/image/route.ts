@@ -123,9 +123,17 @@ export async function POST(req: NextRequest) {
                id: collectionCount + 1,
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
+               // TODO: here we loading data.url that is not orignal quality by planing what to do use data.display_url
                srcUrl: responseData.data.url,
+            // TODO: need to save like 
+            /**
+               srcUrl: data.display_url // orignal size | eg: 801kb
+               srcDecresed: data.url // compressed | eg: 161kb
+               srcThumbnail: thumb.url // thumbnail | eg:. 8.96kb
+               
+             */
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
-               imgSize: {
+               size: { // 
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
                },
