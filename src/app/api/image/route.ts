@@ -124,12 +124,12 @@ export async function POST(req: NextRequest) {
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
                // TODO: here we loading data.url that is not orignal quality by planing what to do use data.display_url
-               srcUrl: responseData.data.url,
+               src: responseData.data.url, // changed srcUrl to src
             // TODO: need to save like 
             /**
-               srcUrl: data.display_url // orignal size | eg: 801kb
-               srcDecresed: data.url // compressed | eg: 161kb
-               srcThumbnail: thumb.url // thumbnail | eg:. 8.96kb
+               srcUrl: data.display_url // orignal size | eg: 161KB, 27KB
+               srcDecresed: data.url // orignal size | eg: 801KB, 1.00MB
+               srcThumbnail: thumb.url // thumbnail | eg:. 8.96KB, 4.78KB
                
              */
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
@@ -221,7 +221,7 @@ export async function GET(req: NextRequest) {
          const image = await collection.findOne(
             { alt: id },
             // { imageName: id },
-            { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } }
+            { projection: { _id: 0, id: 1, src: 1, alt: 1 } }
          );
          if (!image) {
             return NextResponse.json(
@@ -237,7 +237,7 @@ export async function GET(req: NextRequest) {
          console.log("requested page: ", page);
 
          const images: ImageType[] = await collection
-            .find({}, { projection: { _id: 0, id: 1, srcUrl: 1, alt: 1 } })
+            .find({}, { projection: { _id: 0, id: 1, src: 1, alt: 1 } })
             .skip(skip)
             .limit(perPage)
             .toArray();

@@ -12,9 +12,9 @@ export default function GalleryPage() {
       <>
          <main className="main-gallery">
             <div className="image-gallery">
-               <PreloadImages />
+               {/* <PreloadImages /> */}
                {/* TODO: */}
-               {/* <InfiniteScroll /> */}
+               <InfiniteScroll />
             </div>
             <div id="loading-spinner"></div>
          </main>

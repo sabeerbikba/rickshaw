@@ -9,7 +9,7 @@ import ImageWithFallback from './imagewithfallback';
 type MyContextTypes = {
    fallbackImgNumber: number;
    setFallbackImgNumber: (fallbackImgNumber: number) => void;
-   finalErrorImg: string;
+   // finalErrorImg: string;
 }
 
 const MyContext = createContext<MyContextTypes | undefined>(undefined);
@@ -32,7 +32,7 @@ const PreloadImages: FC = () => {
 const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
    const [fallbackImgNumber, setFallbackImgNumber] = useState<number>(0);
    const { src, fallbackSrc1, fallbackSrc2, alt }: ImageType = img; // TODO: types needed or not
-   const finalErrorImg: string = FINAL_ERROR_IMG;
+   // const finalErrorImg: string = FINAL_ERROR_IMG;
    
    // TODO: interception only allowed when image is fully loaded
    // TODO: lastFallback image always needed even image properly loaded to load by checking network request is free
@@ -67,7 +67,8 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
    if (fallbackImgNumber === 3) {
       // if final image is loaded image intercepting and preview will not shown //
       return (
-         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }} >
+         // <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }} >
+         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber }} >
             <span className="image-item" style={{ cursor: 'var(--custom-cursor-default)' }}>
                <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
             </span>
@@ -75,7 +76,8 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
       )
    } else {
       return (
-         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }}>
+         // <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }}>
+         <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber }}>
             <Link className="image-item" href={linkHref} style={{ cursor: 'var(--custom-cursor-pointer)' }}>
                <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
             </Link>
@@ -87,12 +89,15 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
 const useMyContext = () => {
    const context = useContext(MyContext);
    if (context === undefined) {
-      throw new Error('useMyContext must be used within a MyProvider');
+      // throw new Error('useMyContext must be used within a MyProvider');
+            return { fallbackImgNumber: 0, setFallbackImgNumber: () => {} };
+
    }
    return context;
 };
 
 export { MyContext, useMyContext };
+// export { MyContext };
 export type { MyContextTypes };
 export default PreloadImages;
 

@@ -34,8 +34,8 @@ export default async function PhotoModal({
 
    let searchAlt: string;
    let photo: ImageType;
-   let fallbackSrc: number; // 1 = fallbackSrc1, 2 = fallbackSrc2
-
+   let fallbackSrc: number = 0; // 0 = src, 1 = fallbackSrc1, 2 = fallbackSrc2
+   let finalSrc: string | undefined;
 
 
    const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
@@ -53,18 +53,39 @@ export default async function PhotoModal({
 
    photo = images.find((p) => p.alt === searchAlt)!;
 
-   // test
-   // test
-   // test
-   // test
-   console.log('searchAlt', searchAlt);
-   console.log('photo', photo);
+   finalSrc = (() => {
+      switch (fallbackSrc) {
+         case 0: {
+            return photo.src;
+         }
+         case 1: {
+            return photo.fallbackSrc1;
+         }
+         case 2: {
+            return photo.fallbackSrc2;
+         }
+         default: {
+            return photo.src;
+         }
+      }
+   })();
+
+   // // test
+   // // test
+   // // test
+   // // test
+   // console.log('searchAlt', searchAlt);
+   // console.log('photo', photo);
    // console.log('fallbackSrc', fallbackSrc);
-   console.log('id', id);
-   // test
-   // test
-   // test
-   // test
+   // console.log('id', id);
+   // console.log('finalSrc', finalSrc);
+   
+   // // test
+   // // test
+   // // test
+   // // test
+
+
 
    if (photo === undefined) {
       const baseUrl = getBaseUrl();
@@ -77,7 +98,7 @@ export default async function PhotoModal({
    }
 
    return <ImageModal
-      src={photo.src}
+      src={finalSrc as string}
       alt={photo.alt}
    // alt={!photo.alt ? photo.imageName : photo.alt}
    // alt={photo.alt ?? photo.id?.toString() ?? 'default alt text'}

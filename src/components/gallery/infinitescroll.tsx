@@ -135,7 +135,8 @@ const InfiniteScroll: FC = () => {
             <Link className="image-item" key={key} href={`/gallery/${img.alt}`}>
                {/* TODO: give fallbackFixed error like image */}
                {/* for now set tmp images to preview */}
-               <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1="/tmp/test.png"/>
+               <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1="/tmp/test.png" infiniteScroll/>
+
             </Link>
          ))}
          {imagesLoading && <div className="text-red">IMAGES loading</div>}
