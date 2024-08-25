@@ -19,6 +19,7 @@ export default function GalleryPage() {
             </div>
             <div id="loading-spinner"></div>
          </main>
+         {/* i think better place for it in layout.tsx file in /gallery root */}
          <UploadModal />
          <GalleryScroll />
       </>
