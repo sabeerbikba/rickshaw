@@ -30,8 +30,8 @@ const PreloadImages: FC = () => {
 };
 
 const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
+   const imgAlt: string = img.alt;
    const [fallbackImgNumber, setFallbackImgNumber] = useState<number>(0);
-   const { src, fallbackSrc1, fallbackSrc2, alt }: ImageType = img; // TODO: types needed or not
    // const finalErrorImg: string = FINAL_ERROR_IMG;
    
    // TODO: interception only allowed when image is fully loaded
@@ -39,7 +39,7 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
    // TODO: remove or correct the cursor styles 
 
    /**
-      fallbackImagNumber info
+        fallbackImagNumber info
 
          0 = src, default image
          1 = fallbackSrc1
@@ -52,17 +52,19 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
    const linkHref: string = (() => {
       switch (fallbackImgNumber) {
          case 0:
-            return `/gallery/${alt}`;
+            return `/gallery/${imgAlt}`;
          case 1:
-            return `/gallery/fallback1-${alt}`;
+            return `/gallery/fallback1-${imgAlt}`;
          case 2:
-            return `/gallery/fallback2-${alt}`;
+            return `/gallery/fallback2-${imgAlt}`;
          default:
-            return `/gallery/${alt}`;
+            return `/gallery/${imgAlt}`;
       }
    })();
 
    console.log('linkHref', linkHref);
+
+   // TODO: is really needed css var 
 
    if (fallbackImgNumber === 3) {
       // if final image is loaded image intercepting and preview will not shown //
@@ -70,7 +72,7 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
          // <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }} >
          <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber }} >
             <span className="image-item" style={{ cursor: 'var(--custom-cursor-default)' }}>
-               <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
+               <ImageWithFallback img={img}/>
             </span>
          </MyContext.Provider>
       )
@@ -79,7 +81,7 @@ const RenderImageWithLink: FC<{ img: ImageType }> = ({ img }) => {
          // <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber, finalErrorImg }}>
          <MyContext.Provider value={{ fallbackImgNumber, setFallbackImgNumber }}>
             <Link className="image-item" href={linkHref} style={{ cursor: 'var(--custom-cursor-pointer)' }}>
-               <ImageWithFallback src={src} alt={alt} fallbackSrc1={fallbackSrc1} fallbackSrc2={fallbackSrc2} />
+               <ImageWithFallback img={img}/>
             </Link>
          </MyContext.Provider>
       )

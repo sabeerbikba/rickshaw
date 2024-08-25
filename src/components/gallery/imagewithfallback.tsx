@@ -4,33 +4,37 @@ import type { ImgHTMLAttributes } from 'react';
 import { useState, useEffect, useContext } from 'react';
 import type { MyContextTypes } from './preloadimages';
 import { useMyContext } from './preloadimages';
+import { ImageType } from '@/data/images';
 // import { MyContext } from './preloadimages';
 
 // TODO: if more than 10 images loaded not correct log and show message show error using localStorageState,
 //       - every time load the page clear the log
 
 interface ImageWithFallbackProps extends ImgHTMLAttributes<HTMLImageElement> {
-   src: string;
-   alt: string;
-   fallbackSrc1?: string | undefined;
-   fallbackSrc2?: string | undefined;
+   img: ImageType
+   // src: string;
+   // alt: string;
+   // fallbackSrc1?: string | undefined;
+   // fallbackSrc2?: string | undefined;
    boxShadowColor?: string;
-   infiniteScroll?: boolean;
+   // infiniteScroll?: boolean;
 }
 
 const FINAL_ERROR_IMG: string = '/tmp/test.png';
 
 const ImageWithFallback = ({
-   src,
-   alt,
-   fallbackSrc1,
-   fallbackSrc2,
+   img,
+   // src,
+   // alt,
+   // fallbackSrc1,
+   // fallbackSrc2,
    boxShadowColor = "red",
-   infiniteScroll,
+   // infiniteScroll,
    ...props
 }: ImageWithFallbackProps): JSX.Element => {
 
-   const [currentSrc, setCurrentSrc] = useState<string>(src); // TODO: is realy need to use in context
+   const { src, fallbackSrc1, fallbackSrc2, alt }: ImageType = img; // TODO: types needed or not
+   const [currentSrc, setCurrentSrc] = useState<string>(img.src); // TODO: is realy need to use in context
    // const { fallbackImgNumber, setFallbackImgNumber, finalErrorImg }: MyContextTypes = useMyContext();
    const { fallbackImgNumber, setFallbackImgNumber }: MyContextTypes = useMyContext();
    // const { fallbackImgNumber, setFallbackImgNumber, finalErrorImg }: MyContextTypes = useContext(MyContext);
@@ -62,7 +66,7 @@ const ImageWithFallback = ({
             fallbackImg1.src = fallbackSrc1;
 
             fallbackImg1.onerror = () => {
-               if (fallbackSrc2) {
+               if (fallbackSrc2) { // if not `undefined`
                   setCurrentSrc(fallbackSrc2);
                   setFallbackImgNumber(2);
                   const fallbackImg2 = new Image();
@@ -76,7 +80,7 @@ const ImageWithFallback = ({
 
                }
             };
-         } else if (fallbackSrc2) {
+         } else if (fallbackSrc2) { // if not `undefined`
             setCurrentSrc(fallbackSrc2);
             setFallbackImgNumber(2);
             const fallbackImg2 = new Image();

@@ -24,16 +24,16 @@ const images: ImageType[] = [
    fallbackSrc2: "/images/lj1YChB.jpg",
    alt: "apsarkonda-falls-2"
 },
-   {
-   src: "https://i.imgur.com/lj1YChB.jpg",
-   fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-   fallbackSrc2: "/images/lj1YChB.jpg",
-   alt: "apsarkonda-falls-2"
-},
 //    {
 //    src: "https://i.imgur.com/lj1YChB.jpg",
 //    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
 //    fallbackSrc2: "/images/lj1YChB.jpg",
+//    alt: "apsarkonda-falls-2"
+// },
+//    {
+//    src: "https://i.imgur.com/lj1YChB.jpg",
+//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jp",
+//    fallbackSrc2: "/images/lj1YChB.jp",
 //    alt: "apsarkonda-falls-2"
 // },
 //    {

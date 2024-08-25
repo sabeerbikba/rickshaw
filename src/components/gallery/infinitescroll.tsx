@@ -82,8 +82,11 @@ import Link from "next/link";
 import type { ImageType } from "@/data/images";
 import ImageWithFallback from "./imagewithfallback";
 
+// TODO: images rendering double 
+// TODO: if connection problem show somthing error in front-end 
 
 const InfiniteScroll: FC = () => {
+   // TODO: can be used useReducer
    const [images, setImages] = useState<ImageType[]>([]);
    const [page, setPage] = useState<number>(0);
    const [imagesLoading, setImagesLoading] = useState<boolean>(false);
@@ -94,11 +97,19 @@ const InfiniteScroll: FC = () => {
          setImagesLoading(true);
          const response = await fetch(`/api/image?page=${page + 1}`);
          const data = await response.json();
+         console.log(data);
 
          if (Array.isArray(data)) {
             const newImages: ImageType[] = data;
             if (newImages.length > 0) {
-               setImages((prevImages) => [...prevImages, ...newImages]);
+               // setImages((prevImages) => [...prevImages, ...newImages]);
+
+               setImages((prevImages) => {
+                  const existingIds = new Set(prevImages.map(img => img.id));
+                  const filteredNewImages = newImages.filter(img => !existingIds.has(img.id));
+                  return [...prevImages, ...filteredNewImages];
+               });
+
                console.log("before push: ");
                console.log(images);
                images.push(...newImages)
@@ -135,10 +146,12 @@ const InfiniteScroll: FC = () => {
             <Link className="image-item" key={key} href={`/gallery/${img.alt}`}>
                {/* TODO: give fallbackFixed error like image */}
                {/* for now set tmp images to preview */}
-               <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1="/tmp/test.png" infiniteScroll/>
+               {/* <ImageWithFallback src={img.src} alt={img.alt} fallbackSrc1="/tmp/test.png" infiniteScroll/> */}
+               <ImageWithFallback img={img} />
 
             </Link>
          ))}
+         {/* TODO: need to add good animation and all image loaded */}
          {imagesLoading && <div className="text-red">IMAGES loading</div>}
          {allImagesLoaded && <div className="text-red">All Images Loaded</div>}
       </>

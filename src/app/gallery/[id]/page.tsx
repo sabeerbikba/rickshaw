@@ -1,43 +1,68 @@
+'server only';
 import "server-only";
 // import Image from "next/image";
-import images from '@/data/images';
-import type { ImageType } from '@/data/images';
+import { FC } from "react";
+// import images from '@/data/images';
+// import type { ImageType } from '@/data/images';
 import UploadModal from "@/components/gallery/uploadmodal";
 import { transformText } from "@/utils/functions";
 import "./styles.css";
+import getImageData from "@/utils/getimagedata";
 
-export default function PhotoPage({
-   params: { id },
-}: {
-   params: { id: string };
-}): JSX.Element {
+const PhotoPage: FC<{ params: { id: string } }> = async (
+   { params: { id } }) => {
    try {
-      const photo: ImageType = images.find((p) => p.alt === id)!;
+      const [finalSrc, photoAlt] = await getImageData(id);
+
+
+      // const photo: ImageType = images.find((p) => p.alt === id)!;
       return (
          <>
-            <main className="main-gallery">
-               <div className="tab-img-preview">
-                  <img
-                     alt={photo.alt}
-                     src={photo.src}
-                  />
-                  {/* TODO: remove this br elements. instead use better styles*/}
-                  <br />
-                  <br />
-                  <div>
-                     <h1>{transformText(photo.alt)}</h1>
-                  </div>
-               </div>
-            </main>
-            <UploadModal />
+            {!finalSrc ? (
+               <>
+                  <main className="main-gallery">
+                     <div className="tab-img-preview">
+                        <h1 className="error">Image not Found</h1>
+                     </div>
+                  </main>
+               </>
+            ) : (
+               <>
+                  <main className="main-gallery">
+                     <div className="tab-img-preview">
+                        <img
+                           // alt={photo.alt}
+                           // src={photo.src}
+                           src={finalSrc}
+                           alt={photoAlt || ''}
+                        />
+                        {/* TODO: remove this br elements. instead use better styles*/}
+                        <br />
+                        <br />
+                        <div>
+                           {/* <h1>{transformText(photo.alt)}</h1> */}
+                           <h1>{transformText(photoAlt as string)}</h1>
+                        </div>
+                     </div>
+                  </main>
+                  <UploadModal />
+               </>
+            )}
          </>
       );
    } catch {
+      // TODO: add logging logic here to log what happned 
+
+      /**
+       *       console.error('Failed to fetch data:', error);
+      // Log error using a custom logging function
+      logError(error);
+       */
       return (
          <>
             <main className="main-gallery">
                <div className="tab-img-preview">
-                  <h1 className="error">Image not Found</h1>
+                  <h1 className="error">Something wrong when fetching image</h1>
                </div>
             </main>
             <UploadModal />
@@ -46,4 +71,4 @@ export default function PhotoPage({
    }
 }
 
-
+export default PhotoPage;

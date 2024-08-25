@@ -6,13 +6,14 @@ import InfiniteScroll from "@/components/gallery/infinitescroll";
 import PreloadImages from "@/components/gallery/preloadimages";
 
 // TODO: when page load need to scroll to top
+// TODO: where that null printing in terminal before request page:
 
 export default function GalleryPage() {
    return (
       <>
          <main className="main-gallery">
             <div className="image-gallery">
-               {/* <PreloadImages /> */}
+               <PreloadImages />
                {/* TODO: */}
                <InfiniteScroll />
             </div>

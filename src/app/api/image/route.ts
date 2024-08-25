@@ -216,6 +216,8 @@ export async function GET(req: NextRequest) {
    const collection = await connectDB("images");
    console.log(id);
 
+   // TODO: if connection problem show somthing error in front-end 
+
    try {
       if (id) {
          const image = await collection.findOne(
