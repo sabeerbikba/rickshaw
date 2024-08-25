@@ -1,7 +1,8 @@
 "use client";
 import 'client-only'; //
-import type { ImgHTMLAttributes } from 'react';
 import { useState, useEffect, useContext } from 'react';
+import type { ImgHTMLAttributes } from 'react';
+import { Blurhash } from 'react-blurhash';
 import type { MyContextTypes } from './preloadimages';
 import { useMyContext } from './preloadimages';
 import { ImageType } from '@/data/images';
@@ -38,9 +39,10 @@ const ImageWithFallback = ({
    // const { fallbackImgNumber, setFallbackImgNumber, finalErrorImg }: MyContextTypes = useMyContext();
    const { fallbackImgNumber, setFallbackImgNumber }: MyContextTypes = useMyContext();
    // const { fallbackImgNumber, setFallbackImgNumber, finalErrorImg }: MyContextTypes = useContext(MyContext);
+   const [isImgLoading, setIsImgLoading] = useState<boolean>(false);
 
    console.log('fallbackImgNumber', fallbackImgNumber);
-   
+
    /**
          if previous image not loaded becuase of error use fallback image
 
@@ -58,12 +60,18 @@ const ImageWithFallback = ({
          setCurrentSrc(src);
       };
 
+      console.log('src', img.complete);
+
+      setIsImgLoading(img.complete);
+
       img.onerror = () => {
          if (fallbackSrc1) {
             setCurrentSrc(fallbackSrc1);
             setFallbackImgNumber(1);
             const fallbackImg1 = new Image();
             fallbackImg1.src = fallbackSrc1;
+            console.log('fall1', fallbackImg1);
+            setIsImgLoading(fallbackImg1.complete);
 
             fallbackImg1.onerror = () => {
                if (fallbackSrc2) { // if not `undefined`
@@ -71,12 +79,16 @@ const ImageWithFallback = ({
                   setFallbackImgNumber(2);
                   const fallbackImg2 = new Image();
                   fallbackImg2.src = fallbackSrc2;
+                  console.log('fall2', fallbackImg2);
+                  setIsImgLoading(fallbackImg2.complete);
 
                   fallbackImg2.onerror = () => {
                      setFallbackImgNumber(3);
+                     setIsImgLoading(false);
                   };
                } else {
                   setFallbackImgNumber(3);
+                  setIsImgLoading(false);
 
                }
             };
@@ -85,19 +97,36 @@ const ImageWithFallback = ({
             setFallbackImgNumber(2);
             const fallbackImg2 = new Image();
             fallbackImg2.src = fallbackSrc2;
+            console.log('fall2', fallbackImg2);
+            setIsImgLoading(fallbackImg2.complete);
 
             fallbackImg2.onerror = () => {
                setFallbackImgNumber(3);
+               setIsImgLoading(false);
             };
          } else {
             setFallbackImgNumber(3);
+            setIsImgLoading(false);
          }
       };
+
    }, [src, fallbackSrc1, fallbackSrc2]);
 
    console.log('currentSrc', currentSrc);
    console.log('alt', alt);
-   
+   if (isImgLoading) {
+      return (
+         <>
+            <Blurhash
+               hash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+               width={400}
+               height={300}
+               resolutionX={32}
+               resolutionY={32}
+               punch={1}
+            /></>
+      )
+   }
 
    return (
       <img
@@ -107,8 +136,32 @@ const ImageWithFallback = ({
          loading="lazy"
          {...props}
       />
-   );
+   )
 }
+
+   // return (
+   //    <>
+   //       {!isImgLoading ? (
+   //          <>
+   //             <Blurhash
+   //                hash="LEHV6nWB2yk8pyo0adR*.7kCMdnj"
+   //                width={400}
+   //                height={300}
+   //                resolutionX={32}
+   //                resolutionY={32}
+   //                punch={1}
+   //             /></>
+   //       ) : (
+   //          <img
+   //             src={currentSrc}
+   //             alt={alt}
+   //             style={{ boxShadow: `1px 1px 5px ${boxShadowColor}` }}
+   //             loading="lazy"
+   //             {...props}
+   //          />
+   //       )}
+   //    </>
+   // );
 
 export default ImageWithFallback;
 

@@ -15,7 +15,7 @@ export default function GalleryPage() {
             <div className="image-gallery">
                <PreloadImages />
                {/* TODO: */}
-               <InfiniteScroll />
+               {/* <InfiniteScroll /> */}
             </div>
             <div id="loading-spinner"></div>
          </main>

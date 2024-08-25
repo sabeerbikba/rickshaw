@@ -428,7 +428,7 @@ export async function GET(req: NextRequest) {
          console.log("requested page: ", page);
 
          const images: ImageType[] = await collection
-            .find({}, { projection: { _id: 0, id: 1, src: 1, alt: 1 } })
+            .find({}, { projection: { _id: 0, id: 1, src: 1, alt: 1,  } })
             .skip(skip)
             .limit(perPage)
             .toArray();

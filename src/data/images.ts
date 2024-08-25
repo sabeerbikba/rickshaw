@@ -1,8 +1,11 @@
 type ImageType = {
    id?: number;
    imageName?: string;
-   alt: string;
    src: string;
+   alt: string;
+   blurhash: string;
+   width: number;
+   height: number;
    fallbackSrc1?: string;
    fallbackSrc2?: string;
    allImagesLoaded?: boolean; // TODO: is this property really needed
@@ -14,12 +17,18 @@ type ImageType = {
 const images: ImageType[] = [
    {
    src: "https://i.imgur.com/lj1YChB.jpg",
+   blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
+   width: 1872,
+   height: 561,
    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
    fallbackSrc2: "/images/lj1YChB.jpg",
    alt: "apsarkonda-falls-2"
 },
    {
-   src: "https://i.imgur.com/lj1YChB.jpg",
+   src: "https://i.imgur.com/lj1YChB.jp",
+   blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
+   width: 1872,
+   height: 561,
    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
    fallbackSrc2: "/images/lj1YChB.jpg",
    alt: "apsarkonda-falls-2"
