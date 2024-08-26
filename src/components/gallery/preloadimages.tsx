@@ -13,7 +13,7 @@ type MyContextTypes = {
 }
 
 const MyContext = createContext<MyContextTypes | undefined>(undefined);
-const FINAL_ERROR_IMG: string = '/tmp/test.png';
+const FINAL_ERROR_IMG: string = '/images/test.png';
 
 const PreloadImages: FC = () => {
    return (
