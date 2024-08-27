@@ -14,6 +14,7 @@ import type { ImageType } from "@/data/images";
 // TODO: even upload failed show upload success in front-end  need to fix it 
 // TODO: after upload img need to add in top and focus first img if possible 
 // TODO: if something error in database show error in page 
+// TODO: if image size is more then 1 mb need to compress it before upload reason is not show fallback image blurhash
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); // tmp 4 test
 const IMGBB_API = process.env.IMGBB_API as string;

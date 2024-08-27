@@ -7,7 +7,6 @@ console.log(environment);
 // TODO: logging and send mail, if those conditions are true 
 // const allowedCustomHeader = 'custom-value';
 
-
 console.log('middleware detected outside function');
 // To restrict access to API routes from API testing clients, [Still Not Secure]
 export async function middleware(req: NextRequest) {
@@ -16,8 +15,12 @@ export async function middleware(req: NextRequest) {
    const referer = req.headers.get('referer');
    // const customHeader = req.headers.get('x-custom-header');
 
+   console.log('origin: ', origin);
+   console.log('allowedOrigin: ', allowedOrigin);
+
    if (environment === 'production') {
       if (origin !== allowedOrigin) {
+         
          return new NextResponse('Forbidden', { status: 403 });
       }
       

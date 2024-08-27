@@ -14,70 +14,54 @@ type ImageType = {
 // TODO: need to need to check images object object every image is image matched 
 // TODO: TODO: change to: src == imgbb data.url, fallback1 = imgur that used in src
 
-// const images: ImageType[] = [
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jpg",
-//    blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
-//    width: 1872,
-//    height: 561,
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-//    fallbackSrc2: "/images/lj1YChB.jpg",
-//    alt: "apsarkonda-falls-2"
-// },
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jp",
-//    blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
-//    width: 1872,
-//    height: 561,
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-//    fallbackSrc2: "/images/lj1YChB.jpg",
-//    alt: "apsarkonda-falls-2"
-// },
-// {
-//    src: "https://i.imgur.com/RcHMB4v.jp",
-//    blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
-//    width: 1872,
-//    height: 561,
-//    fallbackSrc1: "https://i.ibb.co/GT8Lrsh/RcHMB4v.jp",
-//    fallbackSrc2: "/images/RcHMB4v.jpg",
-//    alt: "eco-beach"
-// },
-// {
-//    src: "https://i.imgur.com/RcHMB4v.jp",
-//    blurhash: 'U35;~;8wv~*0%3sAkWni9sxuXSVYo}R*o0kD',
-//    width: 1872,
-//    height: 561,
-//    fallbackSrc1: "https://i.ibb.co/GT8Lrsh/RcHMB4v.jp",
-//    fallbackSrc2: "/images/RcHMB4v.jp",
-//    alt: "eco-beach"
-// },
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jpg",
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-//    fallbackSrc2: "/images/lj1YChB.jpg",
-//    alt: "apsarkonda-falls-2"
-// },
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jpg",
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jp",
-//    fallbackSrc2: "/images/lj1YChB.jp",
-//    alt: "apsarkonda-falls-2"
-// },
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jpg",
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-//    fallbackSrc2: "/images/lj1YChB.jpg",
-//    alt: "apsarkonda-falls-2"
-// },
-//    {
-//    src: "https://i.imgur.com/lj1YChB.jpg",
-//    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
-//    fallbackSrc2: "/images/lj1YChB.jpg",
-//    alt: "apsarkonda-falls-2"
-// },
-// ];
+/*
 
-// /**
+const images: ImageType[] = [{
+   src: "https://i.imgur.com/lj1YChB.jpg",
+   fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
+   fallbackSrc2: "/images/lj1YChB.jpg",
+   alt: "apsarkonda-falls-2",
+   blurhash: "ULDl}^My4o-:?]RQMxt7~WM{M{t7NMWAt3jc",
+   width: 959,
+   height: 1280,
+}, {
+   src: "https://i.imgur.com/AELVLIx.jpeg",
+   fallbackSrc1: "https://i.ibb.co/MPnWtR2/AELVLIx.jpg",
+   fallbackSrc2: "/images/AELVLIx.jpg",
+   alt: "mangrove-boardwalk-front",
+   blurhash: "UhJRKx8_x]xt_N9Zj^s;o|tRV[t7NFxubboy",
+   width: 1024,
+   height: 767,
+}, {
+   src: "https://i.imgur.com/RcHMB4v.jpg",
+   fallbackSrc1: "https://i.ibb.co/GT8Lrsh/RcHMB4v.jpg",
+   fallbackSrc2: "/images/RcHMB4v.jpg",
+   alt: "eco-beach",
+   blurhash: "UiF~8J%fNGxa_N-pRjog?bxuRjof%Mt6WAs:",
+   width: 700,
+   height: 443,
+}, {
+   src: "https://i.imgur.com/wLlFcOz.jpeg",
+   fallbackSrc1: "https://i.ibb.co/mX6FvsJ/wLlFcOz.jpg",
+   fallbackSrc2: "/images/wLlFcOz.jpg",
+   alt: "rickshaw-and-ecobeach-3",
+   blurhash: "UEJZ-zt.^Nv|0Z%OR*M_yZp058NF?cNz-o$#",
+   width: 4608,
+   height: 3456,
+}, {
+   src: "https://i.imgur.com/G4vcSYV.jpeg",
+   fallbackSrc1: "https://i.ibb.co/L0jspcM/G4vcSYV.jpg",
+   fallbackSrc2: "/images/G4vcSYV.jpg",
+   alt: "rickshaw-and-ecobeach-2",
+   blurhash: "U8G+2M00_1-:G^4n%MRkTfM_4:I[00.8Mx%2",
+   width: 4608,
+   height: 3456,
+}];
+
+// */
+
+
+// /*
 
 const images: ImageType[] = [{
    src: "https://i.imgur.com/lj1YChB.jpg",
