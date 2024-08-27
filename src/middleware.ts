@@ -17,15 +17,17 @@ export async function middleware(req: NextRequest) {
 
    console.log('origin: ', origin);
    console.log('allowedOrigin: ', allowedOrigin);
+   console.log('referer: ', referer);
 
    if (environment === 'production') {
       if (origin !== allowedOrigin) {
-         
+         console.log('origin !== allowedOrigin');
          return new NextResponse('Forbidden', { status: 403 });
       }
-      
+
       // Check if the referer header starts with your domain
       if (!referer || !referer.startsWith(allowedOrigin)) {
+         console.log('!referer || !referer.startsWith(allowedOrigin)');
          return new NextResponse('Forbidden', { status: 403 });
       }
    }
