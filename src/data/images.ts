@@ -1,223 +1,345 @@
 type ImageType = {
-   id?: number;
+   id: number;
    imageName?: string;
    src: string;
    alt: string;
-   blurhash: string;
+   // blurhash: string; 
    width: number;
    height: number;
    fallbackSrc1?: string;
    fallbackSrc2?: string;
+   // isLarage?: boolean;
+   base64String: string; // placeholder string when image loading
+   // size?: boolean;  // src img size
+   // rgb: rgbType;
    allImagesLoaded?: boolean; // TODO: is this property really needed
 };
+
+type rgbType = {
+   r: number;
+   g: number;
+   b: number;
+}
+
+
+const FALLBACK_PLACEHOLDER: string =
+   'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM4MTdiNmQiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iIzBmMDcwOCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyMi42Mzk5NiAtMTcuOTEyNzggMzUuODA5MjQgNDUuMjU5MjggMTE1LjEgMTEwKSIvPjxlbGxpcHNlIGZpbGw9IiNlM2YxZWMiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMzEuNjkzOTIgMjEuOTc4MTIgLTMwLjYyOCA0NC4xNjc2MSAyNDEuNiA0OSkiLz48ZWxsaXBzZSBmaWxsPSIjM2U0ZDNlIiBjeD0iNjYiIGN5PSIzMCIgcng9IjYxIiByeT0iNTIiLz48ZWxsaXBzZSBmaWxsPSIjYzRhZDkzIiBjeD0iMTY2IiBjeT0iMTc1IiByeD0iMTE1IiByeT0iMjUiLz48cGF0aCBmaWxsPSIjNGU0MDMwIiBkPSJNMjcxIDE1NkwxMTYgOThsMTU1IDExeiIvPjxlbGxpcHNlIGZpbGw9IiNmZmRhYTIiIGN4PSI0MSIgY3k9IjExNCIgcng9IjM0IiByeT0iMTAiLz48ZWxsaXBzZSBmaWxsPSIjYjZkNWU2IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0yMi4wNzMxIC0yLjE2NDI5IDEuODgwNDcgLTE5LjE3ODUxIDE0MyA5LjYpIi8+PGVsbGlwc2UgZmlsbD0iIzlkYTU5YSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxNS45NDkxNiAxOS45MDc4MSAtNTQuNjg5MjggNDMuODE0MzcgMTg1LjUgNTUuNykiLz48L2c+PC9zdmc+';
+const FALLBACK_IMG: string = '/images/test.png';
 
 // TODO: need to need to check images object object every image is image matched 
 // TODO: TODO: change to: src == imgbb data.url, fallback1 = imgur that used in src
 
-/*
-
+// /*
 const images: ImageType[] = [{
+   id: 1,
    src: "https://i.imgur.com/lj1YChB.jpg",
    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
    fallbackSrc2: "/images/lj1YChB.jpg",
    alt: "apsarkonda-falls-2",
-   blurhash: "ULDl}^My4o-:?]RQMxt7~WM{M{t7NMWAt3jc",
+   // blurhash: "ULDl}^My4o-:?]RQMxt7~WM{M{t7NMWAt3jc",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NTkgMTI4MCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzViNWU0OSIgZD0iTTAgMGg5NjB2MTI4MEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNSAwIDAgNSAyLjUgMi41KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2Y0ZmZlNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtNjYuNyA3NC40IC05NC43KSBzY2FsZSg4MS43NTI5OSA1NC42NjgzMikiLz48ZWxsaXBzZSBmaWxsPSIjMDAwNDAwIiBjeD0iODIiIGN5PSIxNjUiIHJ4PSIxOTEiIHJ5PSI1MCIvPjxlbGxpcHNlIGZpbGw9IiNkN2FkOTEiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEwMS4xIDE2Mi41IDgwLjEpIHNjYWxlKDQzLjQ1MDk4IDY1LjE5MTI4KSIvPjxwYXRoIGZpbGw9IiNkN2Q0Y2UiIGQ9Ik0xMDMuNyA5MC42bDI1LjUgMTgxLjItMTEgMS42TDkyLjkgOTIuMnoiLz48cGF0aCBmaWxsPSIjMzI1ZDE2IiBkPSJNMTUyIDM2aDQwdjg5aC00MHoiLz48cGF0aCBmaWxsPSIjYmNjNmMzIiBkPSJNNTUgMGgxMzd2MzJINTV6Ii8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTE0LjQgNzcuNiAtMTUuMykgc2NhbGUoOS40NzcwMSAyMi4zMTI4MSkiLz48ZWxsaXBzZSBmaWxsPSIjYTNiZTY4IiBjeD0iMTAzIiBjeT0iODEiIHJ4PSIzNiIgcnk9IjIxIi8+PC9nPjwvc3ZnPg==',
    width: 959,
    height: 1280,
+   // isLarage: false,
+   // size: '303KB',
 }, {
+   id: 2,
    src: "https://i.imgur.com/AELVLIx.jpeg",
    fallbackSrc1: "https://i.ibb.co/MPnWtR2/AELVLIx.jpg",
    fallbackSrc2: "/images/AELVLIx.jpg",
    alt: "mangrove-boardwalk-front",
-   blurhash: "UhJRKx8_x]xt_N9Zj^s;o|tRV[t7NFxubboy",
+   // blurhash: "UhJRKx8_x]xt_N9Zj^s;o|tRV[t7NFxubboy",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDc2NyI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzkyOGI4MCIgZD0iTTAgMGgxMDI0djc2NEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNCAwIDAgNCAyIDIpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0NC45IDEwNSA1My45KSBzY2FsZSg2NC43NDkxMiA4OC4xNTY2NSkiLz48ZWxsaXBzZSBmaWxsPSIjNDQyNTFkIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE3LjQxNjU2IC0zOS41MDM4NCAyMzMuMzI5MzQgMTAyLjg3MDg4IDE4NC45IDE1Ni4zKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoNTcuMiA2Ny43IDIxOC4yKSBzY2FsZSg3OS4xNTQxOCA0OC41NDU4MikiLz48ZWxsaXBzZSBmaWxsPSIjNWMwMDAwIiBjeD0iNTkiIGN5PSIxMTEiIHJ4PSI1MyIgcnk9IjE5Ii8+PGVsbGlwc2UgZmlsbD0iIzRlM2EyYiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNS42MDgzOCAyNC45NTY5IC00NC4xOTE2IC05LjkzMDg2IDEwMSAxNzYuOSkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiBjeD0iMjI1IiBjeT0iNTgiIHJ4PSI1NCIgcnk9IjU0Ii8+PGVsbGlwc2UgZmlsbD0iI2E4YTc5ZCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg2Ljg0NjUzIDIyLjUxMDkyIC02OC42MzQxNiAyMC44NzQ1NSAxMTYuNiA2My4zKSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00MCAxMzFoMjB2MThINDB6Ii8+PC9nPjwvc3ZnPg==',
    width: 1024,
    height: 767,
-}, {
+   // isLarage: false,
+   // size: '174KB',
+},
+{
+   id: 3,
    src: "https://i.imgur.com/RcHMB4v.jpg",
    fallbackSrc1: "https://i.ibb.co/GT8Lrsh/RcHMB4v.jpg",
    fallbackSrc2: "/images/RcHMB4v.jpg",
    alt: "eco-beach",
-   blurhash: "UiF~8J%fNGxa_N-pRjog?bxuRjof%Mt6WAs:",
+   // blurhash: "UiF~8J%fNGxa_N-pRjog?bxuRjof%Mt6WAs:",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNDQzIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjODU3NzU5IiBkPSJNMCAwaDcwMHY0NDJIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNCAxLjQpIHNjYWxlKDIuNzM0MzgpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDg4LjIgMTAuNyAzMy4yKSBzY2FsZSgzOS42NzA3MSAxODEuMjM1MykiLz48ZWxsaXBzZSBmaWxsPSIjM2YyNDAwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0yLjI4MzE5IC01Ny40NTMwNiAyMzkuOTMwNTYgLTkuNTM0ODYgMTM5LjMgMTEyKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIGN4PSI0OCIgY3k9IjE5IiByeD0iMTY2IiByeT0iMzIiLz48ZWxsaXBzZSBmaWxsPSIjMjcxZTAwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0xOC40ODA0MiAtNC43Njk0NSAxOS43OTU0IC03Ni43MDIxNiAyMzkgNDIpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg1LjE5Mjk1IDkuODE0NzggLTEwOS44Njc1NiA1OC4xMzAzNSA3MC42IDE0MS40KSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoOTkuNDM2MzggLTE0LjE4Njk0IDMuODM5MiAyNi45MDkgNDYgMTcuNSkiLz48ZWxsaXBzZSBmaWxsPSIjYTg1ZTIyIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDMwLjggLTE4Ni4zIDQzMy4xKSBzY2FsZSg2My4yMjk3MyA0Ni45MjM5MykiLz48cGF0aCBmaWxsPSIjNzg3YzFkIiBkPSJNLTEwIDE1OEwyMzAgNTUgNDUgODF6Ii8+PC9nPjwvc3ZnPg==',
    width: 700,
    height: 443,
-}, {
+   // isLarage: false,
+   // size: '40KB',
+},
+{
+   id: 4,
    src: "https://i.imgur.com/wLlFcOz.jpeg",
    fallbackSrc1: "https://i.ibb.co/mX6FvsJ/wLlFcOz.jpg",
    fallbackSrc2: "/images/wLlFcOz.jpg",
    alt: "rickshaw-and-ecobeach-3",
-   blurhash: "UEJZ-zt.^Nv|0Z%OR*M_yZp058NF?cNz-o$#",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM5NzdkNjQiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iIzIwMWMwZSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC40NzE5IDMzLjc5ODEgLTY5LjE4ODkxIDU4LjI4NTUzIDE0OCA3OC41KSIvPjxlbGxpcHNlIGZpbGw9IiNmZmJjN2EiIGN4PSIyMjYiIGN5PSIxODciIHJ4PSIxMDIiIHJ5PSIxMDIiLz48ZWxsaXBzZSBmaWxsPSIjODBkMGZmIiBjeD0iNTgiIGN5PSI4IiByeD0iODUiIHJ5PSIyNiIvPjxlbGxpcHNlIGZpbGw9IiNmZmI4NzkiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTIzLjIyNzQ2IC02NC4xNjUxNCA0MC40NjY2MyAtMTQuNjQ4NzIgMzYuMyAxNDMuOSkiLz48ZWxsaXBzZSBmaWxsPSIjMzIyYzBlIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDExLjI4NDQ3IDI5Ljk4MDg4IC00MC45NzczMyAxNS40MjM0MSAyMzEuNyA1NSkiLz48ZWxsaXBzZSBmaWxsPSIjM2Q0MjNkIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0uMDQ5OCAtMjguNTI4OSA1MS4xNzYwOCAtLjA4OTMyIDUwIDU3LjEpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYzY4NyIgY3g9IjExMiIgY3k9IjE4MCIgcng9IjM3IiByeT0iMzQiLz48ZWxsaXBzZSBmaWxsPSIjMjMwZDBhIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDI0LjI4OTM1IC0yNS4yODQgMTYuMjIxNDYgMTUuNTgzMzMgMTQwLjIgMTEyLjUpIi8+PC9nPjwvc3ZnPg==',
+   // blurhash: "UEJZ-zt.^Nv|0Z%OR*M_yZp058NF?cNz-o$#",
    width: 4608,
    height: 3456,
-}, {
+   // isLarage: true,
+   // size: '2.4MB',
+},
+{
+   id: 5,
    src: "https://i.imgur.com/G4vcSYV.jpeg",
    fallbackSrc1: "https://i.ibb.co/L0jspcM/G4vcSYV.jpg",
    fallbackSrc2: "/images/G4vcSYV.jpg",
    alt: "rickshaw-and-ecobeach-2",
-   blurhash: "U8G+2M00_1-:G^4n%MRkTfM_4:I[00.8Mx%2",
+   // blurhash: "U8G+2M00_1-:G^4n%MRkTfM_4:I[00.8Mx%2",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM4MTdiNmQiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2Y2ZmZmNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgxNTYuMSAxMTYuMyA1NS4yKSBzY2FsZSg1MS4zOTQzNyAzNC43NTQ5KSIvPjxlbGxpcHNlIGZpbGw9IiMwNTAwMDAiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTM4LjkgMzYuNSA3OC45KSBzY2FsZSgyNS42MzAwNSA1NS41MDE1OSkiLz48ZWxsaXBzZSBmaWxsPSIjM2M0OTNjIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC01Ny40OTQ4MiAtMTkuNzk3MDUgMTYuMTg1OCAtNDcuMDA2OTkgNjkuMiAzNC44KSIvPjxlbGxpcHNlIGZpbGw9IiNjOGFlOTIiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS40NjAyOCAyMC42NTU2NSAtMTE5LjMwMjE4IDguNDM0MjYgMTY1IDE3Mi4xKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmQ2OWYiIGN4PSIzOCIgY3k9IjExNCIgcng9IjM3IiByeT0iMTAiLz48ZWxsaXBzZSBmaWxsPSIjNGEzYTJhIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDkzLjQ3NDUgMjkuMjkzMTMgLTQuMDIyODggMTIuODM3MDMgMjQyLjcgMTMxLjYpIi8+PHBhdGggZmlsbD0iI2JhZDllYiIgZD0iTTEzMC4yIDMyLjFsLTE0LTM4LjUgMzcuNi0xMy43IDE0IDM4LjV6Ii8+PGVsbGlwc2UgZmlsbD0iIzU3NDg0MSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgxNzIuNiAxMy45IDczKSBzY2FsZSg2OC4xNzQ5NyAyMC4zMzQ4NSkiLz48L2c+PC9zdmc+',
    width: 4608,
    height: 3456,
-}];
+   // isLarage: true,
+   // size: '3.1MB',
+}
+];
 
 // */
 
 
-// /*
 
+
+/** isLarge considered when image size is greater then >800KB */
+/*
 const images: ImageType[] = [{
+   id: 1,
    src: "https://i.imgur.com/lj1YChB.jpg",
    fallbackSrc1: "https://i.ibb.co/HXXy2qv/lj1YChB.jpg",
    fallbackSrc2: "/images/lj1YChB.jpg",
    alt: "apsarkonda-falls-2",
-   blurhash: "ULDl}^My4o-:?]RQMxt7~WM{M{t7NMWAt3jc",
+   // blurhash: "ULDl}^My4o-:?]RQMxt7~WM{M{t7NMWAt3jc",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA5NTkgMTI4MCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzViNWU0OSIgZD0iTTAgMGg5NjB2MTI4MEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNSAwIDAgNSAyLjUgMi41KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2Y0ZmZlNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtNjYuNyA3NC40IC05NC43KSBzY2FsZSg4MS43NTI5OSA1NC42NjgzMikiLz48ZWxsaXBzZSBmaWxsPSIjMDAwNDAwIiBjeD0iODIiIGN5PSIxNjUiIHJ4PSIxOTEiIHJ5PSI1MCIvPjxlbGxpcHNlIGZpbGw9IiNkN2FkOTEiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTEwMS4xIDE2Mi41IDgwLjEpIHNjYWxlKDQzLjQ1MDk4IDY1LjE5MTI4KSIvPjxwYXRoIGZpbGw9IiNkN2Q0Y2UiIGQ9Ik0xMDMuNyA5MC42bDI1LjUgMTgxLjItMTEgMS42TDkyLjkgOTIuMnoiLz48cGF0aCBmaWxsPSIjMzI1ZDE2IiBkPSJNMTUyIDM2aDQwdjg5aC00MHoiLz48cGF0aCBmaWxsPSIjYmNjNmMzIiBkPSJNNTUgMGgxMzd2MzJINTV6Ii8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTE0LjQgNzcuNiAtMTUuMykgc2NhbGUoOS40NzcwMSAyMi4zMTI4MSkiLz48ZWxsaXBzZSBmaWxsPSIjYTNiZTY4IiBjeD0iMTAzIiBjeT0iODEiIHJ4PSIzNiIgcnk9IjIxIi8+PC9nPjwvc3ZnPg==',
    width: 959,
    height: 1280,
+   // isLarage: false,
+   // size: '303KB',
 }, {
+   id: 2,
    src: "https://i.imgur.com/AELVLIx.jpeg",
    fallbackSrc1: "https://i.ibb.co/MPnWtR2/AELVLIx.jpg",
    fallbackSrc2: "/images/AELVLIx.jpg",
    alt: "mangrove-boardwalk-front",
-   blurhash: "UhJRKx8_x]xt_N9Zj^s;o|tRV[t7NFxubboy",
+   // blurhash: "UhJRKx8_x]xt_N9Zj^s;o|tRV[t7NFxubboy",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDc2NyI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzkyOGI4MCIgZD0iTTAgMGgxMDI0djc2NEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNCAwIDAgNCAyIDIpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE0NC45IDEwNSA1My45KSBzY2FsZSg2NC43NDkxMiA4OC4xNTY2NSkiLz48ZWxsaXBzZSBmaWxsPSIjNDQyNTFkIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE3LjQxNjU2IC0zOS41MDM4NCAyMzMuMzI5MzQgMTAyLjg3MDg4IDE4NC45IDE1Ni4zKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoNTcuMiA2Ny43IDIxOC4yKSBzY2FsZSg3OS4xNTQxOCA0OC41NDU4MikiLz48ZWxsaXBzZSBmaWxsPSIjNWMwMDAwIiBjeD0iNTkiIGN5PSIxMTEiIHJ4PSI1MyIgcnk9IjE5Ii8+PGVsbGlwc2UgZmlsbD0iIzRlM2EyYiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNS42MDgzOCAyNC45NTY5IC00NC4xOTE2IC05LjkzMDg2IDEwMSAxNzYuOSkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiBjeD0iMjI1IiBjeT0iNTgiIHJ4PSI1NCIgcnk9IjU0Ii8+PGVsbGlwc2UgZmlsbD0iI2E4YTc5ZCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg2Ljg0NjUzIDIyLjUxMDkyIC02OC42MzQxNiAyMC44NzQ1NSAxMTYuNiA2My4zKSIvPjxwYXRoIGZpbGw9IiNmZmYiIGQ9Ik00MCAxMzFoMjB2MThINDB6Ii8+PC9nPjwvc3ZnPg==',
    width: 1024,
    height: 767,
+   // isLarage: false,
+   // size: '174KB',
 }, {
+   id: 3,
    src: "https://i.imgur.com/RcHMB4v.jpg",
    fallbackSrc1: "https://i.ibb.co/GT8Lrsh/RcHMB4v.jpg",
    fallbackSrc2: "/images/RcHMB4v.jpg",
    alt: "eco-beach",
-   blurhash: "UiF~8J%fNGxa_N-pRjog?bxuRjof%Mt6WAs:",
+   // blurhash: "UiF~8J%fNGxa_N-pRjog?bxuRjof%Mt6WAs:",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDAgNDQzIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjODU3NzU5IiBkPSJNMCAwaDcwMHY0NDJIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNCAxLjQpIHNjYWxlKDIuNzM0MzgpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDg4LjIgMTAuNyAzMy4yKSBzY2FsZSgzOS42NzA3MSAxODEuMjM1MykiLz48ZWxsaXBzZSBmaWxsPSIjM2YyNDAwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0yLjI4MzE5IC01Ny40NTMwNiAyMzkuOTMwNTYgLTkuNTM0ODYgMTM5LjMgMTEyKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIGN4PSI0OCIgY3k9IjE5IiByeD0iMTY2IiByeT0iMzIiLz48ZWxsaXBzZSBmaWxsPSIjMjcxZTAwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0xOC40ODA0MiAtNC43Njk0NSAxOS43OTU0IC03Ni43MDIxNiAyMzkgNDIpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg1LjE5Mjk1IDkuODE0NzggLTEwOS44Njc1NiA1OC4xMzAzNSA3MC42IDE0MS40KSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoOTkuNDM2MzggLTE0LjE4Njk0IDMuODM5MiAyNi45MDkgNDYgMTcuNSkiLz48ZWxsaXBzZSBmaWxsPSIjYTg1ZTIyIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDMwLjggLTE4Ni4zIDQzMy4xKSBzY2FsZSg2My4yMjk3MyA0Ni45MjM5MykiLz48cGF0aCBmaWxsPSIjNzg3YzFkIiBkPSJNLTEwIDE1OEwyMzAgNTUgNDUgODF6Ii8+PC9nPjwvc3ZnPg==',
    width: 700,
    height: 443,
+   // isLarage: false,
+   // size: '40KB',
 }, {
+   id: 4,
    src: "https://i.imgur.com/wLlFcOz.jpeg",
    fallbackSrc1: "https://i.ibb.co/mX6FvsJ/wLlFcOz.jpg",
    fallbackSrc2: "/images/wLlFcOz.jpg",
    alt: "rickshaw-and-ecobeach-3",
-   blurhash: "UEJZ-zt.^Nv|0Z%OR*M_yZp058NF?cNz-o$#",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM5NzdkNjQiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iIzIwMWMwZSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyOC40NzE5IDMzLjc5ODEgLTY5LjE4ODkxIDU4LjI4NTUzIDE0OCA3OC41KSIvPjxlbGxpcHNlIGZpbGw9IiNmZmJjN2EiIGN4PSIyMjYiIGN5PSIxODciIHJ4PSIxMDIiIHJ5PSIxMDIiLz48ZWxsaXBzZSBmaWxsPSIjODBkMGZmIiBjeD0iNTgiIGN5PSI4IiByeD0iODUiIHJ5PSIyNiIvPjxlbGxpcHNlIGZpbGw9IiNmZmI4NzkiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTIzLjIyNzQ2IC02NC4xNjUxNCA0MC40NjY2MyAtMTQuNjQ4NzIgMzYuMyAxNDMuOSkiLz48ZWxsaXBzZSBmaWxsPSIjMzIyYzBlIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDExLjI4NDQ3IDI5Ljk4MDg4IC00MC45NzczMyAxNS40MjM0MSAyMzEuNyA1NSkiLz48ZWxsaXBzZSBmaWxsPSIjM2Q0MjNkIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0uMDQ5OCAtMjguNTI4OSA1MS4xNzYwOCAtLjA4OTMyIDUwIDU3LjEpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYzY4NyIgY3g9IjExMiIgY3k9IjE4MCIgcng9IjM3IiByeT0iMzQiLz48ZWxsaXBzZSBmaWxsPSIjMjMwZDBhIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDI0LjI4OTM1IC0yNS4yODQgMTYuMjIxNDYgMTUuNTgzMzMgMTQwLjIgMTEyLjUpIi8+PC9nPjwvc3ZnPg==',
+   // blurhash: "UEJZ-zt.^Nv|0Z%OR*M_yZp058NF?cNz-o$#",
    width: 4608,
    height: 3456,
+   // isLarage: true,
+   // size: '2.4MB',
 }, {
+   id: 5,
    src: "https://i.imgur.com/G4vcSYV.jpeg",
    fallbackSrc1: "https://i.ibb.co/L0jspcM/G4vcSYV.jpg",
    fallbackSrc2: "/images/G4vcSYV.jpg",
    alt: "rickshaw-and-ecobeach-2",
-   blurhash: "U8G+2M00_1-:G^4n%MRkTfM_4:I[00.8Mx%2",
+   // blurhash: "U8G+2M00_1-:G^4n%MRkTfM_4:I[00.8Mx%2",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM4MTdiNmQiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2Y2ZmZmNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgxNTYuMSAxMTYuMyA1NS4yKSBzY2FsZSg1MS4zOTQzNyAzNC43NTQ5KSIvPjxlbGxpcHNlIGZpbGw9IiMwNTAwMDAiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoMTM4LjkgMzYuNSA3OC45KSBzY2FsZSgyNS42MzAwNSA1NS41MDE1OSkiLz48ZWxsaXBzZSBmaWxsPSIjM2M0OTNjIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC01Ny40OTQ4MiAtMTkuNzk3MDUgMTYuMTg1OCAtNDcuMDA2OTkgNjkuMiAzNC44KSIvPjxlbGxpcHNlIGZpbGw9IiNjOGFlOTIiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS40NjAyOCAyMC42NTU2NSAtMTE5LjMwMjE4IDguNDM0MjYgMTY1IDE3Mi4xKSIvPjxlbGxpcHNlIGZpbGw9IiNmZmQ2OWYiIGN4PSIzOCIgY3k9IjExNCIgcng9IjM3IiByeT0iMTAiLz48ZWxsaXBzZSBmaWxsPSIjNGEzYTJhIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDkzLjQ3NDUgMjkuMjkzMTMgLTQuMDIyODggMTIuODM3MDMgMjQyLjcgMTMxLjYpIi8+PHBhdGggZmlsbD0iI2JhZDllYiIgZD0iTTEzMC4yIDMyLjFsLTE0LTM4LjUgMzcuNi0xMy43IDE0IDM4LjV6Ii8+PGVsbGlwc2UgZmlsbD0iIzU3NDg0MSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgxNzIuNiAxMy45IDczKSBzY2FsZSg2OC4xNzQ5NyAyMC4zMzQ4NSkiLz48L2c+PC9zdmc+',
    width: 4608,
    height: 3456,
-}, {
+   // isLarage: true,
+   // size: '3.1MB',
+},
+
+{
+   id: 6,
    src: "https://i.imgur.com/Sk0pt8f.jpg",
    fallbackSrc1: "https://i.ibb.co/d7PLKf5/Sk0pt8f.jpg",
    fallbackSrc2: "/images/Sk0pt8f.jpg",
    alt: "apsarkonda-falls",
-   blurhash: "UBB3~L~E004mt+f,RQNEDhk6%N%N~p%MIUNF",
+   // blurhash: "UBB3~L~E004mt+f,RQNEDhk6%N%N~p%MIUNF",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyMDAgMjAwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNWU2NjU2IiBkPSJNMCAwaDIwMHYyMDBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC41IC41KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtOTIuMiAxMjMgMjEuNykgc2NhbGUoMTk0LjI1MzY4IDEwLjQzMDk2KSIvPjxlbGxpcHNlIGZpbGw9IiMxYzFhMTYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTExNC45IDUzLjcgMzkuMikgc2NhbGUoNTQuNTU5MTUgNTcuMzAyOTQpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMzMuOTg2MjUgLTEuODcxMSAuNzQ4NiAtMTMuNTk3MzcgMTExLjggMTUzLjEpIi8+PGVsbGlwc2UgZmlsbD0iIzAwMWMxMSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMjEuMzEyODggLTQ5LjM2MjUgMjguMDg1MDMgLTEyLjEyNjA3IDE0Ny40IDEwMikiLz48cGF0aCBmaWxsPSIjYjZjZjhiIiBkPSJNMTcxLjMtMjIuNGwtMTAuMSA2NC4yTDM4LjcgMjIuNGwxMC4xLTY0LjJ6Ii8+PGVsbGlwc2UgZmlsbD0iI2NkN2Y2OCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtODkuMjA0NzQgLTUuMDM1NzIgMS4yMDIyMSAtMjEuMjk2NDYgODIuMSAxOTkpIi8+PHBhdGggZmlsbD0iIzFhMWMxNiIgZD0iTTggNzlMLTE2IDBsNTQtMTB6Ii8+PGVsbGlwc2UgZmlsbD0iI2U5ZWRmZiIgY3g9IjEwMyIgY3k9Ijk5IiByeD0iOCIgcnk9IjY1Ii8+PC9nPjwvc3ZnPg==',
    width: 200,
    height: 200,
+   // isLarage: false,
+   // size: '11KB',
 }, {
+   id: 7,
    src: "https://i.imgur.com/oYli6S9.jpeg",
    fallbackSrc1: "https://i.ibb.co/Y7v7zsh/oYli6S9.jpg",
    fallbackSrc2: "/images/oYli6S9.jpg",
    alt: "Mangrove -walk-bridge",
-   blurhash: "UIFreI+cM|KhPTK6RRwJx^RRaOwh~VnPV[o#",
+   // blurhash: "UIFreI+cM|KhPTK6RRwJx^RRaOwh~VnPV[o#",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2MDAgNzUwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjODI3YzY1IiBkPSJNMCAwaDU5N3Y3NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNSAxLjUpIHNjYWxlKDIuOTI5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0xNTIuODQ5MzcgLTEuMDYzOTUgLjE2NTEgLTIzLjcxNzkzIDk4LjYgMCkiLz48ZWxsaXBzZSBmaWxsPSIjMzE0OTJjIiBjeD0iMTU5IiBjeT0iOTYiIHJ4PSIyMDMiIHJ5PSIzMyIvPjxlbGxpcHNlIGZpbGw9IiNiZDU4M2YiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNTEuMzc1MzQgMTcuNTQ1ODMgLTI5LjQ4MDQzIDg2LjMyMDY1IDU5LjMgMjI2LjMpIi8+PHBhdGggZmlsbD0iIzg1Y2RkNCIgZD0iTTExNCAxMjdsNDkgMTQ0IDQ5LTR6Ii8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgY3g9IjEzMiIgcng9IjcyIiByeT0iMjAiLz48ZWxsaXBzZSBmaWxsPSIjMDAwYjAxIiBjeD0iMTMyIiBjeT0iMjQ0IiByeD0iOCIgcnk9IjQzIi8+PGVsbGlwc2UgZmlsbD0iIzhmNmZiYSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyLjgzNzQgMTguMDUxNzIgLTU0LjkzMDg4IDguNjM0MTUgMTYuOSAyMi4xKSIvPjxlbGxpcHNlIGZpbGw9IiNkNmFhZDIiIGN4PSIxMDIiIGN5PSIxMDQiIHJ4PSIxMCIgcnk9IjE5Ii8+PC9nPjwvc3ZnPg==',
    width: 600,
    height: 750,
+   // isLarage: false,
+   // size : 99KB,
 }, {
+   id: 8,
    src: "https://i.imgur.com/CM3A2GU.jpg",
    fallbackSrc1: "https://i.ibb.co/pw0NhLM/CM3A2GU.jpg",
    fallbackSrc2: "/images/CM3A2GU.jpg",
    alt: "khaleel-rickshaw-1",
-   blurhash: "ULJ7HuE2^jw^04$%$$NH~UxaE2W:4:58aday",
+   // blurhash: "ULJ7HuE2^jw^04$%$$NH~UxaE2W:4:58aday",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MTggMTYwMCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzg2NmM1MSIgZD0iTTAgMGg3MTJ2MTYwMEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNi4yNSAwIDAgNi4yNSAzLjEgMy4xKSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2ZmZmZiYSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgxMDYuMzE5NTMgLTM4LjI3NzM4IDEyLjc4NjQ1IDM1LjUxNTczIDgxLjIgMjI5LjUpIi8+PGVsbGlwc2UgZmlsbD0iIzA3MDAwMCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMjUuNzUwNSA4MS44NjEzMyAtMzkuMzgzNjEgLTEyLjM4ODYgNjAuMSAxMjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmYyIgY3k9IjEwNSIgcng9IjE0IiByeT0iNTAiLz48cGF0aCBmaWxsPSIjZmZjYThkIiBkPSJNMTA2IDI3MWwyMy0xNjNMMTYgMjcxeiIvPjxlbGxpcHNlIGZpbGw9IiNmZmE4MDgiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoLS43NTk5NyA2LjQ4Mzk3IC00Ny42Mjg5OSAtNS41ODI1MSA0MS40IDExNi41KSIvPjxlbGxpcHNlIGZpbGw9IiM0MTYwNWIiIGN4PSI1NSIgY3k9IjgiIHJ4PSI2NiIgcnk9IjY2Ii8+PGVsbGlwc2UgZmlsbD0iIzIzMDUwMCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg1LjUwMzQ1IDMyLjA0Njk1IC0zOC4yOTQ2MyA2LjU3NjM3IDMzLjUgMTc3LjEpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZDg5YyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMTMuNDIyMjQgMTguOTc2MjUgLTkyLjI1NDkzIC02NS4yNTM1NyAwIDIyNy4zKSIvPjwvZz48L3N2Zz4=',
    width: 718,
    height: 1600,
+   // isLarage: false,
+   // size: '175KB',
 }, {
+   id: 9,
    src: "https://i.imgur.com/PYJj2kc.jpg",
    fallbackSrc1: "https://i.ibb.co/vYSSCQJ/PYJj2kc.jpg",
    fallbackSrc2: "/images/PYJj2kc.jpg",
    alt: "apsarkonda-hill-beach",
-   blurhash: "UdA-hxVrM_t6X=xVs*R*xwt7oeae%MWXR+t7",
+   // blurhash: "UdA-hxVrM_t6X=xVs*R*xwt7oeae%MWXR+t7",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDAwIDU2MyI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzRhNmI2YyIgZD0iTTAgMGgxMDAwdjU2MkgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMiAyKSBzY2FsZSgzLjkwNjI1KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNDMuMDc4NTEgNDcuNjc1OTMgLTYwLjMwNSAtNTQuNDg5NzUgMzguNyA5OS42KSIvPjxlbGxpcHNlIGZpbGw9IiM5MGUwZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoOTEuNSA2My41IDY2LjIpIHNjYWxlKDMwLjIyNjgyIDE4My4xNzEzNCkiLz48ZWxsaXBzZSBmaWxsPSIjYzA4ZDE3IiBjeD0iMTgwIiBjeT0iMTI1IiByeD0iODQiIHJ5PSIyOSIvPjxlbGxpcHNlIGZpbGw9IiMyYjg5ZDUiIGN4PSIyMjUiIGN5PSIzOCIgcng9IjE0MSIgcnk9IjQzIi8+PHBhdGggZmlsbD0iI2ZmZDVhOSIgZD0iTTExMiAxMTVsMTA2IDEyLTY1LTQzeiIvPjxwYXRoIGZpbGw9IiNhOGJlZTUiIGQ9Ik05MCA0NEwtMTYgNmwyMjMtMjJ6Ii8+PGVsbGlwc2UgZmlsbD0iIzRlNTEwMCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0Mi42ODUyNCAtNTEuNTk3NTkgMTkuNjc0MDcgMTYuMjc1OCAyNDcgMTE5LjcpIi8+PGVsbGlwc2UgZmlsbD0iIzAyMTMwNyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtMTEuNCA1NTkuNyAtOTEuOCkgc2NhbGUoOTguMjg1NDcgMzEuNjY3NikiLz48L2c+PC9zdmc+',
    width: 1000,
    height: 563,
+   // isLarage: false,
+   // size: '102KB',
 }, {
+   id: 10,
    src: "https://i.imgur.com/2dGwyFP.jpg",
    fallbackSrc1: "https://i.ibb.co/DGQZY5V/2dGwyFP.jpg",
    fallbackSrc2: "/images/2dGwyFP.jpg",
    alt: "apsarkonda-in-rainy-season",
-   blurhash: "UIEW209FMiR*_NDjx?ou?bR%WBRO_JtMICD*",
+   // blurhash: "UIEW209FMiR*_NDjx?ou?bR%WBRO_JtMICD*",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMDI0IDY3OCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzY0NmM0MSIgZD0iTTAgMGgxMDI0djY3NkgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNCAwIDAgNCAyIDIpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDk3IDc1IDc1LjgpIHNjYWxlKDI1Ljk4Mjg0IDE1Ny45MDkxMikiLz48cGF0aCBmaWxsPSIjMGEwOTAwIiBkPSJNMTcyIDQ5TDQxIDI1bC01MSAxNTl6Ii8+PGVsbGlwc2UgZmlsbD0iI2YzZmY2MiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg0Mi44ODA4MiAtNy4yNTIyIDIuODQ0OTMgMTYuODIxNDkgMTEwLjkgMTI5LjkpIi8+PGVsbGlwc2UgZmlsbD0iIzFmMDQwMCIgY3g9IjIxNSIgY3k9IjE2NSIgcng9IjExNiIgcnk9IjM5Ii8+PGVsbGlwc2UgZmlsbD0iIzdmYTI0ZCIgY3g9IjE4MiIgY3k9IjQ1IiByeD0iMjQiIHJ5PSI0OSIvPjxlbGxpcHNlIGZpbGw9IiMwMDA3MDAiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNDYuOTM4MiAxMy4wNzk2NyAtNi4zOTMyOCAyMi45NDMxNiAyOS45IDE0OSkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0xNC41ODM3NCAxMS41ODQ3MiAtMTguMTA0NjkgLTIyLjc5MTU4IDIyMy44IDIyLjkpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMi4wNTM5NCAxNy4yMjQ4NiAtNjUuMTIwNiAtNy43NjUxNiAxMDguOCAwKSIvPjwvZz48L3N2Zz4=',
    width: 1024,
    height: 678,
+   // isLarage: false,
+   // size: '156KB',
 }, {
+   id: 11,
    src: "https://i.imgur.com/2BYPVup.jpeg",
    fallbackSrc1: "https://i.ibb.co/pQQWSmk/2BYPVup.jpg",
    fallbackSrc2: "/images/2BYPVup.jpg",
    alt: "Mangrove Honnavar",
-   blurhash: "UOKSOz0gM_xtw4g2t5Ip}]WB5QOq}GSeJ6V[",
+   // blurhash: "UOKSOz0gM_xtw4g2t5Ip}]WB5QOq}GSeJ6V[",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzk2NWQzZCIgZD0iTTAgMGgxMjgwdjcyMEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNSAwIDAgNSAyLjUgMi41KSIgZmlsbC1vcGFjaXR5PSIuNSI+PHBhdGggZmlsbD0iI2ZmZTFiNSIgZD0iTTE0NyA4OWw3MCA1My0xNjIgOXoiLz48ZWxsaXBzZSBmaWxsPSIjZmY5MWIxIiBjeD0iMTQyIiBjeT0iMTciIHJ4PSI5NyIgcnk9IjEyIi8+PGVsbGlwc2UgZmlsbD0iIzExMjEwMyIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgyLjkwNDY3IC0yOC45NDQ2OCA3MC4zODgzMyA3LjA2MzY0IDEwNi41IDYyLjQpIi8+PGVsbGlwc2UgZmlsbD0iIzA0MjkwOSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMTkuMjg1MzYgLTEwLjUzNzY5IDQxLjkzNDkyIC03Ni43NDY0MSAxNiAyMi4xKSIvPjxlbGxpcHNlIGZpbGw9IiMxYjAzMDIiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoOC42ODYgOC40MTczMiAtNDYuOTMzNCA0OC40MzE1IDczLjMgMTE1LjEpIi8+PGVsbGlwc2UgZmlsbD0icmVkIiBjeD0iMTU5IiBjeT0iNiIgcng9IjExOCIgcnk9IjQiLz48ZWxsaXBzZSBmaWxsPSIjZmZjNjc3IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0uODQzMzMgOC4xMDI5NSAtNTAuMDk4MiAtNS4yMTQwNSAyMjkuMiA4Ny42KSIvPjxlbGxpcHNlIGZpbGw9IiNmZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTEuNDM2NjQgLTEwLjIyODc3IDQ1LjA5Mjg4IC02LjMzMzM0IDE2NC40IDE0MykiLz48L2c+PC9zdmc+',
    width: 1280,
    height: 720,
+   // isLarage: false,
+   // size: '184KB',
 }, {
+   id: 12,
    src: "https://i.imgur.com/CRjpr6X.jpg",
    fallbackSrc1: "https://i.ibb.co/dc5KKLy/CRjpr6X.jpg",
    fallbackSrc2: "/images/CRjpr6X.jpg",
    alt: "apsarkonda",
-   blurhash: "UIGlbCm*TIR*?ZRht1kV~Rf#RPR*S$Z|RkNH",
+   // blurhash: "UIGlbCm*TIR*?ZRht1kV~Rf#RPR*S$Z|RkNH",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxMjgwIDcyMCI+PGZpbHRlciBpZD0iYiI+PGZlR2F1c3NpYW5CbHVyIHN0ZERldmlhdGlvbj0iMTIiIC8+PC9maWx0ZXI+PHBhdGggZmlsbD0iIzc3ODE2NCIgZD0iTTAgMGgxMjgwdjcyMEgweiIvPjxnIGZpbHRlcj0idXJsKCNiKSIgdHJhbnNmb3JtPSJtYXRyaXgoNSAwIDAgNSAyLjUgMi41KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2RkZTliZSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNC4xNzc0OSAzNi43ODA3OSAtMTA2Ljc4MzU3IC0xMi4xMjgyNiAxNDggMCkiLz48ZWxsaXBzZSBmaWxsPSIjMWMxOTI5IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0yLjc3MjAyIC0yMC4yMjc4IDc1LjM5MTQzIC0xMC4zMzE2NiAxMjUuNyA3Mi44KSIvPjxlbGxpcHNlIGZpbGw9IiMyNTllZDQiIGN4PSIyNDUiIGN5PSI4OSIgcng9IjU4IiByeT0iMjEiLz48ZWxsaXBzZSBmaWxsPSIjMGEwYjE5IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0yNS4yMjAzNyAtOS43MzE3MyA1LjkxMTA5IC0xNS4zMTg5NCAxODguMSAxMTcuNCkiLz48ZWxsaXBzZSBmaWxsPSIjMjIxYTFlIiBjeD0iMjMiIGN5PSIxMTIiIHJ4PSI0MyIgcnk9IjE4Ii8+PHBhdGggZmlsbD0iI2IwYTgxMyIgZD0iTS0xNi0xMGwxNjUgMjYtMTY1IDMzeiIvPjxwYXRoIGZpbGw9IiMwYzAwMDAiIGQ9Ik05OCA1N2gyMHY1NEg5OHoiLz48cGF0aCBmaWxsPSIjZmZmIiBkPSJNMjA0LjUtMi4ybDI0LjMtMTcuNiAyNC43IDM0LTI0LjMgMTcuNnoiLz48L2c+PC9zdmc+',
    width: 1280,
    height: 720,
+   // isLarage: false,
+   // size: '345KB',
 }, {
+   id: 13,
    src: "https://i.imgur.com/wMBpwZ6.jpeg",
    fallbackSrc1: "https://i.ibb.co/SVcCnm0/wMBpwZ6.jpg",
    fallbackSrc2: "/images/wMBpwZ6.jpg",
    alt: "rickshaw-and-ecobeach-1",
-   blurhash: "USIz#O-;%1NdLN%Mt6s:%ht7NHxZo~slR*Rk",
+   // blurhash: "USIz#O-;%1NdLN%Mt6s:%ht7NHxZo~slR*Rk",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM5MzdhNjgiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2QyZmZmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtMjQ0LjMxNTE2IDYyLjI3NTE1IC03Ljk4MDQyIC0zMS4zMDg0MiA3MSAxNC45KSIvPjxlbGxpcHNlIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTYyLjYgMTY3LjcgLTcwLjUpIHNjYWxlKDI3LjMyMjkxIDY3LjMxODY5KSIvPjxlbGxpcHNlIGZpbGw9IiMwMDFiMWEiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoNzcuMTQ0OTggMCAwIDIxLjQ5Mzc2IDIxNi43IDQ3LjEpIi8+PHBhdGggZmlsbD0iIzM3NGM0YyIgZD0iTTE5MS44IDI0LjdMNjkuNSA1OC40bDExLjctMzcuNSA3LjMgMi42eiIvPjxlbGxpcHNlIGZpbGw9IiNkZWU1ZjkiIGN4PSIzMyIgY3k9IjI0IiByeD0iNDMiIHJ5PSI0MyIvPjxlbGxpcHNlIGZpbGw9IiNjZDdhNDEiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTcxLjc5MjE3IDM3Ljg4Njc3IC05LjcxODc3IDQ0LjA2ODM3IDE0MS45IDE4MS40KSIvPjxwYXRoIGZpbGw9IiNmZmI0NzQiIGQ9Ik0yODYuOCA2Mi4ybDcuMiA0NS41LTg4LjggMTQtNy4yLTQ1LjR6Ii8+PGVsbGlwc2UgZmlsbD0iI2E5YzZlZCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSg4Ny44IDg2LjcgOTUpIHNjYWxlKDEyLjkxMzM3IDE0Ny42NDQyNykiLz48L2c+PC9zdmc+',
    width: 4608,
    height: 3456,
+   // isLarage: true,
+   // size: '2.5MB',
 }, {
+   id: 14,
    src: "https://i.imgur.com/IQUV13B.jpeg",
    fallbackSrc1: "https://i.ibb.co/2kGP4Gy/IQUV13B.jpg",
    fallbackSrc2: "/images/IQUV13B.jpg",
    alt: "Boating-in-honnavar",
-   blurhash: "UTC7Zn$~nmtRysj=niogKlNFaej]yYoeWEkD",
+   // blurhash: "UTC7Zn$~nmtRysj=niogKlNFaej]yYoeWEkD",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAzNTAgMjAwIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNjY4Njc2IiBkPSJNMCAwaDM1MHYxOTlIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKC43IC43KSBzY2FsZSgxLjM2NzE5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iIzYzZTVmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgzLjcgLTE5MC42IDIwMjkuNykgc2NhbGUoMjU1IDMxLjUwMDg2KSIvPjxlbGxpcHNlIGZpbGw9IiM2YTRlMDkiIGN4PSI3MCIgY3k9IjEwMCIgcng9IjI0MSIgcnk9IjQ2Ii8+PGVsbGlwc2UgZmlsbD0iIzU4YjhmZiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCguMDk4OTUgLTIzLjk2MzU5IDI0MS45OTE0MyAuOTk5MjcgMTg1LjcgMTIpIi8+PGVsbGlwc2UgZmlsbD0iI2M2YWNhMiIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCg5MS4yOTI2NyAuNzk2NyAtLjA5NjQ3IDExLjA1NDc4IDUxLjggMTEyLjYpIi8+PHBhdGggZmlsbD0iIzAwMDAwNiIgZD0iTTEyNCA2OGg1MXYyNmgtNTF6Ii8+PGVsbGlwc2UgZmlsbD0iIzJkNDkyNSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNTAuNDMxNjQgLTE5LjEzNjA0IDEwLjY2NjkgLTI4LjExMTg0IDIwNyA3OS43KSIvPjxlbGxpcHNlIGZpbGw9IiNhNGU0ZmYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS43OTQ3IC0yMS41NTM1NCAzMy40NDI4NyAyLjc4NDcgMjQ2LjUgMzUuNikiLz48cGF0aCBmaWxsPSIjOGM3ODAwIiBkPSJNNTguOCA1NEwxNy40IDgyIDEuMiA1OGw0MS40LTI4eiIvPjwvZz48L3N2Zz4=',
    width: 350,
    height: 200,
+   // isLarage: false,
+   // size: '19KB',
 }, {
+   id: 15,
    src: "https://i.imgur.com/BEXx6V3.jpg",
    fallbackSrc1: "https://i.ibb.co/KytknF9/BEXx6V3.jpg",
    fallbackSrc2: "/images/BEXx6V3.jpg",
    alt: "eco-beach-2",
-   blurhash: "UsHx=]IAM{f7?wInM{kB%ga#RioLjEt7WCf6",
+   // blurhash: "UsHx=]IAM{f7?wInM{kB%ga#RioLjEt7WCf6",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MDggNDUyIj48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjODk4YzZjIiBkPSJNMCAwaDcwOHY0NTBIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNCAxLjQpIHNjYWxlKDIuNzY1NjMpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEyLjgzMDUzIC00OS4xMDQ5NCAxMzguMzk2MzMgMzYuMTYxMjggMTg2LjggMzIuMykiLz48ZWxsaXBzZSBmaWxsPSIjNDEzYTAwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDE5MC44NzAyNSAyNy42NTE0NyAtMTAuMDIxNTcgNjkuMTc2MDMgODguMSAxMjUpIi8+PGVsbGlwc2UgZmlsbD0iI2VmZiIgY3g9IjE2NiIgcng9IjgzIiByeT0iODMiLz48ZWxsaXBzZSByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDkuOTkxMTMgNS45NjY1OCAtMTIuNDg0MTUgMjAuOTA0OSAxNzkuNCA3Ni41KSIvPjxlbGxpcHNlIGZpbGw9IiMxMTI3MzIiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMTMuMjU0NiAzNi41MTMxIC04MS43NTg3MiAyOS42NzkxOCAxMi43IDY1LjEpIi8+PGVsbGlwc2Ugcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgtNzUuOCAxOTkuOSAtMTA3LjUpIHNjYWxlKDEyLjQ0OTU1IDg4LjEzODQxKSIvPjxwYXRoIGZpbGw9IiNlN2Y0ZmYiIGQ9Ik0yNTktMUwtOC0ybDI3MyA3OHoiLz48ZWxsaXBzZSBmaWxsPSIjOTM4NDEzIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0xMzkuNTU4OCAtMi42MTU5OCAuNzg2ODcgLTQxLjk3ODI3IDExNS41IDE0NC40KSIvPjwvZz48L3N2Zz4=',
    width: 708,
    height: 452,
+   // isLarage: false,
+   // size: '63KB',
 }, {
+   id: 16,
    src: "https://i.imgur.com/PktW3cf.png",
    fallbackSrc1: "https://i.ibb.co/K7y3n7d/PktW3cf.png",
    fallbackSrc2: "/images/PktW3cf.png",
    alt: "apsarkoda-falls-3",
-   blurhash: "U4C6-|:o00O=PkBzaA$%~ox.IIsD_KMex:R:",
+   // blurhash: "U4C6-|:o00O=PkBzaA$%~ox.IIsD_KMex:R:",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA4MDAgNTM1Ij48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNTk1YTQzIiBkPSJNMCAwaDgwMHY1MzRIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNiAxLjYpIHNjYWxlKDMuMTI1KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2M3Y2FkMCIgY3g9IjE0MiIgY3k9IjEwMiIgcng9IjE2IiByeT0iMjE0Ii8+PGVsbGlwc2UgZmlsbD0iIzAxMDgwNCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgzOC4zNDYxNyAxMi43NzMxOCAtMjkuNTg2NDMgODguODIxIDIzNy43IDMwKSIvPjxlbGxpcHNlIGZpbGw9IiNiZTk1OGYiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoMS45NDE5OCAyNS44Mjc0OCAtODMuNzczMTYgNi4yOTg5NCAxMDQuNyAxNTYuNSkiLz48cGF0aCBmaWxsPSIjMTkyNjFhIiBkPSJNMjUwIDg3bC0xMDYtNyA3IDU1eiIvPjxlbGxpcHNlIGZpbGw9IiNiNmM0OGQiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTY0LjMgOTYuNSAtMTA5KSBzY2FsZSg0OC40MDQ0NyAyNC42Mzk2MSkiLz48cGF0aCBmaWxsPSIjMzUyNzIwIiBkPSJNMjAgNjNoMTEzdjY4SDIweiIvPjxwYXRoIGZpbGw9IiMxMzE5MTUiIGQ9Ik0xNyAxNjBsNDItOTlMMzctOHoiLz48ZWxsaXBzZSBmaWxsPSIjM2U1YTExIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDMyLjQxMjk1IC0yNy44NTc2MiAxMy45NzQ0NiAxNi4yNTk1OSAxMTIgMTEuMSkiLz48L2c+PC9zdmc+',
    width: 800,
    height: 535,
+   // isLarage: true,
+   // size: '886KB',
 }, {
+   id: 17,
    src: "https://i.imgur.com/NkuPoyi.jpeg",
    fallbackSrc1: "https://i.ibb.co/kDXw2n3/NkuPoyi.jpg",
    fallbackSrc2: "/images/NkuPoyi.jpg",
    alt: "ricksahw-seats",
-   blurhash: "UHF5y@01E1-;~VD*M|a{56kDxaM{x]IUWVxu",
+   // blurhash: "UHF5y@01E1-;~VD*M|a{56kDxaM{x]IUWVxu",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA0NjA4IDM0NTYiPjxmaWx0ZXIgaWQ9ImIiPjxmZUdhdXNzaWFuQmx1ciBzdGREZXZpYXRpb249IjEyIiAvPjwvZmlsdGVyPjxwYXRoIGZpbGw9IiM2YjY2NWIiIGQ9Ik0wIDBoNDYwOHYzNDU2SDB6Ii8+PGcgZmlsdGVyPSJ1cmwoI2IpIiB0cmFuc2Zvcm09Im1hdHJpeCgxOCAwIDAgMTggOSA5KSIgZmlsbC1vcGFjaXR5PSIuNSI+PGVsbGlwc2UgZmlsbD0iI2UxZDVjMyIgY3g9IjE5MiIgY3k9IjU3IiByeD0iNjIiIHJ5PSI5MCIvPjxlbGxpcHNlIGZpbGw9IiMwZTE3MTMiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJyb3RhdGUoLTc4LjggMTc1LjQgLjYpIHNjYWxlKDM3LjM4OTc2IDE2My42ODAzNCkiLz48ZWxsaXBzZSBmaWxsPSIjMDAwNTA2IiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC03LjEzMDk1IC0zNC42NDA1NyA2Ni4xNDI2NiAtMTMuNjE1ODMgMTMgMzIuOSkiLz48ZWxsaXBzZSBmaWxsPSIjZmZmM2U3IiBjeD0iNDkiIGN5PSI3NyIgcng9IjE0IiByeT0iMTYiLz48ZWxsaXBzZSBmaWxsPSIjZmZlZmYwIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0icm90YXRlKDE1OC4yIDc5LjEgNzIuNikgc2NhbGUoNDIuNjYxMTUgMTYuNzU3ODcpIi8+PHBhdGggZmlsbD0iIzE5MjIxYyIgZD0iTTE0IDE4NUw3OCA0MWwxNyAxMzd6Ii8+PGVsbGlwc2UgZmlsbD0iI2UwYzE5ZCIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09Im1hdHJpeCgtNy45MDgxNiAtODkuNjY2MyA1LjkzMzc3IC0uNTIzMzMgMTA4LjcgODQuNykiLz48ZWxsaXBzZSBmaWxsPSIjZGNkYmMxIiBjeD0iMjM1IiBjeT0iNyIgcng9IjY1IiByeT0iMTciLz48L2c+PC9zdmc+',
    width: 4608,
    height: 3456,
+   // isLarage: true,
+   // size: '1.2MB',
 }, {
+   id: 18,
    src: "https://i.imgur.com/MHQApPe.jpeg",
    fallbackSrc1: "https://i.ibb.co/P1bvxw0/MHQApPe.jpg",
    fallbackSrc2: "/images/MHQApPe.jpg",
    alt: "mangrove-boardwalk-front-2",
-   blurhash: "UAH-oRn3W8={C7Z~I.t7GtNFM~s=qCOlrxS%",
+   // blurhash: "UAH-oRn3W8={C7Z~I.t7GtNFM~s=qCOlrxS%",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2ODYgMzg2Ij48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjOGM3YTYxIiBkPSJNMCAwaDY4NnYzODVIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuMyAxLjMpIHNjYWxlKDIuNjc5NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZDlmNGZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC0zNy41MTAxMiAxMC4xMjEgLTguMTUyMjIgLTMwLjIxMzQ1IDE4Ny42IDApIi8+PHBhdGggZmlsbD0iIzExMjQxOCIgZD0iTTQzIDBoMzh2NjNINDN6Ii8+PGVsbGlwc2UgZmlsbD0iI2E5MTQyZSIgcng9IjEiIHJ5PSIxIiB0cmFuc2Zvcm09InJvdGF0ZSgyLjIgLTIxNDYgMzc0NC42KSBzY2FsZSgxMzcuNDI0OTEgMTMuODQ2MjYpIi8+PGVsbGlwc2UgZmlsbD0iI2ZmOTU4NiIgY3g9IjEyNSIgY3k9IjE0MyIgcng9IjI1NSIgcnk9IjEwIi8+PGVsbGlwc2UgZmlsbD0iIzdhZGU4MiIgY3g9IjEzOSIgY3k9IjExMSIgcng9IjEzMyIgcnk9IjEwIi8+PHBhdGggZD0iTTExMyAzNGg2NHY5aC02NHoiLz48cGF0aCBmaWxsPSIjZmZjNjAwIiBkPSJNMCA0OWgzN3YxNUgweiIvPjxlbGxpcHNlIGZpbGw9IiMwMTBhMGIiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoLTQxLjM3NjQyIC0xNi4zMTYxMSAxLjkxMTUgLTQuODQ3NDQgMTEuOCAxMy45KSIvPjwvZz48L3N2Zz4=',
    width: 686,
    height: 386,
+   // isLarage: false,
+   // size: '87KB',
 }, {
+   id: 19,
    src: "https://i.imgur.com/NtTKFde.jpg",
    fallbackSrc1: "https://i.ibb.co/pXxrMLx/NtTKFde.jpg",
    fallbackSrc2: "/images/NtTKFde.jpg",
    alt: "khaleel-rickshaw",
-   blurhash: "UCE2tVDi~U$zpJn3%0RjERrrX9j?J:9Z%gWB",
+   // blurhash: "UCE2tVDi~U$zpJn3%0RjERrrX9j?J:9Z%gWB",
+   base64String: 'data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA3MTggNTE3Ij48ZmlsdGVyIGlkPSJiIj48ZmVHYXVzc2lhbkJsdXIgc3RkRGV2aWF0aW9uPSIxMiIgLz48L2ZpbHRlcj48cGF0aCBmaWxsPSIjNjk2MTUwIiBkPSJNMCAwaDcxOHY1MTZIMHoiLz48ZyBmaWx0ZXI9InVybCgjYikiIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEuNCAxLjQpIHNjYWxlKDIuODA0NjkpIiBmaWxsLW9wYWNpdHk9Ii41Ij48ZWxsaXBzZSBmaWxsPSIjZmZmIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KC4wNzU0OSAtMjEuNjI2MTQgMzEuNzQ2NzMgLjExMDgyIDIzMy41IDE2LjUpIi8+PGVsbGlwc2UgY3g9IjEzNyIgY3k9IjEzMCIgcng9IjQ3IiByeT0iMzQiLz48ZWxsaXBzZSBmaWxsPSIjYzlhOTlhIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDU0LjI3MjI0IC05MC45NTc1IDMzLjgxNTE4IDIwLjE3Njc0IDIyNi4yIDE0NC45KSIvPjxlbGxpcHNlIGZpbGw9IiMwMDEyMTQiIHJ4PSIxIiByeT0iMSIgdHJhbnNmb3JtPSJtYXRyaXgoODQuMDAwNSAyNC4xNDMxNiAtMTAuNDc0MDUgMzYuNDQyMDMgMTIwLjQgOC41KSIvPjxwYXRoIGZpbGw9IiNmMGFlNzMiIGQ9Ik0xMCA0N2g2OXYyNEgxMHoiLz48cGF0aCBmaWxsPSIjZTVmZmZmIiBkPSJNMjYxLjYtNi42TDI1NC43IDM3bC01Mi4zLTguMyA2LjktNDMuNXoiLz48cGF0aCBmaWxsPSIjZmZiZTEyIiBkPSJNMTA5IDg2aDY1djEyaC02NXoiLz48ZWxsaXBzZSBmaWxsPSIjYmY4ZjdjIiByeD0iMSIgcnk9IjEiIHRyYW5zZm9ybT0ibWF0cml4KDEzNy4xNTQ0NSAxMC45MTE0MyAtMS41ODU1MSAxOS45Mjk1NyA0OSAxODMpIi8+PC9nPjwvc3ZnPg==',
    width: 718,
    height: 517,
+   // isLarage: false,
+   // size: '53KB',
 }];
 
 // */
 
-export type { ImageType };
-export default images;
+export {
+   images as default,
+   FALLBACK_IMG,
+   FALLBACK_PLACEHOLDER,
+};
+export type { ImageType, rgbType };

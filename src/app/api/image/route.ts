@@ -8,6 +8,7 @@ import { formatBytes } from "@/utils/functions";
 import connectDB from "@/utils/connectdb";
 import { headersToObject } from "@/utils/apiutils";
 import type { ImageType } from "@/data/images";
+import images from "@/data/images";
 
 // TODO: need to error logging system to front-end
 // TODO: after image uplaod successful close the uplaod modal and if possible focus on upladed first or last image
@@ -55,16 +56,16 @@ function getFileExtension(fileName: string): string {
 
 
 const encodeImageToBlurhash = (path: any) =>
-  new Promise((resolve, reject) => {
-    sharp(path)
-      .raw()
-      .ensureAlpha()
-      .resize(32, 32, { fit: "inside" })
-      .toBuffer((err, buffer, { width, height }) => {
-        if (err) return reject(err);
-        resolve(encode(new Uint8ClampedArray(buffer), width, height, 4, 4));
-      });
-  });
+   new Promise((resolve, reject) => {
+      sharp(path)
+         .raw()
+         .ensureAlpha()
+         .resize(32, 32, { fit: "inside" })
+         .toBuffer((err, buffer, { width, height }) => {
+            if (err) return reject(err);
+            resolve(encode(new Uint8ClampedArray(buffer), width, height, 4, 4));
+         });
+   });
 
 
 
@@ -146,50 +147,52 @@ export async function POST(req: NextRequest) {
          const responseData = await uploadFetchResponse.json();
          console.log(responseData);
 
-//          const uint8Array = new Uint8ClampedArray(buffer);
-         
-//          console.log('response: ', responseData);
-// console.log('height: ', responseData.data.width);
-// console.log('width: ', responseData.data.height);
+         //          const uint8Array = new Uint8ClampedArray(buffer);
 
-//   const { width, height } = await getImageDimensions(filePath);
-//          const blurhash = encode(uint8Array, width as number, height as number, 4, 4);
+         //          console.log('response: ', responseData);
+         // console.log('height: ', responseData.data.width);
+         // console.log('width: ', responseData.data.height);
 
-console.log('blurhash');
-console.log('blurhash');
+         //   const { width, height } = await getImageDimensions(filePath);
+         //          const blurhash = encode(uint8Array, width as number, height as number, 4, 4);
 
- const blurhashResponse = await encodeImageToBlurhash(filePath).then(hash => {
-  return hash;
-});
+         console.log('blurhash');
+         console.log('blurhash');
 
-// const blurhashData = JSON.stringify(blurhashResponse);
-const blurhashData = blurhashResponse;
+         const blurhashResponse = await encodeImageToBlurhash(filePath).then(hash => {
+            return hash;
+         });
 
-console.log(blurhashData);
+         // const blurhashData = JSON.stringify(blurhashResponse);
+         const blurhashData = blurhashResponse;
 
-console.log('blurhash');
-console.log('blurhash');
+         console.log(blurhashData);
+
+         console.log('blurhash');
+         console.log('blurhash');
 
          const collectionCount = await collection.countDocuments() || 0;
 
-         console.log('Inserting document into MongoDB');
+         // console.log('Inserting document into MongoDB');
+         // TODO: need to save like TODO: TODO:
+         /**
+            srcUrl: data.display_url // orignal size | eg: 161KB, 27KB, 266KB
+            srcDecresed: data.url // orignal size | eg: 801KB, 1.00MB, 303KB, 
+            srcThumbnail: thumb.url // thumbnail | eg:. 8.96KB, 4.78KB, 20KB
+            
+          */
          try {
             // TODO: also need to add data.url, data.display-url and thumbnail.url from imgbb API response
             const result = await collection.insertOne({
-               id: collectionCount + 1,
+               id: collectionCount + 1 + images.length, // is this okay
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
                // TODO: here we loading data.url that is not orignal quality by planing what to do use data.display_url
                src: responseData.data.url, // changed srcUrl to src
-               // TODO: need to save like 
-               /**
-                  srcUrl: data.display_url // orignal size | eg: 161KB, 27KB
-                  srcDecresed: data.url // orignal size | eg: 801KB, 1.00MB
-                  srcThumbnail: thumb.url // thumbnail | eg:. 8.96KB, 4.78KB
-                  
-                */
                alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
-               blurhash: blurhashData,
+               // blurhash: blurhashData, // For now not using blurhash
+               width: responseData.data.width,
+               height: responseData.data.height,
                size: { // 
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
@@ -206,7 +209,6 @@ console.log('blurhash');
                allResponse: {
                   fetch: {
                      responseData,
-                     // uploadFetchResponse: uploadFetchResponse // TODO; it showing object in database i think need to save indidual vales suppretely we can't convert .json() because allready converted
                   },
                   headers: {
                      method: req.method,
@@ -401,19 +403,28 @@ console.log('blurhash');
 
 
 export async function GET(req: NextRequest) {
+   console.log('api/images GET request fired!!');
    const url = new URL(req.url);
    const id = url.searchParams.get('id');
    const collection = await connectDB("images");
    console.log(id);
 
-   // TODO: if connection problem show somthing error in front-end 
+   // Handle database connection errors
+   if (!collection) {
+      return NextResponse.json(
+         { success: false, message: "Database connection error" },
+         { status: 500 }
+      );
+   }
+
+   // is working 
+   const projection = { _id: 0, id: 1, src: 1, alt: 1, base64String: 1, width: 1, height: 1, };
 
    try {
+      // Fetch image by id (alt in this case)
       if (id) {
-         const image = await collection.findOne(
-            { alt: id },
-            // { imageName: id },
-            { projection: { _id: 0, id: 1, src: 1, alt: 1 } }
+         const image: ImageType | null = await collection.findOne(
+            { alt: id }, { projection }
          );
          if (!image) {
             return NextResponse.json(
@@ -421,29 +432,91 @@ export async function GET(req: NextRequest) {
                { status: 404 }
             );
          }
-         return NextResponse.json(image);
+         return NextResponse.json({ success: true, image });
       } else {
+         // Handle pagination for fetching images
          const perPage = 5;
          const page = parseInt(url.searchParams.get('page') ?? '1', 10) - 1;
          const skip = page * perPage;
          console.log("requested page: ", page);
 
          const images: ImageType[] = await collection
-            .find({}, { projection: { _id: 0, id: 1, src: 1, alt: 1,  } })
+            .find({}, { projection })
             .skip(skip)
             .limit(perPage)
             .toArray();
 
+         // Check if all images are loaded
+         const totalImages = await collection.countDocuments();
+         const allImagesLoaded = skip + perPage >= totalImages;
+
+         // If no images are returned, set `allImagesLoaded` to true
          if (images.length === 0) {
-            return NextResponse.json({ allImagesLoaded: true });
+            return NextResponse.json({ allImagesLoaded: true, images: [] });
          }
 
-         await delay(1000); // TODO: need to remove
-         return NextResponse.json(images);
+         // Return both images and the `allImagesLoaded` flag
+         console.log('images before send', images);
+         return NextResponse.json({
+            success: true,
+            images,
+            allImagesLoaded
+         });
       }
    } catch (error) {
       console.error(error);
-      return NextResponse.json({ success: false }, { status: 500 });
+      return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
    }
 }
+
+
+
+// export async function GET(req: NextRequest) {
+//    console.log('api/images GET request fired!!');
+//    const url = new URL(req.url);
+//    const id = url.searchParams.get('id');
+//    const collection = await connectDB("images");
+//    console.log(id);
+
+//    // TODO: if connection problem show somthing error in front-end 
+
+//    try {
+//       if (id) {
+//          const image: ImageType[] = await collection.findOne(
+//             { alt: id },
+//             // { imageName: id },
+//             { projection: { _id: 0, id: 1, src: 1, alt: 1, base64String: 1, } }
+//          );
+//          if (!image) {
+//             return NextResponse.json(
+//                { success: false, message: "Image not found" },
+//                { status: 404 }
+//             );
+//          }
+//          return NextResponse.json(image);
+//       } else {
+//          const perPage = 5;
+//          const page = parseInt(url.searchParams.get('page') ?? '1', 10) - 1;
+//          const skip = page * perPage;
+//          console.log("requested page: ", page);
+
+//          const images: ImageType[] = await collection
+//             .find({}, { projection: { _id: 0, id: 1, src: 1, alt: 1, base64String: 1, } })
+//             .skip(skip)
+//             .limit(perPage)
+//             .toArray();
+
+//          if (images.length === 0) {
+//             return NextResponse.json({ allImagesLoaded: true });
+//          }
+
+//          // await delay(1000); // TODO: need to remove
+//          console.log(images);
+//          return NextResponse.json(images);
+//       }
+//    } catch (error) {
+//       console.error(error);
+//       return NextResponse.json({ success: false }, { status: 500 });
+//    }
+// }
 

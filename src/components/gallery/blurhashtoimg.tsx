@@ -1,117 +1,124 @@
 // import { useEffect, useState } from 'react';
+// import Image from 'next/image';
 // import { decode } from 'blurhash';
 
-// const BlurhashToImage = ({ blurhash, width, height }: {blurhash: string, width: number, height: number}) => {
-//   const [imageSrc, setImageSrc] = useState('');
+// function uint8ClampedArrayToBase64(uint8ClampedArray: Uint8ClampedArray): Promise<string> {
+//    return new Promise((resolve, reject) => {
+//       const blob = new Blob([uint8ClampedArray]);
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//          const base64String = (reader.result as string).split(',')[1];
+//          resolve(base64String);
+//       };
+//       reader.onerror = reject;
+//       reader.readAsDataURL(blob);
+//    });
+// }
 
-//   useEffect(() => {
-//     if (blurhash) {
-//       // Create an offscreen canvas
-//       const canvas = document.createElement('canvas');
-//       canvas.width = width;
-//       canvas.height = height;
-//       const ctx = canvas.getContext('2d');
+// const BlurhashImage = ({ src, hash, width, height, alt }: { src: string, hash: string, width: number, height: number, alt: string }) => {
+//    const [blurDataURL, setBlurDataURL] = useState<string | null>(null);
 
-//       if (ctx) {
-//         // Decode the blurhash and draw it on the canvas
-//         const pixels = decode(blurhash, width, height);
-//         const imageData = ctx.createImageData(width, height);
-//         imageData.data.set(Uint8ClampedArray.from(pixels));
-//         ctx.putImageData(imageData, 0, 0);
+//    useEffect(() => {
+//       const generateBlurDataURL = async () => {
+//          const pixels = decode(hash, width, height); // Decode the blurhash
+//          const base64 = await uint8ClampedArrayToBase64(pixels); // Convert to Base64
+//          setBlurDataURL(`data:image/png;base64,${base64}`);
+//       };
 
-//         // Convert the canvas to a data URL
-//         const dataURL = canvas.toDataURL('image/png');
-//         setImageSrc(dataURL);
-//       } else {
-//         console.error('Failed to get 2D context from canvas');
-//       }
-//     }
-//   }, [blurhash, width, height]);
+//       generateBlurDataURL();
+//    }, [hash, width, height]);
 
-//   return (
-//     <>
-//       {imageSrc && <img src={imageSrc} alt="Blurhash" />}
-//     </>
-//   );
+//    console.log('blurDataURL: ', blurDataURL);
+
+//    return (
+//       <Image
+//          src={src}
+//          alt={alt}
+//          width={width}
+//          height={height}
+//          placeholder="blur"
+//          blurDataURL={blurDataURL || undefined} // Use blurDataURL if available
+//       />
+//    );
 // };
 
-// export default BlurhashToImage;
-
-
+// export default BlurhashImage;
 
 
 
 import { useEffect, useState } from 'react';
-import type { Message, WorkerMessage } from '@/workers/blurhash.worker';
+import Image from 'next/image';
+import { decode } from 'blurhash';
+import type { rgbType } from '@/data/images';
 
-// // Define the interface for the message sent to the worker
-// interface Message {
-//    type: 'decode';
-//    blurhash: string;
-//    width: number;
-//    height: number;
+// function uint8ClampedArrayToBase64(uint8ClampedArray: Uint8ClampedArray): Promise<string> {
+//    return new Promise((resolve, reject) => {
+//       const blob = new Blob([uint8ClampedArray]);
+//       const reader = new FileReader();
+//       reader.onloadend = () => {
+//          const base64String = (reader.result as string).split(',')[1];
+//          resolve(base64String);
+//       };
+//       reader.onerror = reject;
+//       reader.readAsDataURL(blob);
+//    });
 // }
+function uint8ClampedArrayToBase64(uint8ClampedArray: Uint8ClampedArray): string {
+   let binary = '';
+   for (let i = 0; i < uint8ClampedArray.length; i++) {
+      binary += String.fromCharCode(uint8ClampedArray[i]);
+   }
+   return btoa(binary);
+}
 
-// // Define the interface for the message sent from the worker
-// interface WorkerMessage {
-//    type: 'result';
-//    pixels: Uint8ClampedArray;
-// }
 
-const BlurhashToImage = ({ blurhash, width, height }: { blurhash: string, width: number, height: number }) => {
-   const [imageSrc, setImageSrc] = useState('');
-   console.log('imageSrc: ', imageSrc);
-   
 
-   useEffect(() => {
-      if (blurhash) {
-         // Create a new Web Worker
-         // const worker = new Worker(new URL('../../workers/blurhash.worker.ts', import.meta.url), { type: 'module' });
-         const worker = new Worker(new URL('../../workers/blurhash.worker.ts', import.meta.url), { type: 'module' });
 
-         // Send a message to the worker to decode the blurhash
-         worker.postMessage({ type: 'decode', blurhash, width, height } as Message);
+// Pixel GIF code adapted from https://stackoverflow.com/a/33919020/266535
+// github: https://github.com/vercel/next.js/blob/canary/examples/image-component/app/color/page.tsx
+const keyStr =
+   "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
 
-         // Listen for the result from the worker
-         worker.onmessage = (event: MessageEvent<WorkerMessage>) => {
-            if (event.data.type === 'result') {
-               const canvas = document.createElement('canvas');
-               canvas.width = width;
-               canvas.height = height;
-               const ctx = canvas.getContext('2d');
+const triplet = (e1: number, e2: number, e3: number) =>
+   keyStr.charAt(e1 >> 2) +
+   keyStr.charAt(((e1 & 3) << 4) | (e2 >> 4)) +
+   keyStr.charAt(((e2 & 15) << 2) | (e3 >> 6)) +
+   keyStr.charAt(e3 & 63);
 
-               if (ctx) {
-                  const imageData = ctx.createImageData(width, height);
-                  imageData.data.set(event.data.pixels);
-                  ctx.putImageData(imageData, 0, 0);
+const rgbDataURL = (r: number, g: number, b: number) =>
+   `data:image/gif;base64,R0lGODlhAQABAPAA${triplet(0, r, g) + triplet(b, 255, 255)
+   }/yH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==`;
 
-                  // Convert the canvas to a data URL
-                  const dataURL = canvas.toDataURL('image/png');
-                  setImageSrc(dataURL);
-               } else {
-                  console.error('Failed to get 2D context from canvas');
-               }
+const BlurhashImage = ({ src, hash, width, height, alt, rgb }: { src: string, hash: string, width: number, height: number, alt: string, rgb: rgbType }) => {
+   const { r, g, b }: rgbType = rgb;
+   // const [blurDataURL, setBlurDataURL] = useState<string | null>(null);
 
-               // Clean up the worker
-               worker.terminate();
-            } else {
-               console.error('Unexpected message type from worker:', event.data.type);
-            }
-         };
+   // useEffect(() => {
+   //    const generateBlurDataURL = async () => {
+   //       const pixels = decode(hash, width, height); // Decode the blurhash
+   //       const base64 = uint8ClampedArrayToBase64(pixels); // Convert to Base64
+   //       setBlurDataURL(`data:image/png;base64,${base64}`);
+   //    };
 
-         // Listen for errors from the worker
-         worker.onerror = (error: ErrorEvent) => {
-            console.error('Worker error:', error.message);
-            worker.terminate();
-         };
-      }
-   }, [blurhash, width, height]);
+   //    generateBlurDataURL();
+   // }, [hash, width, height]);
+
+   // if (!blurDataURL) {
+   //    // Optional: Return a loading state or a placeholder image while blurDataURL is loading
+   //    return <div style={{ width, height, backgroundColor: 'red' }}>Loading...</div>;
+   // }
 
    return (
-      <>
-         {imageSrc && <img src={imageSrc} alt="Blurhash" />}
-      </>
+      <Image
+         src={src}
+         alt={alt}
+         width={width}
+         height={height}
+         placeholder="blur"
+         blurDataURL={rgbDataURL(r, g, b)} // Pass the computed blurDataURL
+      />
    );
 };
 
-export default BlurhashToImage;
+export default BlurhashImage;
+
