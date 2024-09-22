@@ -355,6 +355,9 @@
 import React, { useState, useEffect, useRef, FC } from 'react';
 import { formatBytes } from "@/utils/functions";
 
+// TODO: error not showing of upload failed and image cleared 
+// TODO: .bmp images not supported here still uploading : need fix
+// TODO:  button not disabled when uploading image 
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 
 const UploadModal: FC = (): JSX.Element => {

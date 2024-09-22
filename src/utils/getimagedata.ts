@@ -11,8 +11,10 @@ function getBaseUrl() { // TODO: check it's working as expected in server
    return `${protocol}://${host}`;
 }
 
-// const getImageData = async (id: string) => {
-const getImageData = async (id: string): Promise<[string | undefined, string]> => {
+// TODO: I think this is not utility function 
+
+// const getImageData = async (alt: string) => {
+const getImageData = async (alt: string): Promise<[string | undefined, string]> => {
 
 
    let searchAlt: string;
@@ -22,16 +24,16 @@ const getImageData = async (id: string): Promise<[string | undefined, string]> =
 
 
    const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
-   if (fallBackStartsWith.some(prefix => id.startsWith(prefix))) {
-      searchAlt = id.replace(/^(fallback1-|fallback2-)/, '');
+   if (fallBackStartsWith.some(prefix => alt.startsWith(prefix))) {
+      searchAlt = alt.replace(/^(fallback1-|fallback2-)/, '');
 
-      if (id.startsWith(fallBackStartsWith[0])) {
+      if (alt.startsWith(fallBackStartsWith[0])) {
          fallbackSrc = 1;
-      } else if (id.startsWith(fallBackStartsWith[1])) {
+      } else if (alt.startsWith(fallBackStartsWith[1])) {
          fallbackSrc = 2;
       }
    } else {
-      searchAlt = id
+      searchAlt = alt
    }
 
    photo = images.find((p) => p.alt === searchAlt)!;
@@ -57,7 +59,7 @@ const getImageData = async (id: string): Promise<[string | undefined, string]> =
       // if (photo === undefined) {
       const baseUrl = getBaseUrl();
 
-      const url = `${baseUrl}/api/image?id=${id}`;
+      const url = `${baseUrl}/api/image?alt=${alt}`;
       console.log("url: ");
       console.log(url);
       const response = await fetch(url)
@@ -89,7 +91,7 @@ export default getImageData;
 //    }
 // }
 
-// const getImageData = async (id: string): Promise<[string | undefined, string | undefined]> => {
+// const getImageData = async (alt: string): Promise<[string | undefined, string | undefined]> => {
 //    let searchAlt: string;
 //    let photo: ImageType | undefined;
 //    let fallbackSrc: number = 0; // 0 = src, 1 = fallbackSrc1, 2 = fallbackSrc2
@@ -97,12 +99,12 @@ export default getImageData;
 
 //    try {
 //       const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
-//       if (fallBackStartsWith.some(prefix => id.startsWith(prefix))) {
-//          searchAlt = id.replace(/^(fallback1-|fallback2-)/, '');
+//       if (fallBackStartsWith.some(prefix => alt.startsWith(prefix))) {
+//          searchAlt = alt.replace(/^(fallback1-|fallback2-)/, '');
 
-//          fallbackSrc = id.startsWith(fallBackStartsWith[0]) ? 1 : 2;
+//          fallbackSrc = alt.startsWith(fallBackStartsWith[0]) ? 1 : 2;
 //       } else {
-//          searchAlt = id;
+//          searchAlt = alt;
 //       }
 
 //       photo = images.find((p) => p.alt === searchAlt);
@@ -123,7 +125,7 @@ export default getImageData;
 //          }
 //       } else {
 //          const baseUrl = getBaseUrl();
-//          const url = `${baseUrl}/api/image?id=${id}`;
+//          const url = `${baseUrl}/api/image?alt=${alt}`;
 //          const response = await fetch(url);
 
 //          if (!response.ok) {

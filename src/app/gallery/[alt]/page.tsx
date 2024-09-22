@@ -9,13 +9,13 @@ import { transformText } from "@/utils/functions";
 import "./styles.css";
 import getImageData from "@/utils/getimagedata";
 
-const PhotoPage: FC<{ params: { id: string } }> = async (
-   { params: { id } }) => {
+const PhotoPage: FC<{ params: { alt: string } }> = async (
+   { params: { alt } }) => {
    try {
-      const [finalSrc, photoAlt] = await getImageData(id);
+      const [finalSrc, photoAlt] = await getImageData(alt);
 
 
-      // const photo: ImageType = images.find((p) => p.alt === id)!;
+      // const photo: ImageType = images.find((p) => p.alt === alt)!;
       return (
          <>
             {!finalSrc ? (

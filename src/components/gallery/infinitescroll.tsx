@@ -200,15 +200,10 @@ import imagesObject from "@/data/images";
 // import ImageWithFallback from "./imagewithfallback";
 import InterceptingImageWithFallbacks from "./Interceptingimagewithfallbacks";
 import InfiniteScroll from 'react-infinite-scroll-component';
-
-type ImageApiResponse = {
-   allImagesLoaded?: boolean;
-   success?: boolean;
-   images: ImageType[];
-};
+import type { GetApiResponse } from "@/types/api";
 
 
-const fetchImages = async ({ queryKey }: QueryFunctionContext<[string, number]>): Promise<ImageApiResponse> => {
+const fetchImages = async ({ queryKey }: QueryFunctionContext<[string, number]>): Promise<GetApiResponse> => {
    let result;
    const middleIndexOfImages = Math.ceil(imagesObject.length / 2);
    const [_, page] = queryKey;
@@ -234,7 +229,7 @@ const InfiniteScrollComponent: FC = () => {
       isLoading,
       data,
       error,
-   } = useQuery<ImageApiResponse, Error, ImageApiResponse, [string, number]>({
+   } = useQuery<GetApiResponse, Error, GetApiResponse, [string, number]>({
       queryKey: ['images', page],
       queryFn: fetchImages,
    });
@@ -246,8 +241,6 @@ const InfiniteScrollComponent: FC = () => {
       if (data) {
          // setImages((prevItems) => [...prevItems, ...data]);
          console.log(data);
-         // if (data.allImagesLoaded) return setAllImagesLoaded(true);
-
          setImages((prevImages) => {
             const newImages: ImageType[] = data.images || data;
             const existingIds = new Set(prevImages.map(img => img.id));
@@ -275,20 +268,8 @@ const InfiniteScrollComponent: FC = () => {
          dataLength={images.length}
          next={fetchMoreData}
          hasMore={!allImagesLoaded}
-         // loader={<h4>Loading...</h4>}
-         style={{ overflow: 'hidden' }}
-         loader={isLoading && (
-            <div style={{ width: '100%', height: '80px' }}>
-               <div className="image-loading-animation"></div>
-            </div>
-         )}
-         endMessage={(
-            <div style={{ // TODO: move the styles in css file also add media queries fontSize
-               width: '100%', margin: '20px 0', fontSize: '1.2rem', textAlign: 'center', fontFamily: 'cursive'
-            }}>
-               🏖️ Tour complete! All images are ready, enjoy the scenery.
-            </div>
-         )}
+         loader={isLoading && !allImagesLoaded && (<LoadingAnimation />)}
+         endMessage={(<AllImgesReadyInfo />)}
          className="image-gallery"
       >
          {images.map((img: ImageType): JSX.Element => (
@@ -296,8 +277,23 @@ const InfiniteScrollComponent: FC = () => {
                <InterceptingImageWithFallbacks img={img} />
             </Fragment>
          ))}
-
       </InfiniteScroll>
+   );
+};
+
+const LoadingAnimation = () => {
+   return (
+      <div style={{ width: '100%', minWidth: '100px', height: '75px' }}>
+         <div className="image-loading-animation"></div>
+      </div>
+   );
+};
+
+const AllImgesReadyInfo = () => {
+   return (
+      <div className="images-ready">
+         🏖️ Tour complete! All images are ready, enjoy the scenery.
+      </div>
    );
 };
 

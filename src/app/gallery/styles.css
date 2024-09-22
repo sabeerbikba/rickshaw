@@ -12,6 +12,10 @@ body {
 
 /* upload modal */
 
+#upload-modal {
+   z-index: 3;
+}
+
 .modal-overlay {
    background-color: rgba(0, 0, 0, 0.2);
    position: fixed;
@@ -386,6 +390,7 @@ body {
    display: -webkit-flex;
    display: -ms-flexbox;
    display: flex;
+   overflow: hidden;
    -webkit-flex-wrap: wrap;
    -ms-flex-wrap: wrap;
    flex-wrap: wrap;
@@ -427,11 +432,41 @@ body {
    box-shadow: 0 0 10px gray;
 }
 
+.image {
+   position: absolute;
+   top: 0;
+   left: 0;
+   z-index: 2;
+   background-size: cover;
+   width: 100%;
+   height: 100%;
+}
+
+.image-wrapper {
+   position: relative !important;
+   width: 350px;
+   background-size: cover;
+}
+
+.image-wrapper-blur {
+   position: relative;
+   top: 0;
+   left: 0;
+   right: 0;
+   bottom: 0;
+   z-index: 1;
+   filter: blur(10px);
+   background-size: cover;
+
+}
+
 .image-loading-animation {
+   /*  */
    width: 48px;
-   height: 48px;
+   /* height: 48px; */
    margin: auto;
    position: relative;
+   aspect-ratio: 1 / 1;
 }
 
 .image-loading-animation:before {
@@ -451,12 +486,19 @@ body {
    width: 100%;
    height: 100%;
    background: #e09a31;
-   /* background: #FFD700; */
    position: absolute;
    top: 0;
    left: 0;
    border-radius: 50%;
    animation: jump7456 0.5s linear infinite;
+}
+
+.images-ready {
+   width: 100%;
+   margin: 20px 0;
+   font-size: 1.2rem;
+   text-align: center;
+   font-family: cursive;
 }
 
 @keyframes jump7456 {
@@ -640,6 +682,19 @@ body {
    .imagePreview-info {
       font-size: 0.958em;
    }
+
+   .image-loading-animation {
+      width: 38px;
+   }
+
+   .image-loading-animation:before {
+      width: 38px;
+      top: 50px;
+   }
+
+   .images-ready {
+      font-size: 0.8rem;
+   }
 }
 
 @media only screen and (width >=400px) and (width <=599px) {
@@ -663,11 +718,37 @@ body {
    .imagePreview-info {
       font-size: 0.978em;
    }
+
+   .image-loading-animation {
+      width: 40px;
+   }
+
+   .image-loading-animation:before {
+      width: 40px;
+      top: 52px;
+   }
+
+   .images-ready {
+      font-size: 0.89rem;
+   }
 }
 
 @media only screen and (width >=500px) and (width <=599px) {
    .image-preview-error-loading>.error {
       font-size: 0.65em;
+   }
+
+   .image-loading-animation {
+      width: 45px;
+   }
+
+   .image-loading-animation:before {
+      width: 45px;
+      top: 57px;
+   }
+
+   .images-ready {
+      font-size: 0.94rem;
    }
 }
 
@@ -691,6 +772,19 @@ body {
 
    .imagePreview-info {
       font-size: 0.99em;
+   }
+
+   .image-loading-animation {
+      width: 47px;
+   }
+
+   .image-loading-animation:before {
+      width: 47px;
+      top: 59px;
+   }
+
+   .images-ready {
+      font-size: 1.1rem;
    }
 }
 

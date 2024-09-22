@@ -30,8 +30,6 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
       [src, fallbackSrc1, fallbackSrc2, FALLBACK_IMG].filter((s): s is string => s !== undefined);
    const bgImage: string = isValidString ? base64String : FALLBACK_PLACEHOLDER;
 
-   // TODO: after some time if possible remove the background-image style  because it render on html page  
-
    const removeBaseUrl = (url: string): string => {
       try {
          const baseUrl = new URL('/', window.location.href).href;
@@ -51,11 +49,6 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
       setCurrentSrc(removeBaseUrl(src));
    };
 
-   /**
-      src         ->       fallbackSrc1         ->        falbackSrc2         ->     FALLBACK_IMG 
-`/gallery/${alt}` ->`/gallery/fallback1-${alt}` ->`/gallery/fallback2-${alt}` ->   intercepting off
-    */
-
    useEffect(() => {
       const urls = {
          [src]: `/gallery/${alt}`,
@@ -68,57 +61,28 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
    }, [currentSrc]);
 
    const imageElement = (
-      <div style={{
-         backgroundImage: `url(${bgImage})`,
-         backgroundSize: 'cover',
-         width: '350px',
-         boxShadow: `1px 1px 5px ${boxShadowColor}`,
-         aspectRatio: `${width} / ${height}`,
-      }}>
-         <Img
-            src={imageSources}
-            // decode={true}
-            crossorigin="anonymous"
+      <div
+         className='image-wrapper'
+         style={{
+            aspectRatio: `${width} / ${height}`,
+            boxShadow: `1px 1px 5px ${boxShadowColor}`,
+         }}>
+         <div
+            className='image-wrapper-blur'
             style={{
                backgroundImage: `url(${bgImage})`,
-               backgroundSize: 'cover',
-               aspectRatio: `${width} / ${height}`,
+               aspectRatio: `${width} / ${height}`
             }}
-            // loader={
-            //    <div
-            //       className='image-item'
-            //       style={{
-            //          // object-contain
-            //          backgroundImage: `url(${bgImage})`,
-            //          backgroundSize: 'cover',
-            //          boxShadow: `1px 1px 5px ${boxShadowColor}`,
-            //          width: '350px',
-            //          aspectRatio: `${width} / ${height}`,
-            //       }}
-            //    />
-            // }
+         />
+         <Img
+            className='image'
+            src={imageSources}
+            crossorigin="anonymous"
             unloader={<img src={FALLBACK_IMG} />}
             onLoad={handleImageLoad}
             alt={alt}
          />
       </div>
-      // <div
-      //    className='image-item'
-      //    style={{
-      //       // object-contain
-      //       backgroundImage: `url(${bgImage})`,
-      //       backgroundSize: 'cover',
-      //       boxShadow: `1px 1px 5px ${boxShadowColor}`,
-      //       width: '350px',
-      //       // height: `calc(${width}px / ${height}px)`, // Dynamically calculate height based on the aspect ratio
-      //       // height: '',
-      //       // maxWidth: '100%',
-      //       // maxHeight: '100%',
-      //       // objectFit: 'contain',
-      //       aspectRatio: `${width} / ${height}`,
-      //    }}
-      // />
-
    );
 
    return isNotFallbackImg ? (

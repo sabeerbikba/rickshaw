@@ -1,10 +1,14 @@
-const isValidBase64 = (base64String: string) => {
-   const base64Prefix = 'data:image/svg+xml;base64,';
-   if (base64String == undefined) return false;
-   if (!base64String.startsWith(base64Prefix || '')) // if undefined used empty string
-      return false;
+const isValidBase64 = (base64String: string): boolean => {
+   if (typeof base64String !== 'string') return false;
 
-   const base64Content = base64String.slice(base64Prefix.length);
+   const validMimeTypes = ['image/svg+xml', 'image/webp'];
+   const base64PrefixMatch = base64String.match(/^data:(image\/[a-zA-Z]+);base64,/);
+   if (!base64PrefixMatch) return false;
+
+   const mimeType = base64PrefixMatch[1];
+   if (!validMimeTypes.includes(mimeType)) return false;
+
+   const base64Content = base64String.slice(base64PrefixMatch[0].length);
    const base64Regex = /^[A-Za-z0-9+/]+={0,2}$/;
    return base64Regex.test(base64Content) && base64Content.length % 4 === 0;
 };

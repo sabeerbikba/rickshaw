@@ -2,13 +2,16 @@ import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir, unlink } from "fs/promises";
 import sharp from "sharp";
 import fs from 'fs';
-import { encode } from "blurhash";
+// import { encode } from "blurhash";
+// import sqip from 'sqip';
+import lqip from 'lqip-modern'; // is working
 import path, { join, resolve } from "path";
 import { formatBytes } from "@/utils/functions";
 import connectDB from "@/utils/connectdb";
 import { headersToObject } from "@/utils/apiutils";
+// import images from "@/data/images";
 import type { ImageType } from "@/data/images";
-import images from "@/data/images";
+import type { PostApiResponse, GetApiResponse } from "@/types/api";
 
 // TODO: need to error logging system to front-end
 // TODO: after image uplaod successful close the uplaod modal and if possible focus on upladed first or last image
@@ -21,11 +24,13 @@ const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); /
 const IMGBB_API = process.env.IMGBB_API as string;
 
 const logError = async (error: Error): Promise<void> => {
+   console.log('inside logError: typeof error', typeof error);
    const collection = await connectDB("backend_errorlogs");
 
    await collection.insertOne({
-      error: error.message,
+      errorMsg: error.message,
       stack: error.stack,
+      Error: error,
       timestamp: new Date().toString(),
    });
 }
@@ -55,21 +60,23 @@ function getFileExtension(fileName: string): string {
 
 
 
-const encodeImageToBlurhash = (path: any) =>
-   new Promise((resolve, reject) => {
-      sharp(path)
-         .raw()
-         .ensureAlpha()
-         .resize(32, 32, { fit: "inside" })
-         .toBuffer((err, buffer, { width, height }) => {
-            if (err) return reject(err);
-            resolve(encode(new Uint8ClampedArray(buffer), width, height, 4, 4));
-         });
-   });
+// const encodeImageToBlurhash = (path: any) =>
+//    new Promise((resolve, reject) => {
+//       sharp(path)
+//          .raw()
+//          .ensureAlpha()
+//          .resize(32, 32, { fit: "inside" })
+//          .toBuffer((err, buffer, { width, height }) => {
+//             if (err) return reject(err);
+//             resolve(encode(new Uint8ClampedArray(buffer), width, height, 4, 4));
+//          });
+//    });
 
 
 
-export async function POST(req: NextRequest) {
+
+
+export async function POST(req: NextRequest) { // TODO: Add return type here 
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
    const body = await req.formData();
@@ -84,7 +91,8 @@ export async function POST(req: NextRequest) {
    const uploadDir = resolve('.', 'tmp'); // here need to use which one is wokring 
    await mkdir(uploadDir, { recursive: true });
 
-   const uploadedFilePaths = [];
+   const uploadedFilePaths: string[] = [];
+   const successfullyUploadedFiles: ImageType[] = [];
 
    try {
       const collection = await connectDB("images");
@@ -116,10 +124,10 @@ export async function POST(req: NextRequest) {
 
          //   const { imgWidth, imgHeight } = await getImageDimensions(filePath);
 
-         const isFileRenamed: boolean = file.name !== newFileName;
+         const isFileRenamed: boolean = file.name !== newFileName; // TODO: Is this condtion working as expected
          console.log("isFileRenamed ", isFileRenamed);
 
-         uploadedFilePaths.push(filePath); // move this line bottom if needed
+         uploadedFilePaths.push(filePath); // TODO: some time show error like deleting file not existed somw problem here 
 
 
          // TODO: test renaming works or not 
@@ -130,6 +138,7 @@ export async function POST(req: NextRequest) {
          const blob = new Blob([buffer], { type: file.type });
          // fileName can be changed by using fetchBody('name', newFileName);
          fetchBody.append("image", blob, newFileName);
+         // fetchBody.append("image", ''); // for testing purpose
 
          // exce, curl old code: https://github.com/sabeerbikba/rickshaw/blob/4e8568e3b451c3a18d8293d2cef8edb5084d0cad/src/app/gallery/api/route.ts
          // Response example: https://api.imgbb.com/
@@ -139,14 +148,21 @@ export async function POST(req: NextRequest) {
             // headers: fetchBody.getHeaders(),
          });
 
-
-         if (!uploadFetchResponse.ok) {
-            // TODO: is that good to use returne here 
-            console.error("something going wrong, Error: " + uploadFetchResponse.status + " " + uploadFetchResponse.statusText);
-         }
          const responseData = await uploadFetchResponse.json();
+         console.log('responseData');
          console.log(responseData);
 
+         if (!uploadFetchResponse.ok) {
+            // TODO: If fail to upload reponse from here upload file and show the client 
+            console.error(
+               `Img upload, Error: ${responseData.status_code} ${responseData.status_txt}, ${responseData.error.message}: ${responseData.error.code}`
+            );
+
+            await logError(responseData as Error).catch(logError => {
+               console.error('Failed to log error:', logError);
+            });
+            return NextResponse.json({ success: false });
+         }
          //          const uint8Array = new Uint8ClampedArray(buffer);
 
          //          console.log('response: ', responseData);
@@ -156,22 +172,29 @@ export async function POST(req: NextRequest) {
          //   const { width, height } = await getImageDimensions(filePath);
          //          const blurhash = encode(uint8Array, width as number, height as number, 4, 4);
 
-         console.log('blurhash');
-         console.log('blurhash');
 
-         const blurhashResponse = await encodeImageToBlurhash(filePath).then(hash => {
-            return hash;
-         });
 
-         // const blurhashData = JSON.stringify(blurhashResponse);
-         const blurhashData = blurhashResponse;
+         // // INSTEAD USING SQIP // // 
+         // const blurhashResponse = await encodeImageToBlurhash(filePath).then(hash => {
+         //    return hash;
+         // });
+         // const blurhashData = blurhashResponse;
 
-         console.log(blurhashData);
-
-         console.log('blurhash');
-         console.log('blurhash');
+         // const base64String = sqip({ filename: filePath, numberOfPrimitives: 10 });
+         const lqipOutput = await lqip(filePath);
+         console.log('base64String');
+         console.log(lqipOutput);
 
          const collectionCount = await collection.countDocuments() || 0;
+
+         const id: number = collectionCount + 1 + 19; // images.length = 19
+         const src: string = responseData.data.url;
+         const alt: string = `${file.name === editedImgNames[i] ?
+            "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`
+         const base64String: string = lqipOutput.metadata.dataURIBase64;
+         const width: number = responseData.data.width;
+         const height: number = responseData.data.height;
+
 
          // console.log('Inserting document into MongoDB');
          // TODO: need to save like TODO: TODO:
@@ -184,15 +207,16 @@ export async function POST(req: NextRequest) {
          try {
             // TODO: also need to add data.url, data.display-url and thumbnail.url from imgbb API response
             const result = await collection.insertOne({
-               id: collectionCount + 1 + images.length, // is this okay
+               id,
+               src, // TODO: here we loading data.url that is not orignal quality by planing what to do use data.display_url
+               alt,
+               // blurhash: blurhashData, // For now not using blurhash
+               base64String,
+               width,
+               height,
+
                orignalImgName: file.name,
                editedImgName: editedImgNames[i], // TODO: need to add logic
-               // TODO: here we loading data.url that is not orignal quality by planing what to do use data.display_url
-               src: responseData.data.url, // changed srcUrl to src
-               alt: `${file.name === editedImgNames[i] ? "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`, // TODO: always need to be unique key 
-               // blurhash: blurhashData, // For now not using blurhash
-               width: responseData.data.width,
-               height: responseData.data.height,
                size: { // 
                   inHeaders: formatBytes(parseInt(req.headers.get('content-length') || '0')), // TODO: now need to check working correctly or not
                   inFormData: formatBytes(file.size),
@@ -207,9 +231,14 @@ export async function POST(req: NextRequest) {
                   origin: req.headers.get('origin'),
                },
                allResponse: {
-                  fetch: {
-                     responseData,
+                  formData: {
+                     files: files.map(file => ({
+                        name: file.name,
+                        size: file.size,
+                        type: file.type,
+                     })),
                   },
+                  fetch: responseData,
                   headers: {
                      method: req.method,
                      url: req.url,
@@ -229,24 +258,34 @@ export async function POST(req: NextRequest) {
                      isHistoryNavigation: req.isHistoryNavigation,
                      signal: { aborted: req.signal.aborted },
                   },
-                  formData: {
-                     files: files.map(file => ({
-                        name: file.name,
-                        size: file.size,
-                        type: file.type,
-                     })),
-                  },
+                  lqip: lqipOutput,
                },
             });
+
+            successfullyUploadedFiles.push({
+               id,
+               src,
+               alt,
+               base64String,
+               width,
+               height,
+            }); // TODO: Created but not used in client side
             console.log('Document inserted successfully, Insert result:', result);
          } catch (insertError) {
             await logError(insertError as Error).catch(logError => {
                console.error('Failed to log error:', logError);
             });
+            console.log(insertError);
             console.error('Error inserting document:', insertError);
          }
       }
-      return NextResponse.json({ success: true });
+      // TODO: if possible response uploaded images for preview 
+
+      const postSuccessApiResponse: PostApiResponse = {
+         success: true,
+         images: successfullyUploadedFiles,
+      };
+      return NextResponse.json(postSuccessApiResponse, { status: 200 });
    } catch (err) {
       await logError(err as Error).catch(logError => {
          console.error('Failed to log error:', logError);
@@ -254,6 +293,7 @@ export async function POST(req: NextRequest) {
       console.error('Error saving image:', err);
       return NextResponse.json({ success: false }, { status: 500 });
    } finally {
+      // Cleanup
       for (const filePath of uploadedFilePaths) {
          try {
             await unlink(filePath);
@@ -402,12 +442,12 @@ export async function POST(req: NextRequest) {
 // }
 
 
-export async function GET(req: NextRequest) {
+export async function GET(req: NextRequest) { // TODO: Add return type here 
    console.log('api/images GET request fired!!');
    const url = new URL(req.url);
-   const id = url.searchParams.get('id');
+   const alt = url.searchParams.get('alt'); // TODO:  
    const collection = await connectDB("images");
-   console.log(id);
+   console.log(alt);
 
    // Handle database connection errors
    if (!collection) {
@@ -422,9 +462,9 @@ export async function GET(req: NextRequest) {
 
    try {
       // Fetch image by id (alt in this case)
-      if (id) {
+      if (alt) {
          const image: ImageType | null = await collection.findOne(
-            { alt: id }, { projection }
+            { alt }, { projection }
          );
          if (!image) {
             return NextResponse.json(
@@ -434,7 +474,7 @@ export async function GET(req: NextRequest) {
          }
          return NextResponse.json({ success: true, image });
       } else {
-         // Handle pagination for fetching images
+         // This part used in /gallery for infinite scroll
          const perPage = 5;
          const page = parseInt(url.searchParams.get('page') ?? '1', 10) - 1;
          const skip = page * perPage;
@@ -456,7 +496,8 @@ export async function GET(req: NextRequest) {
          }
 
          // Return both images and the `allImagesLoaded` flag
-         console.log('images before send', images);
+         // console.log('images before send', images);
+
          return NextResponse.json({
             success: true,
             images,

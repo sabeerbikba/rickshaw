@@ -8,7 +8,7 @@ import ImageModal from "@/components/gallery/imagemodal";
 import getImageData from '@/utils/getimagedata';
 
 // TODO: if error happens need to log into databse
-// TODO: need to think about id is which is better: alt or imgName
+// TODO: need to think about alt is which is better: alt or imgName
 
 // TODO: get base can resuse check
 // function getBaseUrl() { // TODO: check it's working as expected in server
@@ -19,11 +19,11 @@ import getImageData from '@/utils/getimagedata';
 // }
 
 export default async function PhotoModal({
-   params: { id },
+   params: { alt },
 }: {
-   params: { id: string };
+   params: { alt: string };
 }) {
-   
+
    // need to add jsx value 
 
    // function removeFallbackPrefix(text: string): string {
@@ -44,16 +44,16 @@ export default async function PhotoModal({
 
 
    // const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
-   // if (fallBackStartsWith.some(prefix => id.startsWith(prefix))) {
-   //    searchAlt = id.replace(/^(fallback1-|fallback2-)/, '');
+   // if (fallBackStartsWith.some(prefix => alt.startsWith(prefix))) {
+   //    searchAlt = alt.replace(/^(fallback1-|fallback2-)/, '');
 
-   //    if (id.startsWith(fallBackStartsWith[0])) {
+   //    if (alt.startsWith(fallBackStartsWith[0])) {
    //       fallbackSrc = 1;
-   //    } else if (id.startsWith(fallBackStartsWith[1])) {
+   //    } else if (alt.startsWith(fallBackStartsWith[1])) {
    //       fallbackSrc = 2;
    //    }
    // } else {
-   //    searchAlt = id
+   //    searchAlt = alt
    // }
 
    // photo = images.find((p) => p.alt === searchAlt)!;
@@ -79,7 +79,7 @@ export default async function PhotoModal({
    //    // if (photo === undefined) {
    //       const baseUrl = getBaseUrl();
 
-   //       const url = `${baseUrl}/api/image?id=${id}`;
+   //       const url = `${baseUrl}/api/image?alt=${alt}`;
    //       console.log("url: ");
    //       console.log(url);
    //       const response = await fetch(url)
@@ -97,7 +97,7 @@ export default async function PhotoModal({
    // console.log('searchAlt', searchAlt);
    // console.log('photo', photo);
    // console.log('fallbackSrc', fallbackSrc);
-   // console.log('id', id);
+   // console.log('alt', alt);
    // console.log('finalSrc', finalSrc);
 
    // // test
@@ -106,15 +106,15 @@ export default async function PhotoModal({
    // // test
 
 
-   const [finalSrc, photoAlt] = await getImageData(id);
+   const [finalSrc, photoAlt] = await getImageData(alt);
 
 
 
    return <ImageModal
       src={finalSrc as string}
       alt={photoAlt}
-      // alt={photo.alt}
+   // alt={photo.alt}
    // alt={!photo.alt ? photo.imageName : photo.alt}
-   // alt={photo.alt ?? photo.id?.toString() ?? 'default alt text'}
+   // alt={photo.alt ?? photo.alt?.toString() ?? 'default alt text'}
    />;
 }

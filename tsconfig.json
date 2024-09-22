@@ -28,11 +28,16 @@
       }
    },
    "include": [
+      // TODO: Fix the mixup here 
       "next-env.d.ts",
       "**/*.ts",
       "**/*.tsx",
-      ".next/types/**/*.ts"
-, "src/components/home/class.tsx", "src/app/test/page.jsx", "src/components/gallery/imagemodal.tsx"   ],
+      ".next/types/**/*.ts",
+      "src/components/home/class.tsx",
+      "src/app/test/page.jsx",
+      "src/components/gallery/imagemodal.tsx",
+      "src/helpers/generateLqip.js"
+   ],
    "exclude": [
       "node_modules"
    ]
