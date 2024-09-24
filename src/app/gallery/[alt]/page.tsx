@@ -1,4 +1,4 @@
-'server only';
+'use server';
 import "server-only";
 // import Image from "next/image";
 import { FC } from "react";
@@ -13,6 +13,8 @@ const PhotoPage: FC<{ params: { alt: string } }> = async (
    { params: { alt } }) => {
    try {
       const [finalSrc, photoAlt] = await getImageData(alt);
+
+      console.log('inside component: alt: ', alt);
 
 
       // const photo: ImageType = images.find((p) => p.alt === alt)!;
@@ -50,7 +52,10 @@ const PhotoPage: FC<{ params: { alt: string } }> = async (
             )}
          </>
       );
-   } catch {
+   } catch (error) {
+
+      // console.error('/gallery/[alt]: error: ', error.message);
+
       // TODO: add logging logic here to log what happned 
 
       /**
@@ -62,6 +67,7 @@ const PhotoPage: FC<{ params: { alt: string } }> = async (
          <>
             <main className="main-gallery">
                <div className="tab-img-preview">
+                  {/* TODO: This is not good message */}
                   <h1 className="error">Something wrong when fetching image</h1>
                </div>
             </main>

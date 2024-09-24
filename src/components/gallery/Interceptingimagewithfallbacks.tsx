@@ -1,14 +1,19 @@
 'use clinet';
 import 'client-only';
-import { useEffect, useState } from "react";
+import { useEffect, useState, createElement } from "react";
 import Link from 'next/link';
 import { Img } from 'react-image';
 
 import type { FC, SyntheticEvent } from 'react';
 import type { ImageType } from '@/data/images';
 
-import { FALLBACK_IMG, FALLBACK_PLACEHOLDER } from '@/data/images';
+import {
+   FALLBACK_IMG,
+   FALLBACK_IMG_DIMENSIONS,
+   FALLBACK_PLACEHOLDER,
+} from '@/data/images';
 import isValidBase64 from '@/utils/isvalidBase64';
+
 
 interface InterceptingImageWithFallbacksProps {
    img: ImageType,
@@ -20,7 +25,15 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
    boxShadowColor = "red",
 }):
    JSX.Element => {
-   const { src, fallbackSrc1, fallbackSrc2, alt, base64String, width, height }: ImageType = img;
+   const {
+      src,
+      fallbackSrc1,
+      fallbackSrc2,
+      alt,
+      base64String,
+      width: actualImageWidth,
+      height: actualImageHeight,
+   }: ImageType = img;
    const [currentSrc, setCurrentSrc] = useState<string>(src);
    const [interceptingUrl, setInterceptingUrl] = useState<string>('');
 
@@ -29,12 +42,15 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
    const imageSources: string[] =
       [src, fallbackSrc1, fallbackSrc2, FALLBACK_IMG].filter((s): s is string => s !== undefined);
    const bgImage: string = isValidString ? base64String : FALLBACK_PLACEHOLDER;
+   const { width: fallbackImageWidth, height: fallbackImageHeight } = FALLBACK_IMG_DIMENSIONS;
+   const finalImageWidth: number = isNotFallbackImg ? actualImageWidth : fallbackImageWidth;
+   const finalImageHeight: number = isNotFallbackImg ? actualImageHeight : fallbackImageHeight;
 
-   const removeBaseUrl = (url: string): string => {
+   const stripBaseUrlIfSameOrigin = (url: string): string => { // not good name for it: it not only remove base it only remove if start with current server
       try {
          const baseUrl = new URL('/', window.location.href).href;
          if (url.startsWith(baseUrl)) {
-            return url.replace(baseUrl, '');
+            return url.replace(baseUrl, '/');
          }
          return url;
       } catch (error) {
@@ -46,7 +62,7 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
    const handleImageLoad = (event: SyntheticEvent<HTMLImageElement, Event>) => {
       const src = event.currentTarget.src;
       console.log('inside handleImgLoad and src is : ', src);
-      setCurrentSrc(removeBaseUrl(src));
+      setCurrentSrc(stripBaseUrlIfSameOrigin(src));
    };
 
    useEffect(() => {
@@ -64,29 +80,36 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
       <div
          className='image-wrapper'
          style={{
-            aspectRatio: `${width} / ${height}`,
+            aspectRatio: `${finalImageWidth} / ${finalImageHeight}`,
             boxShadow: `1px 1px 5px ${boxShadowColor}`,
          }}>
          <div
             className='image-wrapper-blur'
             style={{
                backgroundImage: `url(${bgImage})`,
-               aspectRatio: `${width} / ${height}`
+               aspectRatio: `${finalImageWidth} / ${finalImageHeight}`
             }}
          />
+         {/* TODO: */}
          <Img
             className='image'
             src={imageSources}
             crossorigin="anonymous"
-            unloader={<img src={FALLBACK_IMG} />}
+            unloader={
+               <img
+                  src={FALLBACK_IMG}
+                  width={finalImageWidth}
+                  height={finalImageHeight}
+               />
+            }
             onLoad={handleImageLoad}
             alt={alt}
          />
       </div>
    );
 
-   return isNotFallbackImg ? (
-      <Link href={interceptingUrl} className="image-item">
+   return isNotFallbackImg && interceptingUrl !== '' ? (
+      <Link href={interceptingUrl} scroll={false} className="image-item">
          {imageElement}
       </Link>
    ) : (

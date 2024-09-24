@@ -202,6 +202,27 @@ import InterceptingImageWithFallbacks from "./Interceptingimagewithfallbacks";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import type { GetApiResponse } from "@/types/api";
 
+/**
+TODO: when normally website using sent uncecerrly get request in page: 0 
+
+## to repoduces use intercepting link 
+
+## how logs looks in serverr
+api/images GET request fired!!
+Database already connected, reusing client
+null
+requested page:  0
+
+## i think reason 
+
+- when code changes made 
+
+## how to test
+
+- make production build using `pnpm build`
+- check logs 
+
+ */
 
 const fetchImages = async ({ queryKey }: QueryFunctionContext<[string, number]>): Promise<GetApiResponse> => {
    let result;
@@ -242,7 +263,12 @@ const InfiniteScrollComponent: FC = () => {
          // setImages((prevItems) => [...prevItems, ...data]);
          console.log(data);
          setImages((prevImages) => {
-            const newImages: ImageType[] = data.images || data;
+            // const newImages: ImageType[] = data.images || data as ImageType[]; // TODO: 
+            const newImages: ImageType[] = Array.isArray(data.images)
+               ? data.images
+               : Array.isArray(data)
+                  ? data
+                  : []; // is this working
             const existingIds = new Set(prevImages.map(img => img.id));
             const filteredNewImages = newImages.filter(img => !existingIds.has(img.id));
             return [...prevImages, ...filteredNewImages];

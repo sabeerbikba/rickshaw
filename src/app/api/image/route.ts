@@ -76,7 +76,9 @@ function getFileExtension(fileName: string): string {
 
 
 
-export async function POST(req: NextRequest) { // TODO: Add return type here 
+// export async function POST(req: NextRequest) { // TODO: Add return type here 
+const POST = async (req: NextRequest):
+   Promise<NextResponse<PostApiResponse>> => { // TODO: Add return type here 
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
    const body = await req.formData();
@@ -85,7 +87,7 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
 
    if (!files || files.length <= 0) {
       // TODO: some time not working 
-      return NextResponse.json({ success: false });
+      return NextResponse.json({ success: false }, { status: 500 });
    }
 
    const uploadDir = resolve('.', 'tmp'); // here need to use which one is wokring 
@@ -120,7 +122,8 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
          const buffer = Buffer.from(bytes);
 
          const filePath = join(uploadDir, newFileName);
-         const savedFile = await writeFile(filePath, buffer);
+         // const savedFile = await writeFile(filePath, buffer);
+         await writeFile(filePath, buffer);
 
          //   const { imgWidth, imgHeight } = await getImageDimensions(filePath);
 
@@ -189,12 +192,11 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
 
          const id: number = collectionCount + 1 + 19; // images.length = 19
          const src: string = responseData.data.url;
-         const alt: string = `${file.name === editedImgNames[i] ?
-            "not-specified-" : `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`
+         const alt: string = `${file.name === editedImgNames[i] ? "not-specified-" :
+            `${removeExtension(editedImgNames[i] as string)}-`}${collectionCount + 1}`;
          const base64String: string = lqipOutput.metadata.dataURIBase64;
          const width: number = responseData.data.width;
          const height: number = responseData.data.height;
-
 
          // console.log('Inserting document into MongoDB');
          // TODO: need to save like TODO: TODO:
@@ -204,6 +206,7 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
             srcThumbnail: thumb.url // thumbnail | eg:. 8.96KB, 4.78KB, 20KB
             
           */
+
          try {
             // TODO: also need to add data.url, data.display-url and thumbnail.url from imgbb API response
             const result = await collection.insertOne({
@@ -306,7 +309,7 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
          }
       }
    }
-}
+};
 
 // export async function POST(req: NextRequest) {
 //   const body = await req.formData();
@@ -442,14 +445,17 @@ export async function POST(req: NextRequest) { // TODO: Add return type here
 // }
 
 
-export async function GET(req: NextRequest) { // TODO: Add return type here 
+// export async function GET(req: NextRequest) {
+const GET = async (req: NextRequest):
+   Promise<NextResponse<GetApiResponse>> => {
    console.log('api/images GET request fired!!');
-   const url = new URL(req.url);
-   const alt = url.searchParams.get('alt'); // TODO:  
-   const collection = await connectDB("images");
-   console.log(alt);
 
-   // Handle database connection errors
+   const url = new URL(req.url);
+   const alt = url.searchParams.get('alt');
+   const collection = await connectDB("images");
+
+   console.log('and value is: ', alt, url);
+
    if (!collection) {
       return NextResponse.json(
          { success: false, message: "Database connection error" },
@@ -457,23 +463,24 @@ export async function GET(req: NextRequest) { // TODO: Add return type here
       );
    }
 
-   // is working 
    const projection = { _id: 0, id: 1, src: 1, alt: 1, base64String: 1, width: 1, height: 1, };
 
    try {
-      // Fetch image by id (alt in this case)
       if (alt) {
+
+         // This part used in /gallery/[alt] route and intercepting url 
          const image: ImageType | null = await collection.findOne(
             { alt }, { projection }
          );
          if (!image) {
             return NextResponse.json(
-               { success: false, message: "Image not found" },
-               { status: 404 }
+               { success: true, message: "Image not found" },
+               { status: 200 }
             );
          }
          return NextResponse.json({ success: true, image });
       } else {
+
          // This part used in /gallery for infinite scroll
          const perPage = 5;
          const page = parseInt(url.searchParams.get('page') ?? '1', 10) - 1;
@@ -486,18 +493,17 @@ export async function GET(req: NextRequest) { // TODO: Add return type here
             .limit(perPage)
             .toArray();
 
-         // Check if all images are loaded
          const totalImages = await collection.countDocuments();
          const allImagesLoaded = skip + perPage >= totalImages;
 
-         // If no images are returned, set `allImagesLoaded` to true
          if (images.length === 0) {
-            return NextResponse.json({ allImagesLoaded: true, images: [] });
+            return NextResponse.json(
+               { allImagesLoaded: true, success: true },
+               { status: 200 }
+            );
          }
 
-         // Return both images and the `allImagesLoaded` flag
-         // console.log('images before send', images);
-
+         // TODO: Need to send empty images request in clinet side check how code behave
          return NextResponse.json({
             success: true,
             images,
@@ -506,9 +512,11 @@ export async function GET(req: NextRequest) { // TODO: Add return type here
       }
    } catch (error) {
       console.error(error);
-      return NextResponse.json({ success: false, message: "Internal server error" }, { status: 500 });
+      return NextResponse.json(
+         { success: false, message: "Internal server error" }, { status: 500 }
+      );
    }
-}
+};
 
 
 
@@ -561,3 +569,5 @@ export async function GET(req: NextRequest) { // TODO: Add return type here
 //    }
 // }
 
+
+export { GET, POST };

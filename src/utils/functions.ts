@@ -3,7 +3,7 @@
 
 const transformText = (text: string): string => {
    // if (typeof text === 'number') return text.toString();
-   if (text === undefined) "Not Defined yet!!"; // TODO: need to check this function is used and then better to use this text or not 
+   if (text === undefined) ""; // TODO: need to check this function is used and then better to use this text or not 
    return text.replace(/-\d+$/, '').split('-')
       .map(word => word.charAt(0).toUpperCase() + word.slice(1))
       .join(' ');

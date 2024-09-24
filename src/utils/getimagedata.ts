@@ -3,6 +3,7 @@ import 'server-only';
 import { headers } from 'next/headers';
 import type { ImageType } from "@/data/images";
 import images from "@/data/images";
+import type { GetApiResponse } from '@/types/api';
 
 function getBaseUrl() { // TODO: check it's working as expected in server
    const headersList = headers();
@@ -14,13 +15,15 @@ function getBaseUrl() { // TODO: check it's working as expected in server
 // TODO: I think this is not utility function 
 
 // const getImageData = async (alt: string) => {
-const getImageData = async (alt: string): Promise<[string | undefined, string]> => {
+const getImageData = async (alt: string): Promise<[string | undefined, string, string | undefined]> => {
+   console.log('\n\n\ngetImageData fucntion fired');
 
 
    let searchAlt: string;
    let photo: ImageType;
    let fallbackSrc: number = 0; // 0 = src, 1 = fallbackSrc1, 2 = fallbackSrc2
    let finalSrc: string | undefined;
+   let responseData: GetApiResponse;
 
 
    const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
@@ -59,17 +62,38 @@ const getImageData = async (alt: string): Promise<[string | undefined, string]> 
       // if (photo === undefined) {
       const baseUrl = getBaseUrl();
 
+      /**
+       {
+         success: true,
+         image: {
+           id: 22,
+           src: 'https://i.ibb.co/bvS19Sm/lj1YChB.jpg',
+           alt: 'not-specified-3',
+           base64String: 'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoMABAABUB8JYgC7ACBbO+gAP6C09oes/Ci+gGOEjb21IhlHzONc34q4g9Itt+lnzN0iRcGM+Nc2pHmRt9M3CB/bWgOgAAA',
+           width: 959,
+           height: 1280
+         }
+      }
+       */
+
       const url = `${baseUrl}/api/image?alt=${alt}`;
-      console.log("url: ");
+      console.log("url searching in  **getImageData**: ");
       console.log(url);
       const response = await fetch(url)
-      photo = await response.json();
+      const data = await response.json();
+      photo = data.image;
+      responseData = data;
       finalSrc = photo.src
+
       // }
    }
 
-   return [finalSrc, photo.alt];
-}
+   console.log(
+      'alt from getImageData function: INPUT: ', alt,
+      'OUTPUT: ', finalSrc, photo.alt
+   );
+   return [finalSrc, photo.alt, responseData.message];
+};
 
 export default getImageData;
 

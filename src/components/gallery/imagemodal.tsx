@@ -53,7 +53,17 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
    const tempImgRef = useRef<HTMLImageElement>(null);
    const imgPreviewLoadingErrorRef = useRef<HTMLDivElement>(null);
    const [state, dispatch] = useReducer(reducer, initialState);
-   // TODO: de structure the state {} = state;
+   const {
+      dialogOpen,
+      isLoaded,
+      isError,
+      moonLoadingFrame,
+      imageLoadingFrame,
+   } = state;
+
+   const isAltNotDefined = alt.startsWith('not-specified-');
+   const imagePreviewInfo = isAltNotDefined ? '' : transformText(alt);
+   const isImagePreviewInfoEmpty = imagePreviewInfo == '';
 
    const UPDATE_VALUE = (field: StateField, value: StateValue): void => {
       dispatch({ type: 'UPDATE_VALUE', field, value })
@@ -105,12 +115,12 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
 
    useEffect(() => {
       const interval = setInterval(() => {
-         UPDATE_VALUE('moonLoadingFrame', (state.moonLoadingFrame + 1) % moonLoadingFrames.length);
-         UPDATE_VALUE('imageLoadingFrame', (state.imageLoadingFrame + 1) % imageLoadingFrames.length);
+         UPDATE_VALUE('moonLoadingFrame', (moonLoadingFrame + 1) % moonLoadingFrames.length);
+         UPDATE_VALUE('imageLoadingFrame', (imageLoadingFrame + 1) % imageLoadingFrames.length);
       }, 500);
 
       return () => clearInterval(interval);
-   }, [state.moonLoadingFrame, state.imageLoadingFrame]);
+   }, [moonLoadingFrame, imageLoadingFrame]);
 
    useEffect(() => {
       document.addEventListener("keydown", onKeyDown);
@@ -135,29 +145,22 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
       };
    }, []);
 
-   // test
-   // test
-   // test
-   // test
-   console.log('state.isError', state.isError);
-   // test
-   // test
-   // test
-   // test
+   console.log('isError', isError);
+   console.log('inside imageModal: src, alt', src, alt);
 
    return (
-      <dialog id="imageModal" open={state.dialogOpen}>
-         {state.isError || !state.isLoaded ? (
+      <dialog id="imageModal" open={dialogOpen}>
+         {isError || !isLoaded ? (
             <div className="image-preview-error-loading" ref={imgPreviewLoadingErrorRef}>
-               {state.isError &&
+               {isError &&
                   <div className="error">Unable to load image. Please check your internet
                      {' '}<span>connection 💔.</span>
                   </div>
                }
-               {!state.isLoaded && !state.isError &&
+               {!isLoaded && !isError &&
                   <div>
-                     <p>{moonLoadingFrames[state.moonLoadingFrame]}</p>
-                     <p>{imageLoadingFrames[state.imageLoadingFrame]}</p>
+                     <p>{moonLoadingFrames[moonLoadingFrame]}</p>
+                     <p>{imageLoadingFrames[imageLoadingFrame]}</p>
                   </div>
                }
                <button onClick={onDismiss}>&times;</button>
@@ -167,8 +170,18 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
                <span className="imagePreview-close" onClick={onDismiss}>&times;</span>
                <div className="preview" ref={overlay} onClick={onClick}>
                   <div className="imagePreview-wrapper" ref={wrapper}>
-                     <img src={src} alt={alt} className="imagePreview-modal-content" />
-                     <div className="imagePreview-info">{transformText(alt || '')}</div>
+                     <img
+                        src={src}
+                        alt={alt}
+                        style={{
+                           borderBottomWidth: isImagePreviewInfoEmpty ? '3px' : '0',
+                           borderRadius: '5px',
+                        }}
+                        className="imagePreview-modal-content"
+                     />
+                     {!isImagePreviewInfoEmpty && (
+                        <div className="imagePreview-info">{imagePreviewInfo}</div>
+                     )}
                   </div>
                </div>
             </>
