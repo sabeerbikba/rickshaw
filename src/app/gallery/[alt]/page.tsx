@@ -5,70 +5,63 @@ import { FC } from "react";
 // import images from '@/data/images';
 // import type { ImageType } from '@/data/images';
 import UploadModal from "@/components/gallery/uploadmodal";
-import { transformText } from "@/utils/functions";
+import transformText from "@/utils/transformtext";
 import "./styles.css";
 import getImageData from "@/utils/getimagedata";
+import logError from "@/utils/logerror";
 
 const PhotoPage: FC<{ params: { alt: string } }> = async (
    { params: { alt } }) => {
+
+   const [finalSrc, photoAlt, message] = await getImageData(alt);
+
    try {
-      const [finalSrc, photoAlt] = await getImageData(alt);
+      console.log('photoAlt in /gallery/[alt]', photoAlt);
+      const isAltNotDefined = photoAlt.startsWith('not-specified-');
+      const imagePreviewInfo = isAltNotDefined ? '' : transformText(alt);
 
-      console.log('inside component: alt: ', alt);
-
-
-      // const photo: ImageType = images.find((p) => p.alt === alt)!;
-      return (
+      return !finalSrc ? (
+         <main className="main-gallery">
+            <div className="tab-img-preview">
+               <h1 className="error">Image not Found</h1>
+            </div>
+         </main>
+      ) : (
          <>
-            {!finalSrc ? (
-               <>
-                  <main className="main-gallery">
-                     <div className="tab-img-preview">
-                        <h1 className="error">Image not Found</h1>
-                     </div>
-                  </main>
-               </>
-            ) : (
-               <>
-                  <main className="main-gallery">
-                     <div className="tab-img-preview">
-                        <img
-                           // alt={photo.alt}
-                           // src={photo.src}
-                           src={finalSrc}
-                           alt={photoAlt || ''}
-                        />
-                        {/* TODO: remove this br elements. instead use better styles*/}
+            <main className="main-gallery">
+               <div className="tab-img-preview">
+                  <img
+                     src={finalSrc}
+                     alt={photoAlt || ''}
+                  />
+                  {imagePreviewInfo != '' && (
+                     <div>
+                        {/* // TODO: remove this br elements. instead use better styles */}
                         <br />
                         <br />
-                        <div>
-                           {/* <h1>{transformText(photo.alt)}</h1> */}
-                           <h1>{transformText(photoAlt as string)}</h1>
-                        </div>
+                        <h1>{imagePreviewInfo}</h1>
                      </div>
-                  </main>
-                  <UploadModal />
-               </>
-            )}
+                  )}
+               </div>
+            </main>
+            <UploadModal />
          </>
       );
    } catch (error) {
 
-      // console.error('/gallery/[alt]: error: ', error.message);
+      if (error instanceof Error) {
+         console.error('/gallery/[alt]: error: ', error.message);
+         logError(error);
+      } else {
+         console.log('An unknown error occurred route: /gallery/[alt]', error);
+      }
 
-      // TODO: add logging logic here to log what happned 
-
-      /**
-       *       console.error('Failed to fetch data:', error);
-      // Log error using a custom logging function
-      logError(error);
-       */
       return (
          <>
             <main className="main-gallery">
                <div className="tab-img-preview">
                   {/* TODO: This is not good message */}
-                  <h1 className="error">Something wrong when fetching image</h1>
+                  <h1 className="error">Error: {message}</h1>
                </div>
             </main>
             <UploadModal />

@@ -1,13 +1,14 @@
 import { NextRequest, NextResponse } from "next/server";
 import { writeFile, mkdir, unlink } from "fs/promises";
-import sharp from "sharp";
+// import sharp from "sharp";
 import fs from 'fs';
 // import { encode } from "blurhash";
 // import sqip from 'sqip';
 import lqip from 'lqip-modern'; // is working
 import path, { join, resolve } from "path";
-import { formatBytes } from "@/utils/functions";
+import formatBytes from "@/utils/formatbytes";
 import connectDB from "@/utils/connectdb";
+import logError from "@/utils/logerror";
 import { headersToObject } from "@/utils/apiutils";
 // import images from "@/data/images";
 import type { ImageType } from "@/data/images";
@@ -22,18 +23,6 @@ import type { PostApiResponse, GetApiResponse } from "@/types/api";
 
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); // tmp 4 test
 const IMGBB_API = process.env.IMGBB_API as string;
-
-const logError = async (error: Error): Promise<void> => {
-   console.log('inside logError: typeof error', typeof error);
-   const collection = await connectDB("backend_errorlogs");
-
-   await collection.insertOne({
-      errorMsg: error.message,
-      stack: error.stack,
-      Error: error,
-      timestamp: new Date().toString(),
-   });
-}
 
 function removeExtension(imageName: string): string {
    // replace this function when testing with getFileName() function 
@@ -76,9 +65,8 @@ function getFileExtension(fileName: string): string {
 
 
 
-// export async function POST(req: NextRequest) { // TODO: Add return type here 
 const POST = async (req: NextRequest):
-   Promise<NextResponse<PostApiResponse>> => { // TODO: Add return type here 
+   Promise<NextResponse<PostApiResponse>> => {
    // TODO: if image upload successful need to redirect to /gallery and show uploaded image or open in same tab with image name or opening intercepted modal
 
    const body = await req.formData();
@@ -161,9 +149,7 @@ const POST = async (req: NextRequest):
                `Img upload, Error: ${responseData.status_code} ${responseData.status_txt}, ${responseData.error.message}: ${responseData.error.code}`
             );
 
-            await logError(responseData as Error).catch(logError => {
-               console.error('Failed to log error:', logError);
-            });
+            await logError(responseData as Error);
             return NextResponse.json({ success: false });
          }
          //          const uint8Array = new Uint8ClampedArray(buffer);
@@ -275,9 +261,7 @@ const POST = async (req: NextRequest):
             }); // TODO: Created but not used in client side
             console.log('Document inserted successfully, Insert result:', result);
          } catch (insertError) {
-            await logError(insertError as Error).catch(logError => {
-               console.error('Failed to log error:', logError);
-            });
+            await logError(insertError as Error);
             console.log(insertError);
             console.error('Error inserting document:', insertError);
          }
@@ -290,9 +274,7 @@ const POST = async (req: NextRequest):
       };
       return NextResponse.json(postSuccessApiResponse, { status: 200 });
    } catch (err) {
-      await logError(err as Error).catch(logError => {
-         console.error('Failed to log error:', logError);
-      });
+      await logError(err as Error);
       console.error('Error saving image:', err);
       return NextResponse.json({ success: false }, { status: 500 });
    } finally {
@@ -302,9 +284,7 @@ const POST = async (req: NextRequest):
             await unlink(filePath);
             console.log(`Successfully deleted ${filePath}`);
          } catch (err) {
-            await logError(err as Error).catch(logError => {
-               console.error('Failed to log error:', logError);
-            });
+            await logError(err as Error);
             console.error(`Error deleting ${filePath}:`, err);
          }
       }
@@ -474,8 +454,8 @@ const GET = async (req: NextRequest):
          );
          if (!image) {
             return NextResponse.json(
-               { success: true, message: "Image not found" },
-               { status: 200 }
+               { success: false, message: "Image not found" },
+               { status: 404 }
             );
          }
          return NextResponse.json({ success: true, image });

@@ -7,26 +7,17 @@ import Line from "@/components/home/line";
 import Class from "@/components/home/class";
 import "./globals.css";
 
-// TODO: problem with navigation bar links not clicking properly 
 
 export const viewport: Viewport = {
    width: 'device-width',
    initialScale: 1.0,
 };
 
-const navItems = [
-   { urls: ['/', '/gallery', '/gallery/*'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
-   { urls: ['/', '/about-me', '/gallery/*'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
-   { urls: ['/gallery', '/gallery/*'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
-];
-
-export default function RootLayout({
+const RootLayout = ({
    children,
 }: Readonly<{
    children: React.ReactNode;
-}>): JSX.Element {
-
-
+}>): JSX.Element => {
    return (
       <html lang="en">
          <body>
@@ -54,4 +45,6 @@ export default function RootLayout({
          </body>
       </html>
    );
-}
+};
+
+export default RootLayout;

@@ -23,7 +23,7 @@ const getImageData = async (alt: string): Promise<[string | undefined, string, s
    let photo: ImageType;
    let fallbackSrc: number = 0; // 0 = src, 1 = fallbackSrc1, 2 = fallbackSrc2
    let finalSrc: string | undefined;
-   let responseData: GetApiResponse;
+   let responseData: GetApiResponse | undefined = undefined;
 
 
    const fallBackStartsWith: string[] = ['fallback1-', 'fallback2-'];
@@ -59,40 +59,35 @@ const getImageData = async (alt: string): Promise<[string | undefined, string, s
          }
       })();
    } else {
-      // if (photo === undefined) {
+
+      // If no local image is found, fetch from API
       const baseUrl = getBaseUrl();
-
-      /**
-       {
-         success: true,
-         image: {
-           id: 22,
-           src: 'https://i.ibb.co/bvS19Sm/lj1YChB.jpg',
-           alt: 'not-specified-3',
-           base64String: 'data:image/webp;base64,UklGRlgAAABXRUJQVlA4IEwAAACwAQCdASoMABAABUB8JYgC7ACBbO+gAP6C09oes/Ci+gGOEjb21IhlHzONc34q4g9Itt+lnzN0iRcGM+Nc2pHmRt9M3CB/bWgOgAAA',
-           width: 959,
-           height: 1280
-         }
-      }
-       */
-
       const url = `${baseUrl}/api/image?alt=${alt}`;
       console.log("url searching in  **getImageData**: ");
       console.log(url);
       const response = await fetch(url)
       const data = await response.json();
+      /**
+       * Example response:
+       * {
+       *   success: true,
+       *   image: {
+       *     id: 22,
+       *     src: 'https://i.ibb.co/bvS19Sm/lj1YChB.jpg',
+       *     alt: 'not-specified-3',
+       *     base64String: 'data:image/webp;base64,...',
+       *     width: 959,
+       *     height: 1280
+       *   }
+       * }
+       */
       photo = data.image;
       responseData = data;
-      finalSrc = photo.src
-
-      // }
+      finalSrc = photo?.src
    }
 
-   console.log(
-      'alt from getImageData function: INPUT: ', alt,
-      'OUTPUT: ', finalSrc, photo.alt
-   );
-   return [finalSrc, photo.alt, responseData.message];
+
+   return [finalSrc, photo?.alt, responseData?.message];
 };
 
 export default getImageData;

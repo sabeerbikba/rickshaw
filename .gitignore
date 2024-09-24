@@ -38,8 +38,5 @@ next-env.d.ts
 # locale 
 .env
 .env.production
-.env.example 
 
 # locale tmp 
-notes.todo
-public/tmp

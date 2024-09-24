@@ -1,7 +1,7 @@
 "use client";
 import { useEffect } from "react";
 import { usePathname } from "next/navigation";
-import { matchesUrl } from "@/utils/functions";
+import matchesUrl from "@/utils/matchesurl";
 
 const GalleryScroll = (): JSX.Element => {
    const pathname = usePathname();

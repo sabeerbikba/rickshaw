@@ -353,7 +353,7 @@
 
 "use client";
 import React, { useState, useEffect, useRef, FC } from 'react';
-import { formatBytes } from "@/utils/functions";
+import formatBytes from '@/utils/formatbytes';
 
 // TODO: error not showing of upload failed and image cleared 
 // TODO: .bmp images not supported here still uploading : need fix
@@ -361,11 +361,15 @@ import { formatBytes } from "@/utils/functions";
 const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 
 const UploadModal: FC = (): JSX.Element => {
-   const [isOpen, setIsOpen] = useState(false);
    const modalRef = useRef<HTMLDivElement>(null);
+   const [isOpen, setIsOpen] = useState(false);
    const fileInputRef = useRef<HTMLInputElement>(null);
-   const [selectedImages, setSelectedImages] = useState<{ src: string, file: File, editedName: string }[]>([]);
+   const [selectedImages, setSelectedImages] = useState
+      <{ src: string, file: File, editedName: string }[]>([]);
    const [editIndex, setEditIndex] = useState<number | null>(null);
+   const [isImagesUploading, setIsImagesUploading] = useState<boolean>(false);
+
+   const isImagesNotSelected: boolean = selectedImages.length === 0;
 
    useEffect(() => {
       const openModalButton = document.getElementById('upload-button');
@@ -457,6 +461,7 @@ const UploadModal: FC = (): JSX.Element => {
       });
 
       try {
+         setIsImagesUploading(true);
          const response = await fetch('/api/image', {
             method: 'POST',
             body: formData,
@@ -467,13 +472,16 @@ const UploadModal: FC = (): JSX.Element => {
             // console.log('Upload successful:', result);
             setSelectedImages([]);
             alert('Images uploaded successfully!');
+            setIsImagesUploading(false);
          } else {
             console.error('Upload failed:', response.statusText);
             alert('Upload failed. Please try again.');
+            setIsImagesUploading(false);
          }
       } catch (error) {
          console.error('Error uploading images:', error);
          alert('Error uploading images. Please try again.');
+         setIsImagesUploading(false);
       }
    };
 
@@ -485,10 +493,17 @@ const UploadModal: FC = (): JSX.Element => {
                <div className="upload-container">
                   {/* TODO: .plus-sign not used yet */}
                   {/* <div className="plus-sign">+</div> */}
-                  {selectedImages.length === 0 ? (
-                     <div className="chose-images browse-btn-div">
+                  {/* image drop not used yet */}
+                  {isImagesNotSelected ? (
+                     <div
+                        className="chose-images browse-btn-div"
+                        onClick={fileInputClicked}
+                     >
                         <span className="drag-text">Choose Images{' '}</span>
-                        <button onClick={fileInputClicked} className="browse-btn browse-btn-upload">Browse files</button>
+                        <button
+                           // onClick={fileInputClicked}
+                           className="browse-btn browse-btn-upload"
+                        >Browse files</button>
                      </div>
                   ) : (
                      <div className="image-preview" id="imagePreview">
@@ -524,18 +539,40 @@ const UploadModal: FC = (): JSX.Element => {
                         ))}
                      </div>
                   )}
+                  {/* TODO: Not working */}
                   <progress id="uploadProgress" value="10" max="100"></progress>
                </div>
                <div className="btns-container">
-                  {selectedImages.length !== 0 && (
-                     <div className="add-more browse-btn-div">
+                  {!isImagesNotSelected && (
+                     <div
+                        className="add-more browse-btn-div"
+                        onClick={fileInputClicked}
+                     >
                         <span className="drag-text">Add More Images{" "}</span>
-                        <button onClick={fileInputClicked} className="browse-btn browse-btn-upload">Browse files</button>
+                        <button
+                           // onClick={fileInputClicked}
+                           className="browse-btn browse-btn-upload"
+                        >Browse files</button>
                      </div>
                   )}
                   <div>
-                     <input type="file" id="fileInput" name="images" accept="image/*" multiple hidden ref={fileInputRef} onChange={handleFileInputChange} />
-                     <button id="upload-submit" className="browse-btn browse-server-upload" type="button" onClick={handleUpload}>Upload</button>
+                     <input
+                        type="file"
+                        id="fileInput"
+                        name="images"
+                        accept="image/*"
+                        multiple
+                        hidden
+                        ref={fileInputRef}
+                        onChange={handleFileInputChange}
+                     />
+                     <button
+                        id="upload-submit"
+                        className="browse-btn browse-server-upload"
+                        type="button"
+                        onClick={handleUpload}
+                        disabled={isImagesNotSelected || isImagesUploading}
+                     >Upload</button>
                   </div>
                </div>
             </div>

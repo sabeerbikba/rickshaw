@@ -1,7 +1,6 @@
 type ImgDimesionsTypes = {
    width: number;
    height: number;
-
 };
 
 type ImageType = ImgDimesionsTypes & {

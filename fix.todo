@@ -1,12 +1,1 @@
-* when visited /gallery/[alt] need to show gallery in nav bar
-* when hover on image need to show cursor-pointer
-* when interceping for small sapn of time show loading fix it that looks like : 
-loading
-loading
-loading
-- this loading applied this route: /gallery/[alt]  and  /gallery/@modal/(..)gallery/[alt] 
-* error page
- - error page nav need to be fixed 
-
-
-* if better to use placholder imagge to intercepting image then use it 
+* need to add types every where specially component function return type

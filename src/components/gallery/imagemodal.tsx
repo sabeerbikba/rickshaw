@@ -1,7 +1,7 @@
 "use client";
 import { useCallback, useRef, useEffect, MouseEvent, FC, useReducer } from "react";
 import { useRouter } from "next/navigation";
-import { transformText } from "@/utils/functions";
+import transformText from "@/utils/transformtext";
 
 interface ImageModalProps {
    src: string;

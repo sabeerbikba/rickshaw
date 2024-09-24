@@ -10,19 +10,16 @@
    },
    "dependencies": {
       "@tanstack/react-query": "^5.56.2",
-      "blurhash": "^2.0.5",
       "lqip-modern": "^2.1.0",
       "mongodb": "^6.7.0",
       "next": "14.2.4",
-      "nodemailer": "^6.9.14",
+      "optional": "^0.1.4",
       "react": "^18.3.1",
-      "react-blurhash": "^0.3.0",
       "react-dom": "^18.3.1",
       "react-image": "^4.1.0",
       "react-infinite-scroll-component": "^6.1.0",
       "sharp": "^0.33.5",
-      "sqip": "^0.3.3",
-      "uuid": "^10.0.0"
+      "ts-node": "^10.9.2"
    },
    "devDependencies": {
       "@types/lqip-modern": "^1.1.7",

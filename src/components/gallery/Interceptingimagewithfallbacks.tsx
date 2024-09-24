@@ -91,7 +91,7 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
             }}
          />
          {/* TODO: */}
-         <Img
+         {/* <Img
             className='image'
             src={imageSources}
             crossorigin="anonymous"
@@ -104,7 +104,7 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
             }
             onLoad={handleImageLoad}
             alt={alt}
-         />
+         /> */}
       </div>
    );
 

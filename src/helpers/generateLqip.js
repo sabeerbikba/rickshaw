@@ -9,6 +9,8 @@ const images = [{
    // ... paste from '@/data/images'
 ];
 
+// Usage command : `node generateLqip.js`
+
 (async function generateLQIP(imageArray) {
    for (const image of imageArray) {
       try {
