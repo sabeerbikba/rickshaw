@@ -1,6 +1,7 @@
 import { MongoClient, Db, Collection } from 'mongodb';
+import { ENV_MONGODB_URI } from '@/data/envimports';
 
-const MONGODB_URI = process.env.MONGODB_URI as string;
+const MONGODB_URI = ENV_MONGODB_URI;
 let cachedClient: MongoClient | null = null;
 let cachedDb: Db | null = null;
 // cahced only work when requested same route repetitive

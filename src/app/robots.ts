@@ -1,15 +1,17 @@
 import type { MetadataRoute } from 'next'
+import { ENV_BASE_URL } from '@/data/envimports';
 import { FALLBACK_BASE_URL } from '@/data/envfallback';
 
-const baseUrl = process.env.BASE_URL as string || FALLBACK_BASE_URL;
+const BASE_URL = ENV_BASE_URL || FALLBACK_BASE_URL;
 
-export default function robots(): MetadataRoute.Robots {
-   // TODO:
+const robots = (): MetadataRoute.Robots => {
    return {
       rules: {
          userAgent: '*',
          allow: '/',
       },
-      sitemap: `${baseUrl}/sitemap.xml`,
+      sitemap: `${BASE_URL}/sitemap.xml`,
    }
 }
+
+export default robots;

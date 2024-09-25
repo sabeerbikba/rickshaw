@@ -3,7 +3,7 @@
 // import React, { useState, useEffect, useRef, FC } from 'react';
 // import { formatBytes } from "@/utils/functions";
 
-// const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+// const imgBBsupportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 // // TODO: need to avoid reupload image not working properly need to save in localStorageState MSG: you prevoisly uploaded this image.
 // // TODO: need to find better area to show error and messages, messages will be show for specifc second then disapesrs if it is good log this messages 
 
@@ -57,7 +57,7 @@
 //       if (files) {
 //          const filteredFiles = Array.from(files).filter(file => {
 //             const extension = file.name.split('.').pop()?.toLowerCase();
-//             return extension && supportedFormats.includes(extension);
+//             return extension && imgBBsupportedFormats.includes(extension);
 //          });
 
 //          const newImagesArray = filteredFiles.map(file => ({
@@ -166,7 +166,7 @@
 // import React, { useState, useEffect, useRef, FC } from 'react';
 // import { formatBytes } from "@/utils/functions";
 
-// const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+// const imgBBsupportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
 // // TODO: need to avoid reupload image not working properly need to save in localStorageState MSG: you prevoisly uploaded this image.
 // // TODO: need to find better area to show error and messages, messages will be show for specifc second then disapesrs if it is good log this messages 
 
@@ -221,7 +221,7 @@
 //       if (files) {
 //          const filteredFiles = Array.from(files).filter(file => {
 //             const extension = file.name.split('.').pop()?.toLowerCase();
-//             return extension && supportedFormats.includes(extension);
+//             return extension && imgBBsupportedFormats.includes(extension);
 //          });
 
 //          const newImagesArray = filteredFiles.map(file => ({
@@ -348,22 +348,20 @@
 
 // export default UploadModal;
 
-// TODO: border need to disapear when image is selected
-
-
 "use client";
-import React, { useState, useEffect, useRef, FC } from 'react';
+import { useState, useEffect, useRef, FC } from 'react';
+import { filteredSupportedFormat } from '@/data/supportformat';
 import formatBytes from '@/utils/formatbytes';
+import { ENV_NODE_ENV } from '@/data/envimports';
 
-// TODO: error not showing of upload failed and image cleared 
-// TODO: .bmp images not supported here still uploading : need fix
-// TODO:  button not disabled when uploading image 
-const supportedFormats = ['jpg', 'jpeg', 'png', 'bmp', 'gif', 'tif', 'webp', 'heic', 'avif'];
+const environment = ENV_NODE_ENV;
+
+// TODO: If images upload successful not showing for now
 
 const UploadModal: FC = (): JSX.Element => {
    const modalRef = useRef<HTMLDivElement>(null);
-   const [isOpen, setIsOpen] = useState(false);
    const fileInputRef = useRef<HTMLInputElement>(null);
+   const [isOpen, setIsOpen] = useState<boolean>(false);
    const [selectedImages, setSelectedImages] = useState
       <{ src: string, file: File, editedName: string }[]>([]);
    const [editIndex, setEditIndex] = useState<number | null>(null);
@@ -404,7 +402,7 @@ const UploadModal: FC = (): JSX.Element => {
       };
    }, []);
 
-   const fileInputClicked = () => {
+   const fileInputClicked = (): void => {
       if (fileInputRef.current) {
          fileInputRef.current.click();
       }
@@ -412,25 +410,27 @@ const UploadModal: FC = (): JSX.Element => {
 
    const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
       const files = event.target.files;
-      if (files) {
-         const filteredFiles = Array.from(files).filter(file => {
-            const extension = file.name.split('.').pop()?.toLowerCase();
-            return extension && supportedFormats.includes(extension);
-         });
 
-         const newImagesArray = filteredFiles.map(file => ({
-            src: URL.createObjectURL(file),
-            file,
-            editedName: file.name,
-         }));
+      if (files) {
+         const newImagesArray = Array.from(files).map(file => {
+            if (file.size > 1024 * 1024) { // 1MB
+               alert(`${file.name} exceeds the maximum size of 1MB.`);
+               return null;
+            }
+
+            return {
+               src: URL.createObjectURL(file),
+               file,
+               editedName: file.name,
+            };
+         }).filter(file => file !== null);
 
          const allImages = [...selectedImages, ...newImagesArray];
+         if (allImages.length > 5) {
+            alert('Max 5 images allowed');
+         }
          const limitedImages = allImages.slice(0, 5);
          setSelectedImages(limitedImages);
-
-         if (filteredFiles.length !== files.length) {
-            alert('Some files were filtered out because they are not supported image formats or duplicates.');
-         }
       }
    };
 
@@ -466,20 +466,62 @@ const UploadModal: FC = (): JSX.Element => {
             method: 'POST',
             body: formData,
          });
+         const result = await response.json();
+
+         /**
+          --------------------------------------------------
+          // // RESPONSE WHEN FAILED // // 
+         
+          {"success":false,"message":"Empty request!!"}
+         
+          --------------------------------------------------
+          // // RESPONSE WHEN SUCCESS // //
+
+         {
+             "success": true,
+             "images": [
+                 {
+                     "id": 24,
+                     "src": "https://i.ibb.co/6Nd5M8B/test.png",
+                     "alt": "not-specified-5",
+                     "base64String": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAACQAQCdASoQAAkABUB8JaQAAudUwMAA/orkoYAAAAA=",
+                     "width": 910,
+                     "height": 485
+                 },
+                 {
+                     "id": 25,
+                     "src": "https://i.ibb.co/6Nd5M8B/test.png",
+                     "alt": "not-specified-6",
+                     "base64String": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAACQAQCdASoQAAkABUB8JaQAAudUwMAA/orkoYAAAAA=",
+                     "width": 910,
+                     "height": 485
+                 }
+             ]
+         }
+
+         --------------------------------------------------
+          */
 
          if (response.ok) {
-            const result = await response.json();
-            // console.log('Upload successful:', result);
+
             setSelectedImages([]);
             alert('Images uploaded successfully!');
             setIsImagesUploading(false);
          } else {
-            console.error('Upload failed:', response.statusText);
-            alert('Upload failed. Please try again.');
+            const message: string = result.message;
+            if (message === '') {
+               alert('Image Upload Failed!!');
+            } else {
+               alert(message)
+            }
+
             setIsImagesUploading(false);
          }
       } catch (error) {
-         console.error('Error uploading images:', error);
+         if (environment == 'development') {
+            console.error('Error uploading images:', error);
+         }
+
          alert('Error uploading images. Please try again.');
          setIsImagesUploading(false);
       }
@@ -491,20 +533,13 @@ const UploadModal: FC = (): JSX.Element => {
             <div className="modal-content" id="uploadArea" ref={modalRef}>
                <button className="close-btn" id="close-modal">X</button>
                <div className="upload-container">
-                  {/* TODO: .plus-sign not used yet */}
-                  {/* <div className="plus-sign">+</div> */}
-                  {/* image drop not used yet */}
                   {isImagesNotSelected ? (
-                     <div
-                        className="chose-images browse-btn-div"
+                     <AddImagesButton
+                        divClassNames='chose-images browse-btn-div'
                         onClick={fileInputClicked}
-                     >
-                        <span className="drag-text">Choose Images{' '}</span>
-                        <button
-                           // onClick={fileInputClicked}
-                           className="browse-btn browse-btn-upload"
-                        >Browse files</button>
-                     </div>
+                        text='Choose Images'
+                        conditionToRender={isImagesNotSelected}
+                     />
                   ) : (
                      <div className="image-preview" id="imagePreview">
                         {selectedImages.map((image, index): JSX.Element => (
@@ -519,7 +554,6 @@ const UploadModal: FC = (): JSX.Element => {
                                              type="text"
                                              value={image.editedName}
                                              onChange={(e) => handleNameChange(index, e.target.value)}
-                                             // onInput={adjustWidth(this)}
                                              style={{ width: "" }}
                                              autoFocus
                                           />
@@ -539,30 +573,26 @@ const UploadModal: FC = (): JSX.Element => {
                         ))}
                      </div>
                   )}
-                  {/* TODO: Not working */}
-                  <progress id="uploadProgress" value="10" max="100"></progress>
                </div>
                <div className="btns-container">
-                  {!isImagesNotSelected && (
-                     <div
-                        className="add-more browse-btn-div"
-                        onClick={fileInputClicked}
-                     >
-                        <span className="drag-text">Add More Images{" "}</span>
-                        <button
-                           // onClick={fileInputClicked}
-                           className="browse-btn browse-btn-upload"
-                        >Browse files</button>
-                     </div>
-                  )}
+                  <AddImagesButton
+                     divClassNames='add-more browse-btn-div'
+                     onClick={fileInputClicked}
+                     text='Add More Images'
+                     conditionToRender={!isImagesNotSelected}
+                  />
                   <div>
                      <input
                         type="file"
                         id="fileInput"
                         name="images"
-                        accept="image/*"
+                        accept={
+                           Array.from(filteredSupportedFormat)
+                              .map((format: string) => `.${format}`)
+                              .join(', ')
+                        }
                         multiple
-                        hidden
+                        hidden // HIDDEN //
                         ref={fileInputRef}
                         onChange={handleFileInputChange}
                      />
@@ -572,13 +602,58 @@ const UploadModal: FC = (): JSX.Element => {
                         type="button"
                         onClick={handleUpload}
                         disabled={isImagesNotSelected || isImagesUploading}
-                     >Upload</button>
+                        style={{ display: 'flex', placeContent: 'center space-around', flexWrap: 'wrap' }}
+                     >
+                        <UploadingAnimation conditionToRender={isImagesUploading} />
+                        {isImagesUploading ? 'Uploading' : 'Upload'}
+                     </button>
                   </div>
                </div>
             </div>
          </div>
-      </dialog>
+      </dialog >
    );
-}
+};
+
+const AddImagesButton: FC<
+   { divClassNames: string, onClick: () => void, text: string, conditionToRender: boolean }
+> = (
+   { divClassNames, onClick, text, conditionToRender }
+) => conditionToRender && (
+   <div
+      role='button'
+      className={divClassNames}
+      onClick={onClick}
+   >
+      <span className="drag-text">{text + " "}</span>
+      <button className="browse-btn browse-btn-upload">
+         Browse files
+      </button>
+   </div>
+);
+
+const UploadingAnimation: FC<{ conditionToRender: boolean }> = ({ conditionToRender }) => conditionToRender && (
+   <>
+      <style>
+         {`
+            @keyframes spin {
+               0% { transform: rotate(0deg); }
+               100% { transform: rotate(360deg); }
+               }
+            `}
+      </style>
+      <div
+         style={{
+            width: '16px',
+            height: '16px',
+            border: '3px solid grey',
+            borderRadius: '50%',
+            padding: 'auto 0',
+            borderLeftColor: '#000000b3',
+            animation: 'spin 1s ease infinite',
+         }}
+      />
+   </>
+);
 
 export default UploadModal;

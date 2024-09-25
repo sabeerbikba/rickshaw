@@ -2,7 +2,9 @@ import "server-only";
 import type { Metadata } from "next";
 import Script from 'next/script';
 import Road from "@/components/home/road";
-import Main from "@/components/home/main"
+import Main from "@/components/home/main";
+import image from '@/tmpImages/GWpSpVl.jpeg';
+import PlaceholderImage from "@/components/placeholderImage";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -45,16 +47,16 @@ export const metadata: Metadata = {
    }
 };
 
-export default function HomePage(): JSX.Element {
+export default function HomePage() {
    return (
       <main className="main-home">
          <div className="main-image">
             <div className="hero-img-div flex-center">
-               <img
-                  className="hero-img"
-                  // src="https://i.imgur.com/GWpSpVl.jpeg"
-                  src="./tmp/GWpSpVl.jpg" // TODO: need to remove this image
-                  alt="sunshine-ocean"
+               <PlaceholderImage
+                  image={image}
+                  alt='sunshine-ocean'
+                  mainSrc="https://i.imgur.com/GWpSpVl.jpeg"
+                  classNames="hero-img"
                />
             </div>
             <div className="text-center bottom-div">

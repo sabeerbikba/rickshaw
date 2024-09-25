@@ -34,7 +34,7 @@
       ".next/types/**/*.ts",
    ],
    "exclude": [
-      // "node_modules",
-      "src/helpers/generateLqip.js"
+      "node_modules",
+      "src/helpers/lqip.js"
    ]
 }

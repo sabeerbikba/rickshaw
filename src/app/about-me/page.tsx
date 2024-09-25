@@ -1,6 +1,8 @@
 import "server-only";
 import type { Metadata } from "next";
 import "./styles.css";
+import PlaceholderImage from "@/components/placeholderImage";
+import image from '@/tmpImages/HlVHlz8.jpeg';
 
 export const metadata: Metadata = {
    title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
@@ -57,11 +59,12 @@ export default function AboutMePage(): JSX.Element {
       <>
          <main className="main-about-me">
             <div className="img-div flex-center">
-               <img
-                  className="img"
-                  // src="https://i.imgur.com/HlVHlz8.jpeg"
-                  src="./tmp/HlVHlz8.jpeg" // TODO: need to remove this image
+               <PlaceholderImage
+                  image={image}
                   alt="rickshaw-and-ecobeach"
+                  mainSrc="https://i.imgur.com/HlVHlz8.jpeg"
+                  classNames="img"
+                  noBackgroudImg
                />
             </div>
             <div className="p-div flex-center">

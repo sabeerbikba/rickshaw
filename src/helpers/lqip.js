@@ -6,10 +6,22 @@ const images = [{
    id: 1,
    fallbackSrc2: "/images/lj1YChB.jpg",
 },
-   // ... paste from '@/data/images'
+   // {..},{...}
 ];
 
-// Usage command : `node generateLqip.js`
+
+// * 
+
+/**
+ * 
+ * Usage command : `node generateLqip.js`
+ * 
+ * This file can be used for:
+ * - Generate string
+ * - Check supported file 
+ * - ...
+ */
+
 
 (async function generateLQIP(imageArray) {
    for (const image of imageArray) {
@@ -23,6 +35,7 @@ const images = [{
          console.log('--------------------------------');
       } catch (error) {
          console.error(`Error generating LQIP for ${image.fallbackSrc2}:`, error);
+         console.log('--------------------------------');
       }
    }
 })(images);

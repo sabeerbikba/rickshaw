@@ -10,6 +10,7 @@ import formatBytes from "@/utils/formatbytes";
 import connectDB from "@/utils/connectdb";
 import logError from "@/utils/logerror";
 import { headersToObject } from "@/utils/apiutils";
+import { ENV_IMGBB_API } from "@/data/envimports";
 // import images from "@/data/images";
 import type { ImageType } from "@/data/images";
 import type { PostApiResponse, GetApiResponse } from "@/types/api";
@@ -21,8 +22,10 @@ import type { PostApiResponse, GetApiResponse } from "@/types/api";
 // TODO: if something error in database show error in page 
 // TODO: if image size is more then 1 mb need to compress it before upload reason is not show fallback image blurhash
 
+// TODO: Add better error codes in response
+
 const delay = (ms: number) => new Promise(resolve => setTimeout(resolve, ms)); // tmp 4 test
-const IMGBB_API = process.env.IMGBB_API as string;
+const IMGBB_API = ENV_IMGBB_API;
 
 function removeExtension(imageName: string): string {
    // replace this function when testing with getFileName() function 
@@ -75,7 +78,7 @@ const POST = async (req: NextRequest):
 
    if (!files || files.length <= 0) {
       // TODO: some time not working 
-      return NextResponse.json({ success: false }, { status: 500 });
+      return NextResponse.json({ success: false, message: 'Error: Empty request!!' }, { status: 500 });
    }
 
    const uploadDir = resolve('.', 'tmp'); // here need to use which one is wokring 
@@ -83,6 +86,11 @@ const POST = async (req: NextRequest):
 
    const uploadedFilePaths: string[] = [];
    const successfullyUploadedFiles: ImageType[] = [];
+
+   const postFailedResponse: PostApiResponse = {
+      success: false,
+      message: 'Error: Failed uploading image!!',
+   };
 
    try {
       const collection = await connectDB("images");
@@ -98,6 +106,7 @@ const POST = async (req: NextRequest):
          // const filePath = join(uploadDir, file.name);
          // await writeFile(filePath, buffer);
          // uploadedFilePaths.push(filePath);
+
 
          const file = files[i];
          const originalName = editedImgNames[i] as string;
@@ -150,7 +159,7 @@ const POST = async (req: NextRequest):
             );
 
             await logError(responseData as Error);
-            return NextResponse.json({ success: false });
+            return NextResponse.json(postFailedResponse, { status: 500 });
          }
          //          const uint8Array = new Uint8ClampedArray(buffer);
 
@@ -276,7 +285,9 @@ const POST = async (req: NextRequest):
    } catch (err) {
       await logError(err as Error);
       console.error('Error saving image:', err);
-      return NextResponse.json({ success: false }, { status: 500 });
+
+
+      return NextResponse.json(postFailedResponse, { status: 500 });
    } finally {
       // Cleanup
       for (const filePath of uploadedFilePaths) {
