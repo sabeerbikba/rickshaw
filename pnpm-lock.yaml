@@ -38,9 +38,6 @@ importers:
       sharp:
         specifier: ^0.33.5
         version: 0.33.5
-      ts-node:
-        specifier: ^10.9.2
-        version: 10.9.2(@types/node@20.14.9)(typescript@5.5.2)
     devDependencies:
       '@types/lqip-modern':
         specifier: ^1.1.7
@@ -60,9 +57,6 @@ importers:
       clear:
         specifier: ^0.1.0
         version: 0.1.0
-      client-only:
-        specifier: ^0.0.1
-        version: 0.0.1
       eslint:
         specifier: ^8.57.0
         version: 8.57.0
@@ -72,9 +66,9 @@ importers:
       rimraf:
         specifier: ^5.0.7
         version: 5.0.7
-      server-only:
-        specifier: ^0.0.1
-        version: 0.0.1
+      ts-node:
+        specifier: ^10.9.2
+        version: 10.9.2(@types/node@20.14.9)(typescript@5.5.2)
       typescript:
         specifier: ^5.5.2
         version: 5.5.2
@@ -1460,9 +1454,6 @@ packages:
     resolution: {integrity: sha512-oVekP1cKtI+CTDvHWYFUcMtsK/00wmAEfyqKfNdARm8u1wNVhSgaX7A8d4UuIlUI5e84iEwOhs7ZPYRmzU9U6A==}
     engines: {node: '>=10'}
     hasBin: true
-
-  server-only@0.0.1:
-    resolution: {integrity: sha512-qepMx2JxAa5jjfzxG79yPPq+8BuFToHd1hm7kI+Z4zAq1ftQiP7HcxMhDDItrbtwVeLg/cY2JnKnrcFkmiswNA==}
 
   set-function-length@1.2.2:
     resolution: {integrity: sha512-pgRc4hJ4/sNjWCSS9AmnS40x3bNMDTknHgL5UaMBTMyJnU90EgWh1Rz+MC9eFu4BuN/UwZjKQuY/1v3rM7HMfg==}
@@ -3251,8 +3242,6 @@ snapshots:
   semver@7.6.2: {}
 
   semver@7.6.3: {}
-
-  server-only@0.0.1: {}
 
   set-function-length@1.2.2:
     dependencies:

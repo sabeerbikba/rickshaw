@@ -1,10 +1,10 @@
-import "server-only";
 import type { Metadata } from "next";
 import Script from 'next/script';
 import Road from "@/components/home/road";
 import Main from "@/components/home/main";
 import image from '@/tmpImages/GWpSpVl.jpeg';
 import PlaceholderImage from "@/components/placeholderImage";
+import { ENV_BASE_URL } from "@/data/envimports";
 import "./styles.css";
 
 export const metadata: Metadata = {
@@ -20,11 +20,11 @@ export const metadata: Metadata = {
       ]
    },
    alternates: {
-      canonical: "https://khaleel-rickshaw.vercel.app"
+      canonical: ENV_BASE_URL,
    },
    openGraph: {
       type: 'website',
-      url: "https://khaleel-rickshaw.vercel.app",
+      url: ENV_BASE_URL,
       title: "Explore Honnavar Like a Local - Rickshaw Tours",
       description: "Embark on a unique journey through the heart of Honnavar with our authentic rickshaw tours.",
       images: [
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
    },
    twitter: {
       card: 'summary_large_image',
-      // url: "https://khaleel-rickshaw.vercel.app", // doesn't supported for now
+      // url: ENV_BASE_URL, // doesn't supported for now
       title: "Explore Honnavar Like a Local - Rickshaw Tours",
       description: "Embark on a unique journey through the heart of Honnavar with our authentic rickshaw tours.",
       images: [

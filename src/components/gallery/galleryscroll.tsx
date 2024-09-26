@@ -8,7 +8,6 @@ const GalleryScroll = (): JSX.Element => {
 
    useEffect(() => {
       if (matchesUrl(pathname, '/gallery/*')) {
-         console.log('inside true');
          document.body.style.overflow = "hidden";
       } else {
          document.body.style.overflow = "";

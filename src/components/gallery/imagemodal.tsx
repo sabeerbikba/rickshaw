@@ -2,6 +2,7 @@
 import { useCallback, useRef, useEffect, MouseEvent, FC, useReducer } from "react";
 import { useRouter } from "next/navigation";
 import transformText from "@/utils/transformtext";
+import { isDevelopmentEnv } from "@/data/envimports";
 
 interface ImageModalProps {
    src: string;
@@ -33,8 +34,10 @@ const reducer = (state: State, action: ActionTypes): State => {
       case 'UPDATE_VALUE':
          return { ...state, [action.field]: action.value };
       default:
-         console.error('Unknown action: ' + action.type);
-         console.warn('you have not added action.type: ' + action.type + ' add and try');
+         if (isDevelopmentEnv) {
+            console.error('Unknown action: ' + action.type);
+            console.warn('you have not added action.type: ' + action.type + ' add and try');
+         }
          return state;
    }
 };
@@ -145,9 +148,6 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
       };
    }, []);
 
-   console.log('isError', isError);
-   console.log('inside imageModal: src, alt', src, alt);
-
    return (
       <dialog id="imageModal" open={dialogOpen}>
          {isError || !isLoaded ? (
@@ -176,11 +176,12 @@ const ImageModal: FC<ImageModalProps> = ({ src, alt }): JSX.Element => {
                         style={{
                            borderBottomWidth: isImagePreviewInfoEmpty ? '3px' : '0',
                            borderRadius: '5px',
+                           maxWidth: '90%',
                         }}
                         className="imagePreview-modal-content"
                      />
                      {!isImagePreviewInfoEmpty && (
-                        <div className="imagePreview-info">{imagePreviewInfo}</div>
+                        <div className="imagePreview-info" style={{ maxWidth: '90%' }}>{imagePreviewInfo}</div>
                      )}
                   </div>
                </div>

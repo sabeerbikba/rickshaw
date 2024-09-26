@@ -1,5 +1,6 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { ENV_MONGODB_URI } from '@/data/envimports';
+import logError from './logerror';
 
 const MONGODB_URI = ENV_MONGODB_URI;
 let cachedClient: MongoClient | null = null;
@@ -16,7 +17,6 @@ const connectDB = async (
    }
 
    if (cachedClient && cachedDb) {
-      console.log("Database already connected, reusing client");
       const db = cachedDb.collection(collection);
       return db;
    }
@@ -28,10 +28,11 @@ const connectDB = async (
       cachedClient = client;
       cachedDb = client.db(database);
 
-      console.log("Database connected successfully");
       const db = cachedDb.collection(collection);
       return db;
    } catch (error) {
+
+      logError(error as Error, 'Inside connectDb() function');
       console.error("Database connection error:", error);
       throw new Error("Failed to connect to the database");
    }

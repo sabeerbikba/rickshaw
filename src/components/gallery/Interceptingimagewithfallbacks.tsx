@@ -61,7 +61,6 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
 
    const handleImageLoad = (event: SyntheticEvent<HTMLImageElement, Event>) => {
       const src = event.currentTarget.src;
-      console.log('inside handleImgLoad and src is : ', src);
       setCurrentSrc(stripBaseUrlIfSameOrigin(src));
    };
 
@@ -90,8 +89,7 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
                aspectRatio: `${finalImageWidth} / ${finalImageHeight}`
             }}
          />
-         {/* TODO: */}
-         {/* <Img
+         <Img
             className='image'
             src={imageSources}
             crossorigin="anonymous"
@@ -104,7 +102,7 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
             }
             onLoad={handleImageLoad}
             alt={alt}
-         /> */}
+         />
       </div>
    );
 
@@ -116,9 +114,6 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
       <span className="image-item">{imageElement}</span>
    );
 };
-
-// TODO: if more than 10 images loaded not correct log and show message show error using localStorageState,
-//       - every time load the page clear the log
 
 export default InterceptingImageWithFallbacks;
 

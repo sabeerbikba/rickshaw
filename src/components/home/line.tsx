@@ -1,6 +1,4 @@
-import "server-only";
-
-export default function Line(): JSX.Element {
+const Line = (): JSX.Element => {
    return (
       <div>
          <svg
@@ -28,4 +26,6 @@ export default function Line(): JSX.Element {
          </svg>
       </div>
    )
-}
+};
+
+export default Line;

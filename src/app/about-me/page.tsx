@@ -1,8 +1,8 @@
-import "server-only";
 import type { Metadata } from "next";
-import "./styles.css";
 import PlaceholderImage from "@/components/placeholderImage";
+import { ENV_BASE_URL } from "@/data/envimports";
 import image from '@/tmpImages/HlVHlz8.jpeg';
+import "./styles.css";
 
 export const metadata: Metadata = {
    title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
       ]
    },
    alternates: {
-      canonical: "https://khaleel-rickshaw.vercel.app/about-me"
+      canonical: `${ENV_BASE_URL}/about-me`
    },
    openGraph: {
       type: 'website',
-      url: "https://khaleel-rickshaw.vercel.app/about-me",
+      url: `${ENV_BASE_URL}/about-me`,
       title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
       description: "Explore Honnavar's beauty with Khaleel, your local guide and rickshaw driver. Join us for an extraordinary journey through azure beaches, majestic hills, and meandering rivers. Book your tour today!",
       images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
    },
    twitter: {
       card: 'summary_large_image',
-      // url: "https://khaleel-rickshaw.vercel.app/about-me", // doesn't supported for now
+      // url: `${ENV_BASE_URL}/about-me`, // doesn't supported for now
       title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
       description: "Explore Honnavar's beauty with Khaleel, your local guide and rickshaw driver. Join us for an extraordinary journey through azure beaches, majestic hills, and meandering rivers. Book your tour today!",
       images: [
@@ -54,32 +54,32 @@ const paragraphs = [
    "So, why settle for the ordinary when you can embark on an extraordinary journey with Khaleel's Rickshaw Service? Let's traverse the landscapes of Honnavar together, creating memories that will linger in your heart long after the journey ends.",
 ];
 
-export default function AboutMePage(): JSX.Element {
-   return (
-      <>
-         <main className="main-about-me">
-            <div className="img-div flex-center">
-               <PlaceholderImage
-                  image={image}
-                  alt="rickshaw-and-ecobeach"
-                  mainSrc="https://i.imgur.com/HlVHlz8.jpeg"
-                  classNames="img"
-                  noBackgroudImg
-               />
+const AboutMePage = (): JSX.Element => (
+   <>
+      <main className="main-about-me">
+         <div className="img-div flex-center">
+            <PlaceholderImage
+               image={image}
+               alt="rickshaw-and-ecobeach"
+               mainSrc="https://i.imgur.com/HlVHlz8.jpeg"
+               classNames="img"
+               noBackgroudImg
+            />
+         </div>
+         <div className="p-div flex-center">
+            <div>
+               {paragraphs.map((para, key): JSX.Element => (
+                  <p className="p-about-me" key={key}>{para}</p>
+               ))}
+               <p>
+                  <a href="/?tourClicked=true">Book your tour today</a> and let&apos;s write
+                  the next chapter of your Honnavar adventure, one rickshaw ride at a
+                  time.
+               </p>
             </div>
-            <div className="p-div flex-center">
-               <div>
-                  {paragraphs.map((para, key): JSX.Element => (
-                     <p className="p-about-me" key={key}>{para}</p>
-                  ))}
-                  <p>
-                     <a href="/?tourClicked=true">Book your tour today</a> and let&apos;s write
-                     the next chapter of your Honnavar adventure, one rickshaw ride at a
-                     time.
-                  </p>
-               </div>
-            </div>
-         </main>
-      </>
-   )
-}
+         </div>
+      </main>
+   </>
+);
+
+export default AboutMePage;

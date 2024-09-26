@@ -1,17 +1,13 @@
 'use server';
-import "server-only";
-// import Image from "next/image";
 import { FC } from "react";
-// import images from '@/data/images';
-// import type { ImageType } from '@/data/images';
+import type { PhotoModalTypes } from '@/types/components';
 import UploadModal from "@/components/gallery/uploadmodal";
 import transformText from "@/utils/transformtext";
 import "./styles.css";
 import getImageData from "@/utils/getimagedata";
 import logError from "@/utils/logerror";
 
-const PhotoPage: FC<{ params: { alt: string } }> = async (
-   { params: { alt } }) => {
+const PhotoPage: FC<PhotoModalTypes> = async ({ params: { alt } }) => {
 
    const [finalSrc, photoAlt, message] = await getImageData(alt);
 
@@ -36,7 +32,6 @@ const PhotoPage: FC<{ params: { alt: string } }> = async (
                   />
                   {imagePreviewInfo != '' && (
                      <div>
-                        {/* // TODO: remove this br elements. instead use better styles */}
                         <br />
                         <br />
                         <h1>{imagePreviewInfo}</h1>
@@ -49,18 +44,12 @@ const PhotoPage: FC<{ params: { alt: string } }> = async (
       );
    } catch (error) {
 
-      if (error instanceof Error) {
-         console.error('/gallery/[alt]: error: ', error.message);
-         logError(error);
-      } else {
-         console.log('An unknown error occurred route: /gallery/[alt]', error);
-      }
+      logError(error as Error, '/gallery/[alt]');
 
       return (
          <>
             <main className="main-gallery">
                <div className="tab-img-preview">
-                  {/* TODO: This is not good message */}
                   <h1 className="error">Error: {message}</h1>
                </div>
             </main>

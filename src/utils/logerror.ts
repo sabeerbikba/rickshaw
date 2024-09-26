@@ -1,19 +1,19 @@
 import connectDB from "./connectdb";
 
-const logError = async (error: Error): Promise<void> => {
+const logError = async (error: Error, route?: string): Promise<void> => {
    try {
-      console.log('inside logError: typeof error', typeof error);
       const collection = await connectDB("backend_errorlogs");
 
       await collection.insertOne({
          errorMsg: error.message,
          stack: error.stack,
+         route,
          error,
          timestamp: new Date().toISOString(),
       });
    } catch (error) {
 
-      logError(error as Error);
+      logError(error as Error, 'itself as recusive function (utils)');
       console.error('Failed to log error:', error);
    }
 };

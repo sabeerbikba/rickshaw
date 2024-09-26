@@ -197,7 +197,6 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import type { UseQueryOptions, QueryFunctionContext } from '@tanstack/react-query';
 import type { ImageType } from "@/data/images";
 import imagesObject from "@/data/images";
-// import ImageWithFallback from "./imagewithfallback";
 import InterceptingImageWithFallbacks from "./Interceptingimagewithfallbacks";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import type { GetApiResponse } from "@/types/api";
@@ -237,38 +236,38 @@ const fetchImages = async ({ queryKey }: QueryFunctionContext<[string, number]>)
       if (!response.ok) throw new Error('Failed to fetch images');
       result = await response.json();
    }
-   console.log('fetchImages fired, queryKey, .json()', queryKey, result);
    return result;
 };
 
 const InfiniteScrollComponent: FC = () => {
-   const [images, setImages] = useState<ImageType[]>([]); // made chnages
+   const [images, setImages] = useState<ImageType[]>([]);
    const [page, setPage] = useState<number>(1);
    const [allImagesLoaded, setAllImagesLoaded] = useState<boolean>(false);
 
    const {
       isLoading,
       data,
-      error,
+      // error, // 
    } = useQuery<GetApiResponse, Error, GetApiResponse, [string, number]>({
       queryKey: ['images', page],
       queryFn: fetchImages,
    });
 
-   console.log('useQuery:: isLoading, data, error: ', isLoading, data, error);
+   const fetchMoreData = () => {
+      if (!isLoading) {
+         setPage((prevPage) => prevPage + 1);
+      }
+   };
 
    useEffect(() => {
-      // console.log('useEffect fired!!: data,', data);
       if (data) {
-         // setImages((prevItems) => [...prevItems, ...data]);
          console.log(data);
          setImages((prevImages) => {
-            // const newImages: ImageType[] = data.images || data as ImageType[]; // TODO: 
             const newImages: ImageType[] = Array.isArray(data.images)
                ? data.images
                : Array.isArray(data)
                   ? data
-                  : []; // is this working
+                  : [];
             const existingIds = new Set(prevImages.map(img => img.id));
             const filteredNewImages = newImages.filter(img => !existingIds.has(img.id));
             return [...prevImages, ...filteredNewImages];
@@ -278,16 +277,24 @@ const InfiniteScrollComponent: FC = () => {
       }
    }, [data]);
 
-   useEffect(() => {
-      console.log('error: ', typeof error, error);
-      console.log(error);
-   }, [error]);
+   // useEffect(() => {
+   //    console.log(error);
+   // }, [error]);
 
-   const fetchMoreData = () => {
-      if (!isLoading) {
-         setPage((prevPage) => prevPage + 1);
-      }
-   };
+   useEffect(() => {
+      const handleResize = () => {
+         if (window.innerWidth > 1850 && page === 1) {
+            setPage(2);
+         }
+      };
+
+      handleResize();
+      window.addEventListener('resize', handleResize);
+
+      return () => {
+         window.removeEventListener('resize', handleResize);
+      };
+   }, [page]);
 
    return (
       <InfiniteScroll

@@ -1,8 +1,6 @@
 import { FC } from "react";
 import { StaticImageData } from "next/image";
-import { ENV_NODE_ENV } from "@/data/envimports";
-
-const isDevelopmentEnvironment = ENV_NODE_ENV == 'development';
+import { isDevelopmentEnv } from "@/data/envimports";
 
 type PlaceholderImageProps = {
    image: StaticImageData;
@@ -24,7 +22,7 @@ const PlaceholderImage: FC<PlaceholderImageProps> = ({
 
    return (
       <img
-         src={isDevelopmentEnvironment ? src : mainSrc}
+         src={isDevelopmentEnv ? src : mainSrc}
          alt={alt}
          style={styles}
          className={classNames}

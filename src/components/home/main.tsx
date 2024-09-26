@@ -25,16 +25,11 @@ const Home: FC = (): JSX.Element => {
    }
 
    const getInTouch = () => {
-      // if (isMobileDevice()) {
-         window.open(`tel:+${phoneNumber}`, '_self');
-      // } else {
-         window.open(`https://wa.me/${phoneNumber}/?text=${encodeURIComponent('I would like to call you')}`, '_blank');
-      // }
-      // TODO: show modal of contact details 
-   }
+      window.open(`tel:+${phoneNumber}`, '_self');
+      window.open(`https://wa.me/${phoneNumber}/?text=${encodeURIComponent('I would like to call you')}`, '_blank');
+   };
 
-   // TODO: fuction not crated in /api/click route 
-   const logClick = () => fetch("/api/click", {method: 'POST'});
+   const logClick = () => fetch("/api/click", { method: 'POST' });
 
    const handleBtnClick = () => {
       getInTouch();

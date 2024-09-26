@@ -1,28 +1,10 @@
-// import Image from "next/image";
 "use server";
-import 'server-only';
-// import { headers } from 'next/headers';
+import { FC } from 'react';
+import type { PhotoModalTypes } from '@/types/components';
 import ImageModal from "@/components/gallery/imagemodal";
-// import images from '@/data/images';
-// import type { ImageType } from '@/data/images';
 import getImageData from '@/utils/getimagedata';
 
-// TODO: if error happens need to log into databse
-// TODO: need to think about alt is which is better: alt or imgName
-
-// TODO: get base can resuse check
-// function getBaseUrl() { // TODO: check it's working as expected in server
-//    const headersList = headers();
-//    const host = headersList.get('host');
-//    const protocol = headersList.get('x-forwarded-proto') || 'http';
-//    return `${protocol}://${host}`;
-// }
-
-export default async function PhotoModal({
-   params: { alt },
-}: {
-   params: { alt: string };
-}) {
+const PhotoModal: FC<PhotoModalTypes> = async ({ params: { alt } }) => {
 
    const [finalSrc, photoAlt] = await getImageData(alt);
 
@@ -38,4 +20,6 @@ export default async function PhotoModal({
          alt={photoAlt}
       />
    );
-}
+};
+
+export default PhotoModal;

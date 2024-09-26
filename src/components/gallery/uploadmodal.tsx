@@ -352,9 +352,7 @@
 import { useState, useEffect, useRef, FC } from 'react';
 import { filteredSupportedFormat } from '@/data/supportformat';
 import formatBytes from '@/utils/formatbytes';
-import { ENV_NODE_ENV } from '@/data/envimports';
-
-const environment = ENV_NODE_ENV;
+import { isDevelopmentEnv } from '@/data/envimports';
 
 // TODO: If images upload successful not showing for now
 
@@ -477,27 +475,7 @@ const UploadModal: FC = (): JSX.Element => {
           --------------------------------------------------
           // // RESPONSE WHEN SUCCESS // //
 
-         {
-             "success": true,
-             "images": [
-                 {
-                     "id": 24,
-                     "src": "https://i.ibb.co/6Nd5M8B/test.png",
-                     "alt": "not-specified-5",
-                     "base64String": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAACQAQCdASoQAAkABUB8JaQAAudUwMAA/orkoYAAAAA=",
-                     "width": 910,
-                     "height": 485
-                 },
-                 {
-                     "id": 25,
-                     "src": "https://i.ibb.co/6Nd5M8B/test.png",
-                     "alt": "not-specified-6",
-                     "base64String": "data:image/webp;base64,UklGRioAAABXRUJQVlA4IB4AAACQAQCdASoQAAkABUB8JaQAAudUwMAA/orkoYAAAAA=",
-                     "width": 910,
-                     "height": 485
-                 }
-             ]
-         }
+         {"success": true,}
 
          --------------------------------------------------
           */
@@ -518,7 +496,7 @@ const UploadModal: FC = (): JSX.Element => {
             setIsImagesUploading(false);
          }
       } catch (error) {
-         if (environment == 'development') {
+         if (isDevelopmentEnv) {
             console.error('Error uploading images:', error);
          }
 
