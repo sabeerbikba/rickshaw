@@ -8,12 +8,6 @@ const PhotoModal: FC<PhotoModalTypes> = async ({ params: { alt } }) => {
 
    const [finalSrc, photoAlt] = await getImageData(alt);
 
-   console.log(
-      'image intercepting page component Data$$: findalSrc, phpotoAlt: ',
-      finalSrc, photoAlt,
-
-   );
-
    return (
       <ImageModal
          src={finalSrc as string}
