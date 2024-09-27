@@ -13,6 +13,7 @@ import {
    FALLBACK_PLACEHOLDER,
 } from '@/data/images';
 import isValidBase64 from '@/utils/isvalidBase64';
+import { isDevelopmentEnv } from '@/data/envimports';
 
 
 interface InterceptingImageWithFallbacksProps {
@@ -54,7 +55,9 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
          }
          return url;
       } catch (error) {
-         console.error('Invalid URL:', error);
+         if (isDevelopmentEnv) {
+            console.error('Invalid URL:', error);
+         }
          return url;
       }
    };
