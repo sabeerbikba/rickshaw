@@ -1,8 +1,6 @@
 import type { MetadataRoute } from 'next';
-import { ENV_BASE_URL } from '@/data/envimports';
-import { FALLBACK_BASE_URL } from '@/data/envfallback';
+import { BASE_URL } from '@/data/envimports';
 
-const BASE_URL = ENV_BASE_URL || FALLBACK_BASE_URL;
 
 const urls: { url: string; priority: number }[] = [
    { url: BASE_URL, priority: 1 },

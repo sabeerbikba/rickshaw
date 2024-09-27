@@ -9,14 +9,12 @@ import GalleryScroll from "@/components/gallery/galleryscroll";
 import Class from "@/components/home/class";
 import Script from 'next/script';
 import "./globals.css";
-import { ENV_BASE_URL } from '@/data/envimports';
+import { BASE_URL } from '@/data/envimports';
 
 export const viewport: Viewport = {
    width: 'device-width',
    initialScale: 1.0,
 };
-
-console.log('isServer');
 
 const RootLayout: FC<Readonly<{ children: React.ReactNode; }>> = ({ children }):
    JSX.Element => {
@@ -26,7 +24,7 @@ const RootLayout: FC<Readonly<{ children: React.ReactNode; }>> = ({ children }):
    return (
       <html lang="en">
          <head>
-            <meta name="twitter:url" content={ENV_BASE_URL} />
+            <meta name="twitter:url" content={BASE_URL} />
             <Script
                id="gtm-script"
                strategy="afterInteractive"

@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import PlaceholderImage from "@/components/placeholderImage";
-import { ENV_BASE_URL } from "@/data/envimports";
+import { BASE_URL } from "@/data/envimports";
 import image from '@/tmpImages/HlVHlz8.jpeg';
 import "./styles.css";
 
@@ -17,11 +17,11 @@ export const metadata: Metadata = {
       ]
    },
    alternates: {
-      canonical: `${ENV_BASE_URL}/about-me`
+      canonical: `${BASE_URL}/about-me`
    },
    openGraph: {
       type: 'website',
-      url: `${ENV_BASE_URL}/about-me`,
+      url: `${BASE_URL}/about-me`,
       title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
       description: "Explore Honnavar's beauty with Khaleel, your local guide and rickshaw driver. Join us for an extraordinary journey through azure beaches, majestic hills, and meandering rivers. Book your tour today!",
       images: [
@@ -33,7 +33,7 @@ export const metadata: Metadata = {
    },
    twitter: {
       card: 'summary_large_image',
-      // url: `${ENV_BASE_URL}/about-me`, // doesn't supported for now
+      // url: `${BASE_URL}/about-me`, // doesn't supported for now
       title: "About Khaleel's Rickshaw Service - Your Local Guide in Honnavar",
       description: "Explore Honnavar's beauty with Khaleel, your local guide and rickshaw driver. Join us for an extraordinary journey through azure beaches, majestic hills, and meandering rivers. Book your tour today!",
       images: [

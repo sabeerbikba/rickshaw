@@ -12,7 +12,6 @@ const PhotoPage: FC<PhotoModalTypes> = async ({ params: { alt } }) => {
    const [finalSrc, photoAlt, message] = await getImageData(alt);
 
    try {
-      console.log('photoAlt in /gallery/[alt]', photoAlt);
       const isAltNotDefined = photoAlt.startsWith('not-specified-');
       const imagePreviewInfo = isAltNotDefined ? '' : transformText(alt);
 

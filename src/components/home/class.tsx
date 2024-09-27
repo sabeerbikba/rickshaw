@@ -19,7 +19,6 @@ const Class: React.FC = (): JSX.Element => {
          if (header) {
             header.classList.add("header-relative");
             header.classList.remove('header-fixed');
-            console.log("if");
          }
       } else {
          document.documentElement.classList.remove(HTML_CLASS);

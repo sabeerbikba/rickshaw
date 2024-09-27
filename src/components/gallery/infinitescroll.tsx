@@ -261,7 +261,6 @@ const InfiniteScrollComponent: FC = () => {
 
    useEffect(() => {
       if (data) {
-         console.log(data);
          setImages((prevImages) => {
             const newImages: ImageType[] = Array.isArray(data.images)
                ? data.images
