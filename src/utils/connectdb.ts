@@ -12,7 +12,6 @@ const connectDB = async (
    database: string = 'rickshaw',
    dbUri: string = MONGODB_URI,
 ): Promise<Collection<any>> => {
-   console.error(MONGODB_URI);
    if (!dbUri) {
       throw new Error('Please provide a valid MongoDB URI.');
    }

@@ -51,7 +51,7 @@ const POST = async (req: NextRequest):
       return NextResponse.json({ success: false, message: 'Error: Empty request!!' }, { status: 500 });
    }
 
-   const uploadDir = resolve('.', 'tmp'); // IsWorking on Vercel
+   const uploadDir = resolve('/tmp');
    await mkdir(uploadDir, { recursive: true });
 
    const uploadedFilePaths: string[] = [];
