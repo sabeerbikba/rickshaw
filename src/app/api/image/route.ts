@@ -5,6 +5,7 @@ import { join, resolve } from "path";
 import formatBytes from "@/utils/formatbytes";
 import connectDB from "@/utils/connectdb";
 import logError from "@/utils/logerror";
+// import throwError from "@/helpers/throwerror"; // testing purpose
 import { headersToObject } from "@/utils/apiutils";
 import { ENV_IMGBB_API, isDevelopmentEnv } from "@/data/envimports";
 import type { ImageType } from "@/data/images";
@@ -66,6 +67,8 @@ const POST = async (req: NextRequest):
    };
 
    try {
+      // throwError(); // for testing purpose
+
       const collection = await connectDB("images");
       if (!collection) throw new Error("Collection is not available");
 

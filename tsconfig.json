@@ -5,12 +5,14 @@
          "dom.iterable",
          "esnext"
       ],
+      "target": "ESNext",
+      "forceConsistentCasingInFileNames": true,
       "allowJs": true,
       "skipLibCheck": true,
       "strict": true,
       "noEmit": true,
       "esModuleInterop": true,
-      "module": "esnext",
+      "module": "ESNext",
       "moduleResolution": "bundler",
       "resolveJsonModule": true,
       "isolatedModules": true,
@@ -31,7 +33,7 @@
       "next-env.d.ts",
       "**/*.ts",
       "**/*.tsx",
-      ".next/types/**/*.ts",
+      ".next/types/**/*.ts"
    ],
    "exclude": [
       "node_modules",
