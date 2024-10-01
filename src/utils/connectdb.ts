@@ -1,6 +1,6 @@
 import { MongoClient, Db, Collection } from 'mongodb';
 import { ENV_MONGODB_URI } from '@/data/envimports';
-import logError from './logerror';
+// import logError from './logerror';
 
 const MONGODB_URI = ENV_MONGODB_URI;
 let cachedClient: MongoClient | null = null;
@@ -32,7 +32,9 @@ const connectDB = async (
       return db;
    } catch (error) {
 
-      logError(error as Error, 'Inside connectDb() function');
+      // logError(error as Error, 'Inside connectDb() function');
+      // it can cause infinte loop need to use diffrent approch 
+
       console.error("Database connection error:", error);
       throw new Error("Failed to connect to the database");
    }
