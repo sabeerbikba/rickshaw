@@ -13,9 +13,12 @@ import type { PostApiResponse, GetApiResponse } from "@/types/api";
 
 const IMGBB_API = ENV_IMGBB_API;
 
-function removeExtension(imageName: string): string {
-   return imageName.replace(/\.[^/.]+$/, "");
-}
+const formatAndRemoveExtension = (imageName: string): string => {
+   return imageName
+      .trim()
+      .replace(/\s+/g, '-')
+      .replace(/\.[^/.]+$/, "");
+};
 
 // async function getImageDimensions(filePath: string) {
 //   try {
@@ -129,7 +132,7 @@ const POST = async (req: NextRequest):
          const id: number = collectionCount + 1 + 19; // images.length = 19
          const src: string = responseData.data.url;
          const alt: string = `${file.name === editedImgNames[i] ? "not-specified-" :
-            `${removeExtension(editedImgNames[i] as string)}-`}${id}`;
+            `${formatAndRemoveExtension(editedImgNames[i] as string)}-`}${id}`;
          const base64String: string = lqipOutput.metadata.dataURIBase64;
          const width: number = responseData.data.width;
          const height: number = responseData.data.height;
