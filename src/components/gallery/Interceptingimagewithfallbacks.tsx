@@ -12,7 +12,6 @@ import {
    FALLBACK_IMG_DIMENSIONS,
    FALLBACK_PLACEHOLDER,
 } from '@/data/images';
-import isValidBase64 from '@/utils/isvalidBase64';
 import { isDevelopmentEnv } from '@/data/envimports';
 
 
@@ -38,11 +37,10 @@ const InterceptingImageWithFallbacks: FC<InterceptingImageWithFallbacksProps> = 
    const [currentSrc, setCurrentSrc] = useState<string>(src);
    const [interceptingUrl, setInterceptingUrl] = useState<string>('');
 
-   const isValidString: boolean = isValidBase64(base64String);
    const isNotFallbackImg: boolean = currentSrc !== FALLBACK_IMG;
    const imageSources: string[] =
       [src, fallbackSrc1, fallbackSrc2, FALLBACK_IMG].filter((s): s is string => s !== undefined);
-   const bgImage: string = isValidString ? base64String : FALLBACK_PLACEHOLDER;
+   const bgImage: string = isNotFallbackImg ? base64String : FALLBACK_PLACEHOLDER;
    const { width: fallbackImageWidth, height: fallbackImageHeight } = FALLBACK_IMG_DIMENSIONS;
    const finalImageWidth: number = isNotFallbackImg ? actualImageWidth : fallbackImageWidth;
    const finalImageHeight: number = isNotFallbackImg ? actualImageHeight : fallbackImageHeight;
