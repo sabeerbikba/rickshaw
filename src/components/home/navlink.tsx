@@ -20,27 +20,53 @@ const generateRelativePath = (pathname: string, targetPath: string) => {
    return relativePrefix + targetPath.slice(2);
 }
 
+const navItems: NavItem[] = [
+   {
+      urls: ['/', '/gallery', '/gallery/*'],
+      href: './about-me/',
+      className: 'text-dec-none nav-a indicator',
+      id: 'aboutme-a',
+      label: 'About me'
+   },
+   {
+      urls: ['/', '/about-me', '/gallery/*'],
+      href: './gallery/',
+      className: 'text-dec-none nav-a indicator gallery',
+      id: 'gallery-a',
+      label: 'Gallery'
+   },
+   {
+      urls: ['/', '/about-me', '/gallery', '/gallery/*'],
+      href: './contact/',
+      className: 'text-dec-none nav-a',
+      id: 'contact-a',
+      label: 'Contact'
+   },
+   {
+      urls: ['/gallery', '/gallery/*'],
+      component: <button className="nav-a upload-btn" id="upload-button">Upload</button>
+   },
+];
+
 const NavLinks: FC = (): JSX.Element => {
    const pathname = usePathname();
-
-   // When visited `urls` need to show ``href` and `component` in navigation bar
-   const navItems: NavItem[] = [
-      { urls: ['/', '/gallery', '/gallery/*'], href: './about-me/', className: 'text-dec-none nav-a indicator', id: 'aboutme-a', label: 'About me' },
-      { urls: ['/', '/about-me', '/gallery/*'], href: './gallery/', className: 'text-dec-none nav-a indicator gallery', id: 'gallery-a', label: 'Gallery' },
-      { urls: ['/gallery', '/gallery/*'], component: <button className="nav-a upload-btn" id="upload-button">Upload</button> },
-   ];
-
-   const isPageFound = navItems.some(item => item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)));
+   const isPageFound =
+      navItems.some(item => item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)));
 
    return (
       <ul className="nav-ul">
          {navItems.map((item, index): JSX.Element | ReactNode => {
             if (isPageFound) {
                return (
-                  item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)) && (
+                  item.urls.some(urlPattern => matchesUrl(pathname, urlPattern)) &&
+                  (item.label !== 'Contact' || pathname !== '/contact') && (
                      <li className="nav-li" key={index}>
                         {item.href ? (
-                           <Link href={generateRelativePath(pathname, item.href)} className={item.className} id={item.id}>
+                           <Link
+                              href={generateRelativePath(pathname, item.href)}
+                              className={item.className}
+                              id={item.id}
+                           >
                               {item.label}
                            </Link>
                         ) : (
@@ -53,9 +79,13 @@ const NavLinks: FC = (): JSX.Element => {
 
                // 404 page links
                return (
-                  item.href && (
+                  item.href && (item.label !== 'Contact' || pathname !== '/contact') && (
                      <li className="nav-li" key={index}>
-                        <Link href={generateRelativePath(pathname, item.href)} className={item.className} id={item.id}>
+                        <Link
+                           href={generateRelativePath(pathname, item.href)}
+                           className={item.className}
+                           id={item.id}
+                        >
                            {item.label}
                         </Link>
                      </li>
@@ -68,4 +98,3 @@ const NavLinks: FC = (): JSX.Element => {
 };
 
 export default NavLinks;
-

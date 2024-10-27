@@ -1,9 +1,9 @@
 "use client";
-import { useEffect, FC } from "react"
-import Light from "./light"
+import { useEffect, FC } from "react";
+import Light from "./light";
+import GetInTouchBtn from "@/components/get-in-touch";
 
 const Home: FC = (): JSX.Element => {
-   const phoneNumber = '918970517155';
 
    // function isMobileDevice(): boolean {
    //    const userAgent = navigator.userAgent;
@@ -23,18 +23,6 @@ const Home: FC = (): JSX.Element => {
       }
       return '';
    }
-
-   const getInTouch = () => {
-      window.open(`tel:+${phoneNumber}`, '_self');
-      window.open(`https://wa.me/${phoneNumber}/?text=${encodeURIComponent('I would like to call you')}`, '_blank');
-   };
-
-   const logClick = () => fetch("/api/click", { method: 'POST' });
-
-   const handleBtnClick = () => {
-      getInTouch();
-      logClick();
-   };
 
    useEffect(() => {
       const LIGHT_TOGGLE_INTERVAL: number = 500;
@@ -135,7 +123,7 @@ const Home: FC = (): JSX.Element => {
             </p>
             <div className="flex-center">
                <div className={`btn-div ${getUrlParameter('tourClicked') === 'true' && 'spongeAnimation'}`} id="break">
-                  <button onClick={handleBtnClick} id="btn">Book Your Tour Today!</button>
+                  <GetInTouchBtn page="home" text="Book Your Tour Today!" id="btn" />
                </div>
             </div>
          </div>

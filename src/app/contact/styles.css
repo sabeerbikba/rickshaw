@@ -1,0 +1,102 @@
+.img-div {
+   padding-top: 100px;
+}
+
+.img-div img {
+   height: auto;
+   border: 2px solid black;
+   border-radius: 10px;
+   aspect-ratio: 1050 / 600;
+}
+
+.text-container {
+   font-family: cursive;
+   padding-bottom: 10px;
+}
+
+.text-container h1,
+.text-container h2,
+.text-container a {
+   margin: 30px auto;
+   width: 80%;
+   max-width: 900px;
+}
+
+.text-container h2,
+.text-container a {
+   color: #1D46F7;
+}
+
+.text-container div button {
+   background-color: #DACA98;
+   border: 1px solid black;
+   border-radius: 4px;
+   padding: 15px 50px;
+}
+
+.cot-btn {
+   width: 400px;
+   font-weight: bold;
+}
+
+@media (max-width: 480px) {
+
+   .text-container {
+      font-size: 14px;
+   }
+
+   .cot-btn {
+      font-size: 16px;
+   }
+}
+
+@media (min-width: 481px) and (max-width: 768px) {
+
+   .text-container {
+      font-size: 16px;
+   }
+
+   .cot-btn {
+      font-size: 18px;
+   }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+
+   .text-container {
+      font-size: 18px;
+   }
+
+   .cot-btn {
+      font-size: 20px;
+   }
+}
+
+@media (min-width: 1025px) {
+
+   .text-container {
+      font-size: 20px;
+   }
+
+   .cot-btn {
+      font-size: 22px;
+   }
+
+   .text-container h2,
+   .text-container a {
+      text-align: center;
+   }
+}
+
+/* utils */
+
+.center {
+   display: flex;
+   align-content: center;
+   justify-content: center;
+}
+
+.max-width {
+   width: 80%;
+   max-width: 900px;
+}
